@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_hint">Buscar&#8230;</string>
+    <string name="hint_prompt">Fale um nome ou número</string>
+    <string name="cd_up_button">Botão de navegação UP</string>
+    <string name="cd_voice_search">Busca por voz</string>
+    <string name="cd_clear_button">Limpar campo</string>
+</resources>

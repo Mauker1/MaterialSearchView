@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="search_layover_bg">#80000000</color>
+    <color name="search_field_bg">@color/white_ish</color>
+
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="gray">#ff888888</color>
+
+    <color name="white_50">#88ffffff</color>
+    <color name="black_50">#88000000</color>
+    <color name="gray_50">#88888888</color>
+
+    <color name="white_ish">#fffefefe</color>
+</resources>
