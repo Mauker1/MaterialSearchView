@@ -11,12 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.search.material.materialsearch.R;
-
 import java.util.ArrayList;
 
 import br.com.mauker.materialsearchview.adapters.SearchAdapter;
-import br.com.mauker.materialsearchview.library.MaterialSearchView;
+import br.com.mauker.materialsearchview.lib.MaterialSearchView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,12 +23,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(br.com.mauker.materialsearchview.R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(br.com.mauker.materialsearchview.R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView = (MaterialSearchView) findViewById(br.com.mauker.materialsearchview.R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(br.com.mauker.materialsearchview.R.menu.menu_main, menu);
         return true;
     }
 
@@ -81,9 +79,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_search:
+            case br.com.mauker.materialsearchview.R.id.action_search:
                 // Open the search view on the menu item click.
-                searchView.openSearch();
+
+                searchView.openSearch(item.getActionView());
                 return true;
         }
 

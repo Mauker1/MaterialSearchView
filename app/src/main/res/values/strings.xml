@@ -3,4 +3,62 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="state_array_full">
+        <item>Armed Forces Americas</item>
+        <item>Armed Forces Others</item>
+        <item>Alabama</item>
+        <item>Alaska</item>
+        <item>Armed Forces Pacific</item>
+        <item>Arkansas</item>
+        <item>Arizona</item>
+        <item>California</item>
+        <item>Colorado</item>
+        <item>Connecticut</item>
+        <item>District Of Columbia</item>
+        <item>Delaware</item>
+        <item>Florida</item>
+        <item>Georgia</item>
+        <item>Hawaii</item>
+        <item>Iowa</item>
+        <item>Idaho</item>
+        <item>Illinois</item>
+        <item>Indiana</item>
+        <item>Kansas</item>
+        <item>Kentucky</item>
+        <item>Louisiana</item>
+        <item>Massachusetts</item>
+        <item>Maryland</item>
+        <item>Maine</item>
+        <item>Michigan</item>
+        <item>Minnesota</item>
+        <item>Missouri</item>
+        <item>Mississippi</item>
+        <item>Montana</item>
+        <item>North Carolina</item>
+        <item>North Dakota</item>
+        <item>Nebraska</item>
+        <item>New Hampshire</item>
+        <item>New Jersey</item>
+        <item>New Mexico</item>
+        <item>Nevada</item>
+        <item>New York</item>
+        <item>Ohio</item>
+        <item>Oklahoma</item>
+        <item>Oregon</item>
+        <item>Pennsylvania</item>
+        <item>Puerto Rico</item>
+        <item>Rhode Island</item>
+        <item>South Carolina</item>
+        <item>South Dakota</item>
+        <item>Tennessee</item>
+        <item>Texas</item>
+        <item>Utah</item>
+        <item>Virginia</item>
+        <item>Vermont</item>
+        <item>Washington</item>
+        <item>Wisconsin</item>
+        <item>West Virginia</item>
+        <item>Wyoming</item>
+    </string-array>
 </resources>

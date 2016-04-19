@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview.adapters;
+package br.com.mauker.materialsearchview.lib.adapters;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -13,16 +13,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.mauker.materialsearchview.R;
-
 /**
- * Created by mauker on 31/03/16.
+ * Created by mauker on 18/04/16.
+ *
+ * Default adapter used for the suggestion ListView.
  */
 public class SearchAdapter extends BaseAdapter implements Filterable {
-
     private ArrayList<String> data;
 
-    private String[] typeAheadData;
+    private String[] typeAheadData = {"Potato"};
 
     private LayoutInflater inflater;
 
@@ -33,7 +32,6 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
 
         inflater = LayoutInflater.from(mContext);
         data = new ArrayList<>();
-        typeAheadData = mContext.getResources().getStringArray(R.array.state_array_full);
     }
 
     @Override
@@ -90,6 +88,7 @@ public class SearchAdapter extends BaseAdapter implements Filterable {
         MyViewHolder mViewHolder;
 
         if (convertView == null) {
+            // TODO - Change this later for a custom view.
             convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
             mViewHolder = new MyViewHolder(convertView);
             convertView.setTag(mViewHolder);

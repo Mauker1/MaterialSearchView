@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.mauker.materialsearchview.MainActivity"
+    tools:context=".MainActivity"
     android:background="@color/white">
 
     <android.support.v7.widget.Toolbar
@@ -14,7 +14,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <br.com.mauker.materialsearchview.library.MaterialSearchView
+    <br.com.mauker.materialsearchview.lib.MaterialSearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

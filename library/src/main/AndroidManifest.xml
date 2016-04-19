@@ -1,7 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.mauker.materialsearchview">
+    package="br.com.mauker.materialsearchview.lib">
 
-    <application android:allowBackup="true" android:label="@string/app_name">
+    <application android:allowBackup="false" android:label="@string/app_name">
+
+        <!--
+            Authorities is the package name, while name is the file of the provider
+            Add content provider so android's content resolver can see it.
+            The authority matches package, name represents the file the provider is in.
+            The syncable flag lets android now we're going to synchronize our content provider with the server.
+            Changing the exported tag to false means that only our app can see the content.
+        -->
+        <provider
+            android:name=".db.HistoryProvider"
+            android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true"/>
 
     </application>
 

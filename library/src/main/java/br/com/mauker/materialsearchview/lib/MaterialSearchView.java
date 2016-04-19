@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview.library;
+package br.com.mauker.materialsearchview.lib;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -32,11 +32,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.search.material.library.R;
-
 import java.util.List;
 
-import br.com.mauker.materialsearchview.library.Utils.AnimationUtils;
+import br.com.mauker.materialsearchview.lib.Utils.AnimationUtils;
 
 /**
  * Created by Mauker and Adam McNeilly on 30/03/2016. dd/MM/YY.
@@ -74,6 +72,11 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
      * Whether or not the MaterialSearchView will animate into view or just appear.
      */
     private boolean mShouldAnimate;
+
+    /**
+     * Wheter to keep the search history or not.
+     */
+    private boolean mShouldKeepHistory;
 
     /**
      * Flag for whether or not we are clearing focus.
@@ -170,19 +173,17 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
         // Set variables
         this.mContext = context;
         this.mShouldAnimate = true;
+        this.mShouldKeepHistory = true;
 
         // Initialize view
         init();
 
         // Initialize style
+        // TODO - Improve this to the next release.
 //        initStyle(attributeSet, defStyleAttributes);
     }
 
     // ----- Setters ----- //
-
-    public void setShouldAnimate(boolean mShouldAnimate) {
-        this.mShouldAnimate = mShouldAnimate;
-    }
 
     public void setOnQueryTextListener(OnQueryTextListener mOnQueryTextListener) {
         this.mOnQueryTextListener = mOnQueryTextListener;
@@ -199,6 +200,14 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
      */
     public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
         mSuggestionsListView.setOnItemClickListener(listener);
+    }
+
+    public void setShouldAnimate(boolean mShouldAnimate) {
+        this.mShouldAnimate = mShouldAnimate;
+    }
+
+    public void setShouldKeepHistory(boolean keepHistory) {
+        this.mShouldKeepHistory = keepHistory;
     }
 
     //-- Initializers --//
@@ -221,7 +230,7 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
         mSuggestionsListView = (ListView) mRoot.findViewById(R.id.suggestion_list);
 
         // Set click listeners
-        mBack.setOnClickListener(new OnClickListener() {
+        mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeSearch();
@@ -428,6 +437,38 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
         }
     }
 
+    public void openSearch(View v) {
+        // If search is already open, just return.
+        if(mOpen) {
+            return;
+        }
+
+//        Log.d(LOG_TAG,"sb w: " + mSearchBar.getWidth() + " sb h: " + mSearchBar.getHeight());
+//        Log.d(LOG_TAG,"v w: " + v.getWidth() + " v h: " + v.getHeight());
+
+        // Get focus
+        mSearchEditText.setText("");
+        mSearchEditText.requestFocus();
+
+        if(mShouldAnimate) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mRoot.setVisibility(View.VISIBLE);
+                AnimationUtils.circleRevealView(mSearchBar);
+            }
+            else {
+                AnimationUtils.fadeInView(mRoot, AnimationUtils.ANIMATION_DURATION_SHORT);
+            }
+
+        } else {
+            mRoot.setVisibility(View.VISIBLE);
+            if(mSearchViewListener != null) {
+                mSearchViewListener.onSearchViewOpened();
+            }
+        }
+
+        mOpen = true;
+    }
+
     /**
      * Displays the SearchView.
      */
@@ -447,26 +488,7 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
                 AnimationUtils.circleRevealView(mSearchBar);
             }
             else {
-                AnimationUtils.fadeInView(mRoot, AnimationUtils.ANIMATION_DURATION_SHORT, new AnimationUtils.AnimationListener() {
-                    @Override
-                    public boolean onAnimationStart(View view) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onAnimationEnd(View view) {
-                        if (mSearchViewListener != null) {
-                            mSearchViewListener.onSearchViewOpened();
-                        }
-
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onAnimationCancel(View view) {
-                        return false;
-                    }
-                });
+                AnimationUtils.fadeInView(mRoot, AnimationUtils.ANIMATION_DURATION_SHORT);
             }
 
         } else {
@@ -595,6 +617,7 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
 
     /**
      * Filters the current list of suggestions based on a given text.
+     *
      * @param query The text that the suggestions will be filtered by.
      */
     private void startFilter(CharSequence query) {
@@ -606,6 +629,7 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
 
     /**
      * Handles the completion of filtering.
+     *
      * @param count The number of results returned by the filter.
      */
     @Override
