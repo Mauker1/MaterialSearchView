@@ -12,8 +12,8 @@ To add the MaterialSearchView library to your Android Studio project, simply add
 ## Interfaces
 Currently there are two interfaces that you can use to instantiate listeners for:
 
-- OnQueryTextListener: This interface handles either QueryTextChange or QueryTextSubmit events inside the MaterialSearchView.
-- SearchViewListener: This interfaces handles the open or close events of the MaterialSearchView.
+- `OnQueryTextListener`: This interface handles either QueryTextChange or QueryTextSubmit events inside the MaterialSearchView.
+- `SearchViewListener`: This interfaces handles the open or close events of the MaterialSearchView.
 
 ## Custom Attributes
 A number of custom attributes can be applied to the MaterialSearchView inside of your XML layout:
@@ -27,7 +27,9 @@ A number of custom attributes can be applied to the MaterialSearchView inside of
 - `android:textColorHint`: The text color of the hint in the EditText of the search view.
 
 ## Sample
-//TODO: Add a sample here.
+```java
+  //TODO: Add a sample here.
+```
 
 ## Credits
 This library was created by Maurício Pessoa with contributions from:
