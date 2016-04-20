@@ -27,7 +27,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
-import android.widget.Filter;
+import android.widget.FilterQueryProvider;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -45,7 +45,7 @@ import br.com.mauker.materialsearchview.lib.db.HistoryContract;
  * Created by Mauker and Adam McNeilly on 30/03/2016. dd/MM/YY.
  * Based on stadiko on 6/8/15. https://github.com/krishnakapil/MaterialSeachView
  */
-public class MaterialSearchView extends CoordinatorLayout implements Filter.FilterListener {
+public class MaterialSearchView extends CoordinatorLayout {
     //-- Class Properties --//
 
     /**
@@ -270,7 +270,21 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
         initSearchView();
 
         mAdapter = new CursorSearchAdapter(mContext,null,0);
+        ((CursorAdapter)mAdapter).setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                String filter = constraint.toString();
+                return mContext.getContentResolver().query(
+                        HistoryContract.HistoryEntry.CONTENT_URI,
+                        null,
+                        HistoryContract.HistoryEntry.COLUMN_QUERY + " LIKE ?",
+                        new String[]{"%" + filter + "%"},
+                        HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " DESC"
+                );
+            }
+        });
         mSuggestionsListView.setAdapter(mAdapter);
+        mSuggestionsListView.setTextFilterEnabled(true);
 
         if (mAdapter.isEmpty()) {
             // Start with the suggestions list gone
@@ -351,6 +365,8 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // When the text changes, filter
 //                startFilter(s); TODO
+                ((CursorAdapter)mAdapter).getFilter().filter(s.toString());
+                ((CursorAdapter) mAdapter).notifyDataSetChanged();
                 MaterialSearchView.this.onTextChanged(s);
             }
 
@@ -614,7 +630,7 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
     private void startFilter(CharSequence query) {
         // If we have an adapter and it implements filterable, filter it.
         if(mAdapter != null && mAdapter instanceof Filterable) {
-            ((Filterable)mAdapter).getFilter().filter(query, MaterialSearchView.this);
+//            ((Filterable)mAdapter).getFilter().filter(query, MaterialSearchView.this);
         }
     }
 
@@ -623,15 +639,15 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
      *
      * @param count The number of results returned by the filter.
      */
-    @Override
-    public void onFilterComplete(int count) {
-        // If count is greater than 0, show suggestions. Otherwise hide it
-        if(count > 0) {
-            showSuggestions();
-        } else {
-            dismissSuggestions();
-        }
-    }
+//    @Override
+//    public void onFilterComplete(int count) {
+//        // If count is greater than 0, show suggestions. Otherwise hide it
+//        if(count > 0) {
+//            showSuggestions();
+//        } else {
+//            dismissSuggestions();
+//        }
+//    }
 
     //-- Mutators --//
 

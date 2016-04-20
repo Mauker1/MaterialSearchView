@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 
 import java.util.ArrayList;
 
-import br.com.mauker.materialsearchview.R;
 import br.com.mauker.materialsearchview.lib.MaterialSearchView;
 
 public class MainActivity extends AppCompatActivity {
