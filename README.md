@@ -17,14 +17,14 @@ Currently there are two interfaces that you can use to instantiate listeners for
 
 ## Custom Attributes
 A number of custom attributes can be applied to the MaterialSearchView inside of your XML layout:
-- searchBackground: The background drawable for the view.
-- searchVoiceIcon: The drawable resource for the voice search icon.
-- searchCloseIcon: The drawable resource for the close search icon.
-- searchBackIcon: The drawable resource for the back icon.
-- searchSuggestionBackground: The background drawable for the suggestions ListView.
-- android:hint: The hint that appears in the EditText of the search view.
-- android:textColor: The text color of the EditText of the search view.
-- android:textColorHint: The text color of the hint in the EditText of the search view.
+- `searchBackground`: The background drawable for the view.
+- `searchVoiceIcon`: The drawable resource for the voice search icon.
+- `searchCloseIcon`: The drawable resource for the close search icon.
+- `searchBackIcon`: The drawable resource for the back icon.
+- `searchSuggestionBackground`: The background drawable for the suggestions ListView.
+- `android:hint`: The hint that appears in the EditText of the search view.
+- `android:textColor`: The text color of the EditText of the search view.
+- `android:textColorHint`: The text color of the hint in the EditText of the search view.
 
 ## Sample
 //TODO: Add a sample here.
