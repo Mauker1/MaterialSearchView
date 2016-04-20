@@ -34,6 +34,7 @@ public class HistoryContract {
 
         public static final String COLUMN_QUERY = "query";
         public static final String COLUMN_INSERT_DATE = "insert_date";
+        public static final String COLUMN_IS_HISTORY = "is_history";
 
         public static Uri buildHistoryUri(long id){
             return ContentUris.withAppendedId(CONTENT_URI, id);

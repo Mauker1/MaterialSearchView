@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.test.AndroidTestCase;
-import android.util.Log;
 
 import java.util.Map;
 import java.util.Set;
@@ -21,14 +20,11 @@ import br.com.mauker.materialsearchview.lib.db.HistoryContract;
 public class HistoryProviderTest extends AndroidTestCase {
     private static final String TEST_QUERY_01 = "Batata";
     private static final String TEST_QUERY_02 = "Banana";
-    private static final String TEST_QUERY_03 = "Beterraba";
-    private static final String TEST_QUERY_04 = "Buriti";
-    private static final String TEST_QUERY_05 = "Brocolis";
     private static long time_01;
     private static long time_02;
-    private static long time_03;
-    private static long time_04;
-    private static long time_05;
+    private static int isHistory_01 = 0;
+    private static int isHistory_02 = 1;
+
 
     @Override
     protected void setUp() throws Exception {
@@ -36,9 +32,6 @@ public class HistoryProviderTest extends AndroidTestCase {
         testDeleteAllRecords();
         time_01 = System.currentTimeMillis();
         time_02 = time_01 + 1000;
-        time_03 = time_02 + 1000;
-        time_04 = time_03 + 1000;
-        time_05 = time_04 + 1000;
     }
 
     @Override
@@ -76,13 +69,11 @@ public class HistoryProviderTest extends AndroidTestCase {
         String type = mContext.getContentResolver().getType(HistoryContract.HistoryEntry.CONTENT_URI);
         // vnd.android.cursor.dir/br.com.mauker.searchhistorydatabase/history
         assertEquals(HistoryContract.HistoryEntry.CONTENT_TYPE, type);
-        Log.d("test",type);
 
         // Search History Date
         // Content-authority + history/date
         type = mContext.getContentResolver().getType(HistoryContract.HistoryEntry.buildHistoryUri(1));
         // vnd.android.cursor.item/br.com.mauker.searchhistorydatabase/history/0
-        Log.d("test",type);
         assertEquals(HistoryContract.HistoryEntry.CONTENT_ITEM,type);
     }
 
@@ -123,8 +114,6 @@ public class HistoryProviderTest extends AndroidTestCase {
 
         assertTrue(id > 0);
 
-        Log.d("Test","Id: " + id);
-
         // Now, let's update it with new values.
         ContentValues newValues = getHistoryContentValues02();
         newValues.put(HistoryContract.HistoryEntry._ID, id);
@@ -154,6 +143,7 @@ public class HistoryProviderTest extends AndroidTestCase {
         ContentValues values = new ContentValues();
         values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, TEST_QUERY_01);
         values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, time_01);
+        values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,isHistory_01);
         return values;
     }
 
@@ -161,6 +151,8 @@ public class HistoryProviderTest extends AndroidTestCase {
         ContentValues values = new ContentValues();
         values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, TEST_QUERY_02);
         values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, time_02);
+        values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,isHistory_02);
+
         return values;
     }
 

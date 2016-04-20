@@ -34,6 +34,7 @@ public class HistoryDbHelper extends SQLiteOpenHelper {
     /**
      * Called whenever DATABASE_VERSION is incremented. This is used whenever schema changes need
      * to be made or new tables are added.
+     *
      * @param db The database being updated.
      * @param oldVersion The previous version of the database. Used to determine whether or not
      *                   certain updates should be run.
@@ -42,7 +43,22 @@ public class HistoryDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO - Create update if needed.
-        db.execSQL("DROP TABLE IF EXISTS " + HistoryContract.HistoryEntry.TABLE_NAME);
+        dropAllTables(db);
+        onCreate(db);
+    }
+
+    /**
+     * Called whenever DATABASE_VERSION is decremented.
+     *
+     * @param db The database being updated.
+     * @param oldVersion The previous version of the database. Used to determine whether or not
+     *                   certain updates should be run.
+     * @param newVersion The new version of the database.
+     */
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // TODO - Create downgrade if needed.
+        dropAllTables(db);
         onCreate(db);
     }
 
@@ -54,8 +70,19 @@ public class HistoryDbHelper extends SQLiteOpenHelper {
         db.execSQL(
                 "CREATE TABLE " + HistoryContract.HistoryEntry.TABLE_NAME + " (" +
                         HistoryContract.HistoryEntry._ID + " INTEGER PRIMARY KEY," +
-                        HistoryContract.HistoryEntry.COLUMN_QUERY + " TEXT UNIQUE NOT NULL," +
-                        HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " INTEGER NOT NULL);"
+                        HistoryContract.HistoryEntry.COLUMN_QUERY + " TEXT NOT NULL," +
+                        HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " INTEGER DEFAULT 0," +
+                        HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " INTEGER NOT NULL DEFAULT 0," +
+                        "UNIQUE (" + HistoryContract.HistoryEntry.COLUMN_QUERY + ") ON CONFLICT REPLACE);"
         );
+    }
+
+    /**
+     * Convenience method to drop all tables. Take extreme care with this.
+     *
+     * @param db The SQLiteDatabase from where you're dropping the tables.
+     */
+    private void dropAllTables(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS " + HistoryContract.HistoryEntry.TABLE_NAME);
     }
 }

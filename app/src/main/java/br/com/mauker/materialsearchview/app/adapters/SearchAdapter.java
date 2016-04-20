@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview.adapters;
+package br.com.mauker.materialsearchview.app.adapters;
 
 import android.content.Context;
 import android.text.TextUtils;

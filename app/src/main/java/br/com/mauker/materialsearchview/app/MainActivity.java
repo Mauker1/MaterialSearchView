@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview;
+package br.com.mauker.materialsearchview.app;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 
 import java.util.ArrayList;
 
-import br.com.mauker.materialsearchview.adapters.SearchAdapter;
+import br.com.mauker.materialsearchview.R;
 import br.com.mauker.materialsearchview.lib.MaterialSearchView;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,12 +23,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(br.com.mauker.materialsearchview.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(br.com.mauker.materialsearchview.R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        searchView = (MaterialSearchView) findViewById(br.com.mauker.materialsearchview.R.id.search_view);
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -59,15 +59,12 @@ public class MainActivity extends AppCompatActivity {
                 // Do something when the suggestion list is clicked.
             }
         });
-
-        SearchAdapter adapter = new SearchAdapter(this);
-        searchView.setAdapter(adapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(br.com.mauker.materialsearchview.R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -79,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case br.com.mauker.materialsearchview.R.id.action_search:
+            case R.id.action_search:
                 // Open the search view on the menu item click.
 
-                searchView.openSearch(item.getActionView());
+                searchView.openSearch();
                 return true;
         }
 
@@ -113,5 +110,16 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        searchView.activityResumed();
     }
 }

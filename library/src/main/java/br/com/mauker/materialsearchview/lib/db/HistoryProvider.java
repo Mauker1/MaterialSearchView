@@ -21,6 +21,7 @@ public class HistoryProvider extends ContentProvider {
     private static final int SEARCH_HISTORY = 100;
     private static final int SEARCH_HISTORY_DATE = 101;
     private static final int SEARCH_HISTORY_ID = 102;
+    private static final int SEARCH_HISTORY_IS_HISTORY = 103;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private HistoryDbHelper mOpenHelper;
@@ -40,12 +41,15 @@ public class HistoryProvider extends ContentProvider {
         matcher.addURI(content, HistoryContract.PATH_HISTORY, SEARCH_HISTORY);
         matcher.addURI(content, HistoryContract.PATH_HISTORY + "/#", SEARCH_HISTORY_DATE);
         matcher.addURI(content, HistoryContract.PATH_HISTORY + "/#", SEARCH_HISTORY_ID);
+        matcher.addURI(content, HistoryContract.PATH_HISTORY + "/#", SEARCH_HISTORY_IS_HISTORY);
 
         return matcher;
     }
 
     @Override
-    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection,
+                        String[] selectionArgs, String sortOrder) {
+
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         Cursor rCursor;
 
@@ -88,6 +92,19 @@ public class HistoryProvider extends ContentProvider {
                 );
                 break;
 
+            case SEARCH_HISTORY_IS_HISTORY:
+                long flag = ContentUris.parseId(uri);
+                rCursor = db.query(
+                        HistoryContract.HistoryEntry.TABLE_NAME,
+                        projection,
+                        HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " = ?",
+                        new String[]{String.valueOf(flag)},
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+
             default:
                 throw new UnsupportedOperationException("Uknown Uri: " + uri);
         }
@@ -117,6 +134,7 @@ public class HistoryProvider extends ContentProvider {
                 return HistoryContract.HistoryEntry.CONTENT_TYPE;
             case SEARCH_HISTORY_DATE:
             case SEARCH_HISTORY_ID:
+            case SEARCH_HISTORY_IS_HISTORY:
                 return HistoryContract.HistoryEntry.CONTENT_ITEM;
             default:
                 throw new UnsupportedOperationException("Uknown Uri: " + uri);

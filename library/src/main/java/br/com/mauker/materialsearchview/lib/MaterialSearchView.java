@@ -3,11 +3,13 @@ package br.com.mauker.materialsearchview.lib;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -23,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -35,6 +38,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.mauker.materialsearchview.lib.Utils.AnimationUtils;
+import br.com.mauker.materialsearchview.lib.adapters.CursorSearchAdapter;
+import br.com.mauker.materialsearchview.lib.db.HistoryContract;
 
 /**
  * Created by Mauker and Adam McNeilly on 30/03/2016. dd/MM/YY.
@@ -264,8 +269,18 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
         // Initialize the search view.
         initSearchView();
 
-        // Start with the suggestions list gone
-        mSuggestionsListView.setVisibility(View.GONE);
+        mAdapter = new CursorSearchAdapter(mContext,null,0);
+        mSuggestionsListView.setAdapter(mAdapter);
+
+        if (mAdapter.isEmpty()) {
+            // Start with the suggestions list gone
+            mSuggestionsListView.setVisibility(View.GONE);
+        }
+        else {
+            // Start with the suggestions list visible
+            mSuggestionsListView.setVisibility(View.VISIBLE);
+        }
+
     }
 
     /**
@@ -335,7 +350,7 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // When the text changes, filter
-                startFilter(s);
+//                startFilter(s); TODO
                 MaterialSearchView.this.onTextChanged(s);
             }
 
@@ -437,38 +452,6 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
         }
     }
 
-    public void openSearch(View v) {
-        // If search is already open, just return.
-        if(mOpen) {
-            return;
-        }
-
-//        Log.d(LOG_TAG,"sb w: " + mSearchBar.getWidth() + " sb h: " + mSearchBar.getHeight());
-//        Log.d(LOG_TAG,"v w: " + v.getWidth() + " v h: " + v.getHeight());
-
-        // Get focus
-        mSearchEditText.setText("");
-        mSearchEditText.requestFocus();
-
-        if(mShouldAnimate) {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mRoot.setVisibility(View.VISIBLE);
-                AnimationUtils.circleRevealView(mSearchBar);
-            }
-            else {
-                AnimationUtils.fadeInView(mRoot, AnimationUtils.ANIMATION_DURATION_SHORT);
-            }
-
-        } else {
-            mRoot.setVisibility(View.VISIBLE);
-            if(mSearchViewListener != null) {
-                mSearchViewListener.onSearchViewOpened();
-            }
-        }
-
-        mOpen = true;
-    }
-
     /**
      * Displays the SearchView.
      */
@@ -488,7 +471,7 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
                 AnimationUtils.circleRevealView(mSearchBar);
             }
             else {
-                AnimationUtils.fadeInView(mRoot, AnimationUtils.ANIMATION_DURATION_SHORT);
+                AnimationUtils.fadeInView(mRoot);
             }
 
         } else {
@@ -609,6 +592,14 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
 
             // If we don't have a listener, or if the search view handled the query, close it.
             if(mOnQueryTextListener == null || !mOnQueryTextListener.onQueryTextSubmit(query.toString())) {
+
+                saveQueryToDb(query.toString(),System.currentTimeMillis());
+//                Log.d(LOG_TAG,query.toString() + " saved to db.");
+
+                // Refresh the cursor on the adapter,
+                // so the new entry will be shown on the next time the user opens the search view.
+                refreshAdapterCursor();
+
                 closeSearch();
                 mSearchEditText.setText("");
             }
@@ -784,6 +775,44 @@ public class MaterialSearchView extends CoordinatorLayout implements Filter.Filt
     public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
         // Don't accept if we are clearing focus, or if the view isn't focusable.
         return !(mClearingFocus || !isFocusable()) && mSearchEditText.requestFocus(direction, previouslyFocusedRect);
+    }
+
+    //----- Lifecycle methods -----//
+
+    public void activityPaused() {
+        Cursor cursor = ((CursorAdapter)mAdapter).getCursor();
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+    }
+
+    public void activityResumed() {
+        refreshAdapterCursor();
+    }
+
+    //----- Other methods -----//
+
+    private void saveQueryToDb(String query, long ms) {
+        ContentValues values = new ContentValues();
+        values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
+        values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, ms);
+
+        mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
+    }
+
+    private Cursor getHistoryCursor() {
+        return mContext.getContentResolver().query(
+                HistoryContract.HistoryEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " DESC"
+        );
+    }
+
+    private void refreshAdapterCursor() {
+        Cursor historyCursor = getHistoryCursor();
+        ((CursorAdapter) mAdapter).changeCursor(historyCursor);
     }
 
     //-- Interfaces --//

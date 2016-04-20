@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import br.com.mauker.materialsearchview.lib.db.HistoryContract;
+
 /**
  * Created by mauker on 19/04/2016.
+ *
+ * Default adapter used for the suggestion/history ListView.
  */
 public class CursorSearchAdapter extends CursorAdapter {
 
@@ -24,15 +28,18 @@ public class CursorSearchAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        if (view != null) {
+        ListViewHolder vh = new ListViewHolder(view);
+        view.setTag(vh);
 
-        }
+        String text = cursor.getString(cursor.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_QUERY));
+
+        vh.textView.setText(text);
     }
 
-    private class MyViewHolder {
+    private class ListViewHolder {
         TextView textView;
 
-        public MyViewHolder(View convertView) {
+        public ListViewHolder(View convertView) {
             textView = (TextView) convertView.findViewById(android.R.id.text1);
         }
     }

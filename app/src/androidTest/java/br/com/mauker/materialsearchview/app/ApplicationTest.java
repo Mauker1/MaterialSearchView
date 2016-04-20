@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview;
+package br.com.mauker.materialsearchview.app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

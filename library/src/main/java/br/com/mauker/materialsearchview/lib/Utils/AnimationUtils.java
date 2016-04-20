@@ -97,7 +97,8 @@ public class AnimationUtils {
         view.setVisibility(View.VISIBLE);
         view.setAlpha(0f);
 
-        ViewCompat.animate(view).alpha(1f).setDuration(duration);
+        // Setting the listener to null, so it won't keep getting called.
+        ViewCompat.animate(view).alpha(1f).setDuration(duration).setListener(null);
     }
 
     /**
@@ -115,7 +116,7 @@ public class AnimationUtils {
      * @param view The View that's being animated.
      * @param duration How long should the animation take, in millis.
      */
-    public static void fadeOutView(View view, int duration) {
+    public static void fadeOutView(final View view, int duration) {
         ViewCompat.animate(view).alpha(0f).setDuration(duration).setListener(new ViewPropertyAnimatorListener() {
             @Override
             public void onAnimationStart(View view) {
@@ -125,6 +126,7 @@ public class AnimationUtils {
             @Override
             public void onAnimationEnd(View view) {
                 view.setVisibility(View.GONE);
+                view.setAlpha(1f);
                 view.setDrawingCacheEnabled(false);
             }
 
