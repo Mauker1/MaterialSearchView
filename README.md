@@ -1,7 +1,7 @@
 # DISCLAIMER: This library is in the final stages of production. The information that follows is not complete, and may change at any moment.
 
 # MaterialSearchView
-Android SearchView based on Material design headlines. The MaterialSearchView will overlay a Toolbar or ActionBar and show a list of suggested or filtered searches below it.
+Android SearchView based on Material Design guidelines. The MaterialSearchView will overlay a Toolbar or ActionBar as well as display a ListView for the user to show filtered, suggested, or recent searches.
 
 ## Usage
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
