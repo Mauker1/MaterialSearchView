@@ -10,7 +10,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_history_white_36dp"
         android:padding="16dp" />
 
     <TextView
@@ -20,6 +19,5 @@
         android:layout_toRightOf="@+id/iv_icon"
         android:layout_toEndOf="@+id/iv_icon"
         android:layout_centerVertical="true"
-        android:text="batata"
         android:padding="16dp" />
 </RelativeLayout>

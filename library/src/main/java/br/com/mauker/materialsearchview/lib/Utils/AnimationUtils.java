@@ -15,6 +15,7 @@ import android.view.ViewAnimationUtils;
  */
 public class AnimationUtils {
 
+    public static final int ANIMATION_DURATION_SHORTEST = 150;
     public static final int ANIMATION_DURATION_SHORT = 250;
     public static final int ANIMATION_DURATION_MEDIUM = 400;
     public static final int ANIMATION_DURATION_LONG = 800;
@@ -84,7 +85,7 @@ public class AnimationUtils {
     }
 
     public static void fadeInView(View view) {
-        fadeInView(view, ANIMATION_DURATION_SHORT);
+        fadeInView(view, ANIMATION_DURATION_SHORTEST);
     }
 
     /**
@@ -107,7 +108,7 @@ public class AnimationUtils {
      * @param view The View that's being animated.
      */
     public static void fadeOutView(View view) {
-        fadeOutView(view, ANIMATION_DURATION_SHORT);
+        fadeOutView(view, ANIMATION_DURATION_SHORTEST);
     }
 
     /**

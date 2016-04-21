@@ -534,7 +534,7 @@ public class MaterialSearchView extends CoordinatorLayout {
                 AnimationUtils.circleHideView(mSearchBar, listenerAdapter);
             }
             else {
-                AnimationUtils.fadeOutView(mRoot,AnimationUtils.ANIMATION_DURATION_MEDIUM);
+                AnimationUtils.fadeOutView(mRoot);
             }
         }
         else {
@@ -606,16 +606,6 @@ public class MaterialSearchView extends CoordinatorLayout {
     }
 
     //-- Mutators --//
-
-    /**
-     * Sets the Adapter for the suggestions list. This should implement filterable, but we will not require it.
-     * TODO: Consider requiring that.
-     * @param adapter The adapter to be used for suggestions.
-     */
-    private void setAdapter(ListAdapter adapter) {
-        mAdapter = adapter;
-        mSuggestionsListView.setAdapter(adapter);
-    }
 
     /**
      * Sets the background of the SearchView.
