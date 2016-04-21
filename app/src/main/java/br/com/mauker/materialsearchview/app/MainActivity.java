@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,10 @@ import br.com.mauker.materialsearchview.lib.MaterialSearchView;
 public class MainActivity extends AppCompatActivity {
 
     private MaterialSearchView searchView;
+
+    private Button bt_clearHistory;
+    private Button bt_clearSuggestions;
+    private Button bt_clearAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
+
+        bt_clearHistory = (Button) findViewById(R.id.bt_clearHistory);
+        bt_clearSuggestions = (Button) findViewById(R.id.bt_clearSuggestions);
+        bt_clearAll = (Button) findViewById(R.id.bt_clearAll);
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -56,6 +66,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Do something when the suggestion list is clicked.
+            }
+        });
+
+        bt_clearHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearHistory();
+            }
+        });
+
+        bt_clearSuggestions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearSuggestions();
+            }
+        });
+
+        bt_clearAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAll();
             }
         });
     }
@@ -114,11 +145,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        searchView.clearSuggestions();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         searchView.activityResumed();
+        String[] arr = getResources().getStringArray(R.array.suggestions);
+
+        searchView.saveSuggestions(arr);
+    }
+
+    private void clearHistory() {
+        searchView.clearHistory();
+    }
+
+    private void clearSuggestions() {
+        searchView.clearSuggestions();
+    }
+
+    private void clearAll() {
+        searchView.clearAll();
     }
 }

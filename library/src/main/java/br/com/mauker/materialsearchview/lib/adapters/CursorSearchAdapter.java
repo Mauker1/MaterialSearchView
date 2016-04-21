@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import br.com.mauker.materialsearchview.lib.R;
 import br.com.mauker.materialsearchview.lib.db.HistoryContract;
 
 /**
@@ -23,7 +25,7 @@ public class CursorSearchAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
     }
 
     @Override
@@ -33,14 +35,26 @@ public class CursorSearchAdapter extends CursorAdapter {
 
         String text = cursor.getString(cursor.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_QUERY));
 
-        vh.textView.setText(text);
+        boolean isHistory = cursor.getInt(cursor.getColumnIndexOrThrow(
+                                            HistoryContract.HistoryEntry.COLUMN_IS_HISTORY)) != 0;
+
+        vh.tv_content.setText(text);
+
+        if (isHistory) {
+            vh.iv_icon.setImageResource(R.drawable.ic_history_white_24dp);
+        }
+        else {
+            vh.iv_icon.setImageResource(R.drawable.ic_search_white_24dp);
+        }
     }
 
     private class ListViewHolder {
-        TextView textView;
+        ImageView iv_icon;
+        TextView tv_content;
 
         public ListViewHolder(View convertView) {
-            textView = (TextView) convertView.findViewById(android.R.id.text1);
+            iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
+            tv_content = (TextView) convertView.findViewById(R.id.tv_str);
         }
     }
 }

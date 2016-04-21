@@ -14,9 +14,42 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <RelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/bt_clearHistory"
+            android:text="@string/bt_clearHistory" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_clearHistory"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/bt_clearSuggestions"
+            android:text="@string/bt_clearSuggestions"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_clearSuggestions"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/bt_clearAll"
+            android:text="@string/bt_clearAll" />
+
+    </RelativeLayout>
+
     <br.com.mauker.materialsearchview.lib.MaterialSearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+
 
 </RelativeLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MaterialSearch</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="bt_clearHistory">Limpar histórico</string>
+    <string name="bt_clearSuggestions">Limpar sugestões</string>
+    <string name="bt_clearAll">Limpar tudo</string>
+
+    <string-array name="suggestions">
+        <item>Maçã</item>
+        <item>Damasco</item>
+        <item>Abacate</item>
+        <item>Banana</item>
+        <item>Mirtilo</item>
+        <item>Amora preta</item>
+        <item>Cenoura</item>
+        <item>Cereja</item>
+        <item>Laranja</item>
+        <item>Batata</item>
+        <item>Pêssego</item>
+        <item>Maracujá</item>
+        <item>Pêra</item>
+        <item>Morango</item>
+    </string-array>
+</resources>

@@ -19,7 +19,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +27,14 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
-import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.com.mauker.materialsearchview.lib.Utils.AnimationUtils;
@@ -274,27 +274,24 @@ public class MaterialSearchView extends CoordinatorLayout {
             @Override
             public Cursor runQuery(CharSequence constraint) {
                 String filter = constraint.toString();
-                return mContext.getContentResolver().query(
-                        HistoryContract.HistoryEntry.CONTENT_URI,
-                        null,
-                        HistoryContract.HistoryEntry.COLUMN_QUERY + " LIKE ?",
-                        new String[]{"%" + filter + "%"},
-                        HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " DESC"
-                );
+
+                if (filter.isEmpty()) {
+                    return getHistoryCursor();
+                }
+                else {
+                    return mContext.getContentResolver().query(
+                            HistoryContract.HistoryEntry.CONTENT_URI,
+                            null,
+                            HistoryContract.HistoryEntry.COLUMN_QUERY + " LIKE ?",
+                            new String[]{"%" + filter + "%"},
+                            HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " DESC, " +
+                                    HistoryContract.HistoryEntry.COLUMN_QUERY
+                    );
+                }
             }
         });
         mSuggestionsListView.setAdapter(mAdapter);
         mSuggestionsListView.setTextFilterEnabled(true);
-
-        if (mAdapter.isEmpty()) {
-            // Start with the suggestions list gone
-            mSuggestionsListView.setVisibility(View.GONE);
-        }
-        else {
-            // Start with the suggestions list visible
-            mSuggestionsListView.setVisibility(View.VISIBLE);
-        }
-
     }
 
     /**
@@ -357,23 +354,18 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         mSearchEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // When the text changes, filter
-//                startFilter(s); TODO
                 ((CursorAdapter)mAdapter).getFilter().filter(s.toString());
                 ((CursorAdapter) mAdapter).notifyDataSetChanged();
                 MaterialSearchView.this.onTextChanged(s);
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) { }
         });
 
         mSearchEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -524,13 +516,10 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         // Clear text, values, and focus.
         mSearchEditText.setText("");
-        dismissSuggestions();
         clearFocus();
 
         if (mShouldAnimate) {
             final View v = mRoot;
-
-            Log.d(LOG_TAG,"Closing and animating.");
 
             AnimatorListenerAdapter listenerAdapter = new AnimatorListenerAdapter() {
                 @Override
@@ -560,13 +549,6 @@ public class MaterialSearchView extends CoordinatorLayout {
         }
 
         mOpen = false;
-    }
-
-    /**
-     * Hides the suggestion list view.
-     */
-    private void dismissSuggestions() {
-        mSuggestionsListView.setVisibility(View.GONE);
     }
 
     //-- Interface methods --//
@@ -609,8 +591,9 @@ public class MaterialSearchView extends CoordinatorLayout {
             // If we don't have a listener, or if the search view handled the query, close it.
             if(mOnQueryTextListener == null || !mOnQueryTextListener.onQueryTextSubmit(query.toString())) {
 
-                saveQueryToDb(query.toString(),System.currentTimeMillis());
-//                Log.d(LOG_TAG,query.toString() + " saved to db.");
+                if (mShouldKeepHistory) {
+                    saveQueryToDb(query.toString(),System.currentTimeMillis());
+                }
 
                 // Refresh the cursor on the adapter,
                 // so the new entry will be shown on the next time the user opens the search view.
@@ -622,33 +605,6 @@ public class MaterialSearchView extends CoordinatorLayout {
         }
     }
 
-    /**
-     * Filters the current list of suggestions based on a given text.
-     *
-     * @param query The text that the suggestions will be filtered by.
-     */
-    private void startFilter(CharSequence query) {
-        // If we have an adapter and it implements filterable, filter it.
-        if(mAdapter != null && mAdapter instanceof Filterable) {
-//            ((Filterable)mAdapter).getFilter().filter(query, MaterialSearchView.this);
-        }
-    }
-
-    /**
-     * Handles the completion of filtering.
-     *
-     * @param count The number of results returned by the filter.
-     */
-//    @Override
-//    public void onFilterComplete(int count) {
-//        // If count is greater than 0, show suggestions. Otherwise hide it
-//        if(count > 0) {
-//            showSuggestions();
-//        } else {
-//            dismissSuggestions();
-//        }
-//    }
-
     //-- Mutators --//
 
     /**
@@ -656,10 +612,9 @@ public class MaterialSearchView extends CoordinatorLayout {
      * TODO: Consider requiring that.
      * @param adapter The adapter to be used for suggestions.
      */
-    public void setAdapter(ListAdapter adapter) {
+    private void setAdapter(ListAdapter adapter) {
         mAdapter = adapter;
         mSuggestionsListView.setAdapter(adapter);
-        startFilter(mSearchEditText.getText());
     }
 
     /**
@@ -736,7 +691,8 @@ public class MaterialSearchView extends CoordinatorLayout {
     }
 
     /**
-     * Sets the background of the suggestions listview.
+     * Sets the background of the suggestions ListView.
+     *
      * @param drawable The drawable to use as a background for the suggestions listview.
      */
     public void setSuggestionBackground(Drawable drawable) {
@@ -795,40 +751,89 @@ public class MaterialSearchView extends CoordinatorLayout {
 
     //----- Lifecycle methods -----//
 
-    public void activityPaused() {
-        Cursor cursor = ((CursorAdapter)mAdapter).getCursor();
-        if (cursor != null && !cursor.isClosed()) {
-            cursor.close();
-        }
-    }
+//    public void activityPaused() {
+//        Cursor cursor = ((CursorAdapter)mAdapter).getCursor();
+//        if (cursor != null && !cursor.isClosed()) {
+//            cursor.close();
+//        }
+//    }
 
     public void activityResumed() {
         refreshAdapterCursor();
     }
 
-    //----- Other methods -----//
+    //----- Database methods -----//
 
     private void saveQueryToDb(String query, long ms) {
         ContentValues values = new ContentValues();
         values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
         values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, ms);
+        values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,1); // Saving as history.
 
         mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
+    }
+
+    public void saveSuggestions(List<String> suggestions) {
+        ArrayList<ContentValues> toSave = new ArrayList<>();
+        for (String str : suggestions) {
+            ContentValues value = new ContentValues();
+            value.put(HistoryContract.HistoryEntry.COLUMN_QUERY, str);
+            value.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, System.currentTimeMillis());
+            value.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,0); // Saving as suggestion.
+
+            toSave.add(value);
+        }
+
+        ContentValues[] values = toSave.toArray(new ContentValues[toSave.size()]);
+
+        mContext.getContentResolver().bulkInsert(
+                HistoryContract.HistoryEntry.CONTENT_URI,
+                values
+        );
+    }
+
+    public void saveSuggestions(String[] suggestions) {
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(suggestions));
+        saveSuggestions(list);
     }
 
     private Cursor getHistoryCursor() {
         return mContext.getContentResolver().query(
                 HistoryContract.HistoryEntry.CONTENT_URI,
                 null,
-                null,
-                null,
-                HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " DESC"
+                HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " = ?",
+                new String[]{"1"},
+                HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " DESC LIMIT " + BuildConfig.MAX_HISTORY
         );
     }
 
     private void refreshAdapterCursor() {
         Cursor historyCursor = getHistoryCursor();
         ((CursorAdapter) mAdapter).changeCursor(historyCursor);
+    }
+
+    public void clearSuggestions() {
+        mContext.getContentResolver().delete(
+                HistoryContract.HistoryEntry.CONTENT_URI,
+                HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " = ?",
+                new String[]{"0"}
+        );
+    }
+
+    public void clearHistory() {
+        mContext.getContentResolver().delete(
+                HistoryContract.HistoryEntry.CONTENT_URI,
+                HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " = ?",
+                new String[]{"1"}
+        );
+    }
+
+    public void clearAll() {
+        mContext.getContentResolver().delete(
+                HistoryContract.HistoryEntry.CONTENT_URI,
+                null,
+                null
+        );
     }
 
     //-- Interfaces --//
@@ -839,6 +844,7 @@ public class MaterialSearchView extends CoordinatorLayout {
     public interface OnQueryTextListener {
         /**
          * Called when a search query is submitted.
+         *
          * @param query The text that will be searched.
          * @return True when the query is handled by the listener, false to let the SearchView handle the default case.
          */
@@ -846,6 +852,7 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         /**
          * Called when a search query is changed.
+         *
          * @param newText The new text of the search query.
          * @return True when the query is handled by the listener, false to let the SearchView handle the default case.
          */
