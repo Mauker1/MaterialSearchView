@@ -768,7 +768,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
     }
 
-    public void saveSuggestions(List<String> suggestions) {
+    public void addSuggestions(List<String> suggestions) {
         ArrayList<ContentValues> toSave = new ArrayList<>();
         for (String str : suggestions) {
             ContentValues value = new ContentValues();
@@ -787,9 +787,9 @@ public class MaterialSearchView extends CoordinatorLayout {
         );
     }
 
-    public void saveSuggestions(String[] suggestions) {
+    public void addSuggestions(String[] suggestions) {
         ArrayList<String> list = new ArrayList<>(Arrays.asList(suggestions));
-        saveSuggestions(list);
+        addSuggestions(list);
     }
 
     private Cursor getHistoryCursor() {
