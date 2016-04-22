@@ -17,8 +17,5 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url "http://dl.bintray.com/androidessence/maven"
-        }
     }
 }
