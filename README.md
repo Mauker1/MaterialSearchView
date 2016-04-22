@@ -82,7 +82,7 @@ The MaterialSearchView supports the following languages:
 - Brazillian Portuguese (pt_BR).
 
 ## Sample
-<img src='http://i.stack.imgur.com/JgK6M.gif' width='400' height='640' />
+<img src='http://i.stack.imgur.com/C5LA4.gif' width='450' height='800' />
 
 ## Credits
 This library was created by Maurício Pessoa with contributions from:
