@@ -269,7 +269,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         // Initialize the search view.
         initSearchView();
 
-        mAdapter = new CursorSearchAdapter(mContext,null,0);
+        mAdapter = new CursorSearchAdapter(mContext,getHistoryCursor(),0);
         ((CursorAdapter)mAdapter).setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
@@ -454,10 +454,7 @@ public class MaterialSearchView extends CoordinatorLayout {
      * Displays the available suggestions, if any.
      */
     private void showSuggestions() {
-        // If we have an adapter, and it has at least one item, show suggestions.
-        if(mAdapter != null && mAdapter.getCount() > 0) {
-            mSuggestionsListView.setVisibility(View.VISIBLE);
-        }
+        mSuggestionsListView.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -495,6 +492,13 @@ public class MaterialSearchView extends CoordinatorLayout {
     //-- Hide methods --//
 
     /**
+     * Hides the suggestion list.
+     */
+    private void dismissSuggestions() {
+        mSuggestionsListView.setVisibility(View.GONE);
+    }
+
+    /**
      * Hides the keyboard displayed for the SearchEditText.
      * @param view The view to detach the keyboard from.
      */
@@ -516,6 +520,7 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         // Clear text, values, and focus.
         mSearchEditText.setText("");
+        dismissSuggestions();
         clearFocus();
 
         if (mShouldAnimate) {

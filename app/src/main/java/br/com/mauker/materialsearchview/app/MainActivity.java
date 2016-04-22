@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        searchView.activityResumed();
+//        searchView.activityResumed();
         String[] arr = getResources().getStringArray(R.array.suggestions);
 
         searchView.saveSuggestions(arr);
