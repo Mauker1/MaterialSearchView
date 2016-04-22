@@ -1,13 +1,22 @@
-# DISCLAIMER: This library is in the final stages of production. The information that follows is not complete, and may change at any moment.
-
 # MaterialSearchView
 Android SearchView based on Material Design guidelines. The MaterialSearchView will overlay a Toolbar or ActionBar as well as display a ListView for the user to show suggested or recent searches.
 
 ## Usage
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
 ```java
-  //TODO: This library is not yet released in JCenter.
+  compile 'br.com.mauker.materialsearchview:materialsearchview:1.0.2'
 ```
+
+At this current moment, the library has not yet been released to JCenter so you must also reference the maven repo in your build.gradle file:
+```java
+  repositories {
+      maven {
+          url  "http://dl.bintray.com/mauker/maven"
+      }
+  }
+```
+
+This library is supported with a min SDK of 14.
 
 ## Interfaces
 Currently there are two interfaces that you can use to instantiate listeners for:
@@ -27,9 +36,7 @@ A number of custom attributes can be applied to the MaterialSearchView inside of
 - `android:textColorHint`: The text color of the hint in the EditText of the search view.
 
 ## Sample
-```java
-  //TODO: Add a sample here.
-```
+<img src='http://i.stack.imgur.com/JgK6M.gif' width='400' height='640' />
 
 ## Credits
 This library was created by Maurício Pessoa with contributions from:
