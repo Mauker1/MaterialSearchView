@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Do something when the suggestion list is clicked.
+                TextView tv = (TextView) view.findViewById(R.id.tv_str);
+
+                if (tv != null) {
+                    searchView.setQuery(tv.getText().toString(),false);
+                }
             }
         });
 
