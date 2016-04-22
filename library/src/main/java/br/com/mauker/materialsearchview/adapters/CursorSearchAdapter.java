@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview.lib.adapters;
+package br.com.mauker.materialsearchview.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,8 +9,8 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import br.com.mauker.materialsearchview.lib.R;
-import br.com.mauker.materialsearchview.lib.db.HistoryContract;
+import br.com.mauker.materialsearchview.R;
+import br.com.mauker.materialsearchview.db.HistoryContract;
 
 /**
  * Created by mauker on 19/04/2016.

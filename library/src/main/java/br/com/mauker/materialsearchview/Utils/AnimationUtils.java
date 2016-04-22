@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview.lib.Utils;
+package br.com.mauker.materialsearchview.Utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

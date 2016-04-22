@@ -14,7 +14,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-import br.com.mauker.materialsearchview.lib.MaterialSearchView;
+import br.com.mauker.materialsearchview.MaterialSearchView;
 
 public class MainActivity extends AppCompatActivity {
 

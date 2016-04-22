@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview.lib;
+package br.com.mauker.materialsearchview;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -37,9 +37,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.mauker.materialsearchview.lib.Utils.AnimationUtils;
-import br.com.mauker.materialsearchview.lib.adapters.CursorSearchAdapter;
-import br.com.mauker.materialsearchview.lib.db.HistoryContract;
+import br.com.mauker.materialsearchview.Utils.AnimationUtils;
+import br.com.mauker.materialsearchview.adapters.CursorSearchAdapter;
+import br.com.mauker.materialsearchview.db.HistoryContract;
 
 /**
  * Created by Mauker and Adam McNeilly on 30/03/2016. dd/MM/YY.

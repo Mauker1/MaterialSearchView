@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview.lib;
+package br.com.mauker.materialsearchview;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -9,7 +9,7 @@ import android.test.AndroidTestCase;
 import java.util.Map;
 import java.util.Set;
 
-import br.com.mauker.materialsearchview.lib.db.HistoryContract;
+import br.com.mauker.materialsearchview.db.HistoryContract;
 
 /**
  * Created by mauker on 15/04/16.

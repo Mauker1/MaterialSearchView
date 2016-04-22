@@ -1,4 +1,4 @@
-package br.com.mauker.materialsearchview.lib.db;
+package br.com.mauker.materialsearchview.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
