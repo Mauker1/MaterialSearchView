@@ -4,16 +4,7 @@ Android SearchView based on Material Design guidelines. The MaterialSearchView w
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
 ```java
-  compile 'br.com.mauker.materialsearchview:materialsearchview:1.0.3'
-```
-
-At this current moment, the library has not yet been released to JCenter so you must also reference the maven repo in your build.gradle file:
-```java
-  repositories {
-      maven {
-          url  "http://dl.bintray.com/mauker/maven"
-      }
-  }
+compile 'br.com.mauker.materialsearchview:materialsearchview:1.0.3'
 ```
 
 This library is supported with a min SDK of 14.
@@ -22,16 +13,20 @@ This library is supported with a min SDK of 14.
 
 To open the search view on your app, add the following code to your layout:
 
-    <br.com.mauker.materialsearchview.MaterialSearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-        
+```xml
+<br.com.mauker.materialsearchview.MaterialSearchView
+    android:id="@+id/search_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+```    
+
 Then, inside your `Activity` get the reference:
 
-    // Activity:
-    MaterialSearchView searchView = (MaterialSearchView) findViewById(R.id.search_view);
-    
+```java
+// Activity:
+MaterialSearchView searchView = (MaterialSearchView) findViewById(R.id.search_view);
+```
+
 To open the search view, simply call the `searchView.openSearch()` method.
 
 To close the search view, call the `searchView.closeSearch()` method.
@@ -40,15 +35,17 @@ You can check if the view is open by using the `searchView.isOpen()` method.
 
 **Protip:** To close the search view using the back button, put the following code on your `Activity`:
 
-    @Override
-    public void onBackPressed() {
-        if (searchView.isOpen()) {
-            // Close the search on the back button press.
-            searchView.closeSearch();
-        } else {
-            super.onBackPressed();
-        }
+```java
+@Override
+public void onBackPressed() {
+    if (searchView.isOpen()) {
+        // Close the search on the back button press.
+        searchView.closeSearch();
+    } else {
+        super.onBackPressed();
     }
+}
+```
 
 ## Search history and suggestions
 
