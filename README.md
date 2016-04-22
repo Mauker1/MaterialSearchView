@@ -1,6 +1,8 @@
 # MaterialSearchView
 Android SearchView based on Material Design guidelines. The MaterialSearchView will overlay a Toolbar or ActionBar as well as display a ListView for the user to show suggested or recent searches.
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialSearchView-green.svg?style=true)](https://android-arsenal.com/details/1/3469)
+
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
 ```java
