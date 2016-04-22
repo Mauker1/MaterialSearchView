@@ -88,6 +88,10 @@ The MaterialSearchView supports the following languages:
 This library was created by Maurício Pessoa with contributions from:
 - [Adam McNeilly](http://adammcneilly.com)
 
+JCenter version was made possible with help from:
+
+- [Eric Cugota](https://github.com/tryadelion)
+
 This project was inspired by the [MaterialSearchView](https://github.com/krishnakapil/MaterialSeachView) library by krishnakapil.
 
 ## License
