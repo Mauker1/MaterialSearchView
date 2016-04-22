@@ -594,6 +594,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         if(query != null && TextUtils.getTrimmedLength(query) > 0) {
 
             // If we don't have a listener, or if the search view handled the query, close it.
+            // TODO - Improve.
             if(mOnQueryTextListener == null || !mOnQueryTextListener.onQueryTextSubmit(query.toString())) {
 
                 if (mShouldKeepHistory) {
