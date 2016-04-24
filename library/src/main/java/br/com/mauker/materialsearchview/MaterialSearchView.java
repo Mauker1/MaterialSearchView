@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.mauker.materialsearchview.Utils.AnimationUtils;
+import br.com.mauker.materialsearchview.utils.AnimationUtils;
 import br.com.mauker.materialsearchview.adapters.CursorSearchAdapter;
 import br.com.mauker.materialsearchview.db.HistoryContract;
 
