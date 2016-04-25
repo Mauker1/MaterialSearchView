@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
                 clearAll();
             }
         });
+
+//        searchView.setTintAlpha(200);
+        searchView.adjustTintAlpha(0.8f);
     }
 
     @Override

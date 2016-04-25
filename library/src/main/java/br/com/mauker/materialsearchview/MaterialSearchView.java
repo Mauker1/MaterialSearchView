@@ -8,9 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
@@ -425,8 +428,20 @@ public class MaterialSearchView extends CoordinatorLayout {
         }
 
         view.requestFocus();
-        InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.showSoftInput(view, 0);
+
+        if (!isHardKeyboardAvailable()) {
+            InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.showSoftInput(view, 0);
+        }
+    }
+
+    /**
+     * Method that checks if there's a physical keyboard on the phone.
+     *
+     * @return true if there's a physical keyboard connected, false otherwise.
+     */
+    private boolean isHardKeyboardAvailable() {
+        return mContext.getResources().getConfiguration().keyboard != Configuration.KEYBOARD_NOKEYS;
     }
 
     /**
@@ -575,8 +590,9 @@ public class MaterialSearchView extends CoordinatorLayout {
             displayVoiceButton(true);
         }
 
+        // TODO - #5
         // If we have a query listener and the text has changed, call it.
-        if(mOnQueryTextListener != null && !TextUtils.equals(mOldQuery, mCurrentQuery)) {
+        if(mOnQueryTextListener != null) {
             mOnQueryTextListener.onQueryTextChange(newText.toString());
         }
 
@@ -630,12 +646,75 @@ public class MaterialSearchView extends CoordinatorLayout {
 
     /**
      * Sets the background color of the SearchView.
+     *
      * @param color The color to use for the background.
      */
     @Override
     public void setBackgroundColor(int color) {
         // Set background color of search bar.
         mSearchBar.setBackgroundColor(color);
+    }
+
+    /**
+     * Change the color of the background tint.
+     *
+     * @param color The new color.
+     */
+    public void setTintColor(int color) {
+        mTintView.setBackgroundColor(color);
+    }
+
+    /**
+     * Sets the alpha value of the background tint.
+     * @param alpha The alpha value, from 0 to 255.
+     */
+    public void setTintAlpha(int alpha) {
+        if (alpha < 0 || alpha > 255) return;
+
+        Drawable d = mTintView.getBackground();
+
+        if (d instanceof ColorDrawable) {
+            ColorDrawable cd = (ColorDrawable) d;
+            int color = cd.getColor();
+            int newColor = Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
+
+            setTintColor(newColor);
+        }
+    }
+
+    /**
+     * Adjust the background tint alpha, based on a percentage.
+     *
+     * @param factor The factor of the alpha, from 0% to 100%.
+     */
+    public void adjustTintAlpha(float factor) {
+        if (factor < 0 || factor > 1.0) return;
+
+        Drawable d = mTintView.getBackground();
+
+        if (d instanceof ColorDrawable) {
+            ColorDrawable cd = (ColorDrawable) d;
+            int color = cd.getColor();
+
+            color = adjustAlpha(color,factor);
+
+            mTintView.setBackgroundColor(color);
+        }
+    }
+
+    /**
+     * Adjust the alpha of a color based on a percent factor.
+     *
+     * @param color - The color you want to change the alpha value.
+     * @param factor - The factor of the alpha, from 0% to 100%.
+     * @return The color with the adjusted alpha value.
+     */
+    private int adjustAlpha(int color, float factor) {
+        if (factor < 0) return color;
+
+        int alpha = Math.round(Color.alpha(color) * factor);
+
+        return Color.argb(alpha,Color.red(color),Color.green(color),Color.blue(color));
     }
 
     /**
