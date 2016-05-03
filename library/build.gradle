@@ -4,14 +4,13 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
-    def STRING = "String"
     def INT = "int"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.1.0"
 
         buildConfigField INT, "MAX_HISTORY", "5"
     }
@@ -32,7 +31,7 @@ dependencies {
 ext {
     PUBLISH_GROUP_ID = 'br.com.mauker.materialsearchview'
     PUBLISH_ARTIFACT_ID = 'materialsearchview'
-    PUBLISH_VERSION = '1.0.3'
+    PUBLISH_VERSION = '1.1.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'

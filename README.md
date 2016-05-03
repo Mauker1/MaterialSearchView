@@ -49,6 +49,12 @@ public void onBackPressed() {
 }
 ```
 
+**Note:** To get the library to work, now you have to implement a class 
+named `MsvAuthority` inside the `br.com.mauker` package on your app module,
+and it should have a public static String variable called `CONTENT_AUTHORITY`.
+Give it the value you want and don't forget to add the same name on your
+manifest file.
+
 ## Search history and suggestions
 
 You can provide search suggestions by using the following methods:
