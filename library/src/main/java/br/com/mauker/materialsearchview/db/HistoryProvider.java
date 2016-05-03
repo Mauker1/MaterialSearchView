@@ -16,8 +16,6 @@ import android.support.annotation.NonNull;
  *
  * The content provider for the search history.
  *
- * TODO - Abandon Content Provider. Related to issue #7 (https://github.com/Mauker1/MaterialSearchView/issues/7)
- *
  */
 public class HistoryProvider extends ContentProvider {
     private static final int SEARCH_HISTORY = 100;

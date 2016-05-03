@@ -4,17 +4,42 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by mauker on 15/04/16.
  * Database contract. Contains the definition of my tables.
  */
 public class HistoryContract {
 
-    public static final String CONTENT_AUTHORITY = "br.com.mauker.materialsearchview.searchhistorydatabase";
+    public static final String CONTENT_AUTHORITY = initAuthority();
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     public static final String PATH_HISTORY = "history";
+
+    // ----- Authority setup ----- //
+
+    private static String initAuthority() {
+        String authority = "br.com.mauker.materialsearchview.defaultsearchhistorydatabase";
+
+        try {
+            ClassLoader clazzLoader = HistoryContract.class.getClassLoader();
+            Class<?> clazz = clazzLoader.loadClass("br.com.mauker.MsvAuthority");
+            Field field = clazz.getDeclaredField("CONTENT_AUTHORITY");
+
+            authority = field.get(null).toString();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return authority;
+    }
 
     // ----- Table definitions ----- //
 

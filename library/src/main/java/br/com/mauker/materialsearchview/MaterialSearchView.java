@@ -18,6 +18,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -65,6 +66,8 @@ public class MaterialSearchView extends CoordinatorLayout {
      * The identifier for the voice request intent. (Guess why it's 42).
      */
     public static final int REQUEST_VOICE = 42;
+
+    private static int MAX_HISTORY = BuildConfig.MAX_HISTORY;
 
     /**
      * Whether or not the search view is open right now.
@@ -188,7 +191,7 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         // Initialize style
         // TODO - Improve this to the next release.
-//        initStyle(attributeSet, defStyleAttributes);
+        initStyle(attributeSet, defStyleAttributes);
     }
 
     // ----- Setters ----- //
@@ -216,6 +219,10 @@ public class MaterialSearchView extends CoordinatorLayout {
 
     public void setShouldKeepHistory(boolean keepHistory) {
         this.mShouldKeepHistory = keepHistory;
+    }
+
+    public static void setMaxHistoryResults(int maxHistory) {
+        MAX_HISTORY = maxHistory;
     }
 
     //-- Initializers --//
@@ -311,11 +318,13 @@ public class MaterialSearchView extends CoordinatorLayout {
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_android_textColor)) {
-                setTextColor(typedArray.getColor(R.styleable.MaterialSearchView_android_textColor, 0));
+                setTextColor(typedArray.getColor(R.styleable.MaterialSearchView_android_textColor,
+                        ContextCompat.getColor(mContext,R.color.black)));
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_android_textColorHint)) {
-                setHintTextColor(typedArray.getColor(R.styleable.MaterialSearchView_android_textColorHint, 0));
+                setHintTextColor(typedArray.getColor(R.styleable.MaterialSearchView_android_textColorHint,
+                        ContextCompat.getColor(mContext,R.color.gray_50)));
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_android_hint)) {
@@ -878,7 +887,7 @@ public class MaterialSearchView extends CoordinatorLayout {
                 null,
                 HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " = ?",
                 new String[]{"1"},
-                HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " DESC LIMIT " + BuildConfig.MAX_HISTORY
+                HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " DESC LIMIT " + MAX_HISTORY
         );
     }
 

@@ -10,12 +10,12 @@
             The syncable flag lets android now we're going to synchronize our content provider with the server.
             Changing the exported tag to false means that only our app can see the content.
         -->
-        <provider
-            android:name=".db.HistoryProvider"
-            android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
-            android:exported="false"
-            android:protectionLevel="signature"
-            android:syncable="true"/>
+        <!--<provider-->
+            <!--android:name=".db.HistoryProvider"-->
+            <!--android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"-->
+            <!--android:exported="false"-->
+            <!--android:protectionLevel="signature"-->
+            <!--android:syncable="true"/>-->
 
     </application>
 

@@ -6,7 +6,7 @@ Android SearchView based on Material Design guidelines. The MaterialSearchView w
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
 ```java
-compile 'br.com.mauker.materialsearchview:materialsearchview:1.0.3'
+compile 'br.com.mauker.materialsearchview:materialsearchview:1.1.0'
 ```
 
 This library is supported with a min SDK of 14.
@@ -68,6 +68,38 @@ You can also remove both by using the method below:
 
 - `clearAll()`
 
+## Styling the View
+
+You can change how your MaterialSearchView looks like. To achieve that effect, try to add the following lines to your styles.xml:
+
+```xml
+<style name="MaterialSearchViewStyle">
+    <item name="searchBackground">@color/white_ish</item>
+    <item name="searchVoiceIcon">@drawable/ic_action_voice_search</item>
+    <item name="searchCloseIcon">@drawable/ic_action_navigation_close</item>
+    <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back</item>
+    <item name="searchSuggestionBackground">@color/search_layover_bg</item>
+    <item name="android:textColor">@color/black</item>
+    <item name="android:textColorHint">@color/gray_50</item>
+    <item name="android:hint">@string/search_hint</item>
+</style>
+```
+
+And add this line on your `br.com.mauker.materialsearchview.MaterialSearchView` tag:
+
+```xml
+style="@style/MaterialSearchViewStyle"
+```
+
+So it'll look like:
+
+```xml
+<br.com.mauker.materialsearchview.MaterialSearchView
+    android:id="@+id/search_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/MaterialSearchViewStyle"/>
+```
 
 ## Interfaces
 Currently there are two interfaces that you can use to instantiate listeners for:
