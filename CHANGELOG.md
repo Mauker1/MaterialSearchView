@@ -16,6 +16,8 @@ have a public static String variable called `CONTENT_AUTHORITY`.
 Give it the value you want and don't forget to add the same name on your
 manifest file.
 
+More information, on [this link](http://stackoverflow.com/a/14592121/4070469).
+
 ## Version 1.0.3
 
 _2016-04-21_
