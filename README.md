@@ -47,6 +47,13 @@ public class MsvAuthority {
 </manifest>
 ```
 
+**Proguard note:** Some of you might experience some problems with Proguard, to solve those problems, add those lines on your proguard file:
+
+```
+-keep class br.com.mauker.MsvAuthority
+-keepclassmembers class br.com.mauker.** { *; }
+```
+
 ## Usage
 
 To open the search view on your app, add the following code to your layout:
