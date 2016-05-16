@@ -15,7 +15,7 @@ This library is supported with a min SDK of 14.
 
 ## Setup
 
-Before you can use this lib, you have to implement a class named `MsvAuthority` inside the `br.com.mauker` package on your app module, and it should have a public static String variable called `CONTENT_AUTHORITY`. Give it the value you want and **don't forget** to add the same name on your manifest file.
+Before you can use this lib, you have to implement a class named `MsvAuthority` inside the `br.com.mauker` package on your app module, and it should have a public static String variable called `CONTENT_AUTHORITY`. Give it the value you want and **don't forget** to add the same name on your manifest file. The lib will use this file to set the Content Provider authority.
 
 **Example:**
 
@@ -47,7 +47,7 @@ public class MsvAuthority {
 </manifest>
 ```
 
-**Proguard note:** Some of you might experience some problems with Proguard, to solve those problems, add those lines on your proguard file:
+**Proguard note:** Some of you might experience some problems with Proguard deleting the authority class, to solve those problems, add the following lines on your proguard file:
 
 ```
 -keep class br.com.mauker.MsvAuthority
