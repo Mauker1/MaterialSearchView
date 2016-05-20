@@ -19,6 +19,7 @@ import android.os.Build;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -27,23 +28,17 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
-import android.widget.FilterQueryProvider;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.mauker.materialsearchview.utils.AnimationUtils;
-import br.com.mauker.materialsearchview.adapters.CursorSearchAdapter;
 import br.com.mauker.materialsearchview.db.HistoryContract;
+import br.com.mauker.materialsearchview.utils.AnimationUtils;
 
 /**
  * Created by Mauker and Adam McNeilly on 30/03/2016. dd/MM/YY.
@@ -134,12 +129,7 @@ public class MaterialSearchView extends CoordinatorLayout {
     /**
      * The ListView for displaying suggestions based on the search.
      */
-    private ListView mSuggestionsListView;
-
-    /**
-     * Adapter for displaying suggestions.
-     */
-    private ListAdapter mAdapter;
+    private RecyclerView mSuggestionsListView;
 
     //-- Query properties --//
 
@@ -204,15 +194,6 @@ public class MaterialSearchView extends CoordinatorLayout {
         this.mSearchViewListener = mSearchViewListener;
     }
 
-    /**
-     * Sets an OnItemClickListener to the suggestion list.
-     *
-     * @param listener - The ItemClickListener.
-     */
-    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-        mSuggestionsListView.setOnItemClickListener(listener);
-    }
-
     public void setShouldAnimate(boolean mShouldAnimate) {
         this.mShouldAnimate = mShouldAnimate;
     }
@@ -242,7 +223,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         mSearchEditText = (EditText) mRoot.findViewById(R.id.et_search);
         mVoice = (ImageButton) mRoot.findViewById(R.id.action_voice);
         mClear = (ImageButton) mRoot.findViewById(R.id.action_clear);
-        mSuggestionsListView = (ListView) mRoot.findViewById(R.id.suggestion_list);
+        mSuggestionsListView = (RecyclerView) mRoot.findViewById(R.id.suggestion_list);
 
         // Set click listeners
         mBack.setOnClickListener(new View.OnClickListener() {
@@ -278,30 +259,10 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         // Initialize the search view.
         initSearchView();
+    }
 
-        mAdapter = new CursorSearchAdapter(mContext,getHistoryCursor(),0);
-        ((CursorAdapter)mAdapter).setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-                String filter = constraint.toString();
-
-                if (filter.isEmpty()) {
-                    return getHistoryCursor();
-                }
-                else {
-                    return mContext.getContentResolver().query(
-                            HistoryContract.HistoryEntry.CONTENT_URI,
-                            null,
-                            HistoryContract.HistoryEntry.COLUMN_QUERY + " LIKE ?",
-                            new String[]{"%" + filter + "%"},
-                            HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " DESC, " +
-                                    HistoryContract.HistoryEntry.COLUMN_QUERY
-                    );
-                }
-            }
-        });
-        mSuggestionsListView.setAdapter(mAdapter);
-        mSuggestionsListView.setTextFilterEnabled(true);
+    public RecyclerView getRecyclerView(){
+        return mSuggestionsListView;
     }
 
     /**
@@ -370,9 +331,6 @@ public class MaterialSearchView extends CoordinatorLayout {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // When the text changes, filter
-                ((CursorAdapter)mAdapter).getFilter().filter(s.toString());
-                ((CursorAdapter) mAdapter).notifyDataSetChanged();
                 MaterialSearchView.this.onTextChanged(s);
             }
 
@@ -626,10 +584,6 @@ public class MaterialSearchView extends CoordinatorLayout {
                     saveQueryToDb(query.toString(),System.currentTimeMillis());
                 }
 
-                // Refresh the cursor on the adapter,
-                // so the new entry will be shown on the next time the user opens the search view.
-                refreshAdapterCursor();
-
                 closeSearch();
                 mSearchEditText.setText("");
             }
@@ -833,18 +787,6 @@ public class MaterialSearchView extends CoordinatorLayout {
         return !(mClearingFocus || !isFocusable()) && mSearchEditText.requestFocus(direction, previouslyFocusedRect);
     }
 
-    //----- Lifecycle methods -----//
-
-//    public void activityPaused() {
-//        Cursor cursor = ((CursorAdapter)mAdapter).getCursor();
-//        if (cursor != null && !cursor.isClosed()) {
-//            cursor.close();
-//        }
-//    }
-
-    public void activityResumed() {
-        refreshAdapterCursor();
-    }
 
     //----- Database methods -----//
 
@@ -889,11 +831,6 @@ public class MaterialSearchView extends CoordinatorLayout {
                 new String[]{"1"},
                 HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " DESC LIMIT " + MAX_HISTORY
         );
-    }
-
-    private void refreshAdapterCursor() {
-        Cursor historyCursor = getHistoryCursor();
-        ((CursorAdapter) mAdapter).changeCursor(historyCursor);
     }
 
     public void clearSuggestions() {

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -14,8 +17,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
+import br.com.mauker.EmailBinder;
+import br.com.mauker.ItemEmail;
+import br.com.mauker.ItemName;
+import br.com.mauker.NameBinder;
 import br.com.mauker.materialsearchview.MaterialSearchView;
+import io.c0nnector.github.least.LeastAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Button bt_clearHistory;
     private Button bt_clearSuggestions;
     private Button bt_clearAll;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
         bt_clearHistory = (Button) findViewById(R.id.bt_clearHistory);
         bt_clearSuggestions = (Button) findViewById(R.id.bt_clearSuggestions);
         bt_clearAll = (Button) findViewById(R.id.bt_clearAll);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.suggestion_list);
+        setupLeastView(recyclerView);
+
+        searchView.setShouldKeepHistory(false);
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -60,18 +76,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSearchViewClosed() {
                 // Do something once the view is closed.
-            }
-        });
-
-        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Do something when the suggestion list is clicked.
-                TextView tv = (TextView) view.findViewById(R.id.tv_str);
-
-                if (tv != null) {
-                    searchView.setQuery(tv.getText().toString(),false);
-                }
             }
         });
 
@@ -160,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        searchView.activityResumed();
+        //searchView.activityResumed();
         String[] arr = getResources().getStringArray(R.array.suggestions);
 
         searchView.addSuggestions(arr);
@@ -176,5 +180,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void clearAll() {
         searchView.clearAll();
+    }
+
+
+    private void setupLeastView(RecyclerView recyclerView){
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        LeastAdapter adapter = new LeastAdapter.Builder()
+                .binder(NameBinder.instance(this))
+                .binder(EmailBinder.instance(this))
+                .items(getItems())
+                .build(this);
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    private List<Object> getItems(){
+        List<Object> myList = new ArrayList<>();
+
+        for (int i = 0; i < 20; i++) {
+            if (i%2 == 0) {
+                myList.add(new ItemName("Name - " + i));
+            }
+            else myList.add(new ItemEmail("Email@Email.com - " + i));
+        }
+
+        return myList;
     }
 }
