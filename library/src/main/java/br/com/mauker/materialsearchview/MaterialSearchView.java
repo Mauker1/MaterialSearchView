@@ -505,9 +505,10 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         } else {
             mRoot.setVisibility(View.VISIBLE);
-            if(mSearchViewListener != null) {
-                mSearchViewListener.onSearchViewOpened();
-            }
+        }
+
+        if(mSearchViewListener != null) {
+            mSearchViewListener.onSearchViewOpened();
         }
 
         mOpen = true;

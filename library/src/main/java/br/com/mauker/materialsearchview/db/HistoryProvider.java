@@ -106,7 +106,7 @@ public class HistoryProvider extends ContentProvider {
                 break;
 
             default:
-                throw new UnsupportedOperationException("Uknown Uri: " + uri);
+                throw new UnsupportedOperationException("Unknown Uri: " + uri);
         }
 
         // Set the notification URI for the cursor to the one passed into the function. This

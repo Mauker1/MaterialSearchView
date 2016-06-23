@@ -11,7 +11,48 @@ compile 'br.com.mauker.materialsearchview:materialsearchview:1.1.0'
 
 This library is supported with a min SDK of 14.
 
-**Important note:** If you're still using version 1.0.3, it's recommended to upgrade to version 1.1.0.
+**Important note:** If you're still using version 1.0.3, it's recommended to upgrade to version 1.1.0. For more information, please see [this issue](https://github.com/Mauker1/MaterialSearchView/issues/7).
+
+## Setup
+
+Before you can use this lib, you have to implement a class named `MsvAuthority` inside the `br.com.mauker` package on your app module, and it should have a public static String variable called `CONTENT_AUTHORITY`. Give it the value you want and **don't forget** to add the same name on your manifest file. The lib will use this file to set the Content Provider authority.
+
+**Example:**
+
+**MsvAuthority.java**
+
+```java
+package br.com.mauker;
+
+public class MsvAuthority {
+    public static final String CONTENT_AUTHORITY = "br.com.mauker.materialsearchview.searchhistorydatabase";
+}
+```
+
+**AndroidManifest.xml**
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest ...>
+
+    <application ... >
+        <provider
+        android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
+        android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
+        android:exported="false"
+        android:protectionLevel="signature"
+        android:syncable="true"/>
+    </application>
+
+</manifest>
+```
+
+**Proguard note:** Some of you might experience some problems with Proguard deleting the authority class, to solve those problems, add the following lines on your proguard file:
+
+```
+-keep class br.com.mauker.MsvAuthority
+-keepclassmembers class br.com.mauker.** { *; }
+```
 
 ## Usage
 
@@ -50,12 +91,6 @@ public void onBackPressed() {
     }
 }
 ```
-
-**Note:** To get the library to work, now you have to implement a class 
-named `MsvAuthority` inside the `br.com.mauker` package on your app module,
-and it should have a public static String variable called `CONTENT_AUTHORITY`.
-Give it the value you want and don't forget to add the same name on your
-manifest file.
 
 ## Search history and suggestions
 
