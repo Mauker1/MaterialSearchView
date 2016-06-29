@@ -4,6 +4,7 @@ Android SearchView based on Material Design guidelines. The MaterialSearchView w
 [![Build Status](https://travis-ci.org/Mauker1/MaterialSearchView.svg?branch=master)](https://travis-ci.org/Mauker1/MaterialSearchView)
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialSearchView-green.svg?style=true)](https://android-arsenal.com/details/1/3469)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/Mauker1/MaterialSearchView/blob/master/LICENSE)
 
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
