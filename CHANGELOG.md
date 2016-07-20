@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+## Version 1.1.2
+
+_2016-07-19_
+
+* Now it's possible to change the Search View input type.
+
+**e.g.:** `search_view.setInputType(InputType.TYPE_CLASS_TEXT);`
+
 ## Version 1.1.1
 
 _2016-06-23_
