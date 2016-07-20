@@ -20,6 +20,7 @@ import android.speech.RecognizerIntent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -345,6 +346,10 @@ public class MaterialSearchView extends CoordinatorLayout {
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_searchSuggestionBackground)) {
                 setSuggestionBackground(typedArray.getDrawable(R.styleable.MaterialSearchView_searchSuggestionBackground));
+            }
+
+            if(typedArray.hasValue(R.styleable.MaterialSearchView_android_inputType)) {
+                setInputType(typedArray.getInteger(R.styleable.MaterialSearchView_android_inputType, InputType.TYPE_CLASS_TEXT));
             }
 
             typedArray.recycle();
@@ -790,6 +795,15 @@ public class MaterialSearchView extends CoordinatorLayout {
         }
     }
 
+    /**
+     * Sets the input type of the SearchEditText.
+     *
+     * @param inputType The input type to set to the EditText.
+     */
+    public void setInputType(int inputType) {
+        mSearchEditText.setInputType(inputType);
+    }
+
     //-- Accessors --//
 
     /**
@@ -812,6 +826,20 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         // Returns true if we have at least one activity.
         return activities.size() > 0;
+    }
+
+    /**
+     * Retrieves a suggestion at a given index in the adapter.
+     *
+     * @return The search suggestion for that index.
+     */
+    public String getSuggestionAtPosition(int position) {
+        // If position is out of range just return empty string.
+        if(position < 0 || position >= mAdapter.getCount()) {
+            return "";
+        } else {
+            return mAdapter.getItem(position).toString();
+        }
     }
 
     //-- View methods --//

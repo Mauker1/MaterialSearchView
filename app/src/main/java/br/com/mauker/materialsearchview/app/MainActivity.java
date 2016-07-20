@@ -67,11 +67,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Do something when the suggestion list is clicked.
-                TextView tv = (TextView) view.findViewById(R.id.tv_str);
+                String suggestion = searchView.getSuggestionAtPosition(position);
 
-                if (tv != null) {
-                    searchView.setQuery(tv.getText().toString(),false);
-                }
+                searchView.setQuery(suggestion, false);
             }
         });
 
