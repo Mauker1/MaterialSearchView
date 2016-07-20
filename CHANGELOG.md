@@ -6,6 +6,7 @@ Change Log
 _2016-07-19_
 
 * Now it's possible to change the Search View input type.
+* Added the `getItemAtPosition()` method to simplify how you get the list item String.
 
 **e.g.:** `search_view.setInputType(InputType.TYPE_CLASS_TEXT);`
 
