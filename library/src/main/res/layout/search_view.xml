@@ -40,7 +40,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/search_hint"
-                android:imeOptions="actionSearch"
+                android:imeOptions="actionSearch|flagNoExtractUi"
                 android:paddingLeft="@dimen/search_view_text_padding"
                 android:paddingRight="@dimen/search_view_text_padding"
                 android:singleLine="true"
