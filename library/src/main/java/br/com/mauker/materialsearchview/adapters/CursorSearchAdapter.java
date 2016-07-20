@@ -48,6 +48,19 @@ public class CursorSearchAdapter extends CursorAdapter {
         }
     }
 
+    @Override
+    public Object getItem(int position) {
+        String retString = "";
+
+        // Move to position, get query
+        Cursor cursor = getCursor();
+        if(cursor.moveToPosition(position)) {
+            retString = cursor.getString(cursor.getColumnIndexOrThrow(HistoryContract.HistoryEntry.COLUMN_QUERY));
+        }
+
+        return retString;
+    }
+
     private class ListViewHolder {
         ImageView iv_icon;
         TextView tv_content;

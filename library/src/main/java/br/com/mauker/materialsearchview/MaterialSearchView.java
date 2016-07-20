@@ -828,6 +828,20 @@ public class MaterialSearchView extends CoordinatorLayout {
         return activities.size() > 0;
     }
 
+    /**
+     * Retrieves a suggestion at a given index in the adapter.
+     *
+     * @return The search suggestion for that index.
+     */
+    public String getSuggestionAtPosition(int position) {
+        // If position is out of range just return empty string.
+        if(position < 0 || position >= mAdapter.getCount()) {
+            return "";
+        } else {
+            return mAdapter.getItem(position).toString();
+        }
+    }
+
     //-- View methods --//
 
     /**
