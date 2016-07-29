@@ -42,9 +42,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.mauker.materialsearchview.utils.AnimationUtils;
 import br.com.mauker.materialsearchview.adapters.CursorSearchAdapter;
 import br.com.mauker.materialsearchview.db.HistoryContract;
+import br.com.mauker.materialsearchview.utils.AnimationUtils;
 
 /**
  * Created by Mauker and Adam McNeilly on 30/03/2016. dd/MM/YY.
@@ -175,8 +175,6 @@ public class MaterialSearchView extends CoordinatorLayout {
 
     public MaterialSearchView(Context context, AttributeSet attributeSet) {
         this(context, attributeSet, 0);
-
-        init();
     }
 
     public MaterialSearchView(Context context, AttributeSet attributeSet, int defStyleAttributes) {
@@ -370,8 +368,11 @@ public class MaterialSearchView extends CoordinatorLayout {
         });
 
         mSearchEditText.addTextChangedListener(new TextWatcher() {
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -877,7 +878,7 @@ public class MaterialSearchView extends CoordinatorLayout {
 
     //----- Database methods -----//
 
-    private void saveQueryToDb(String query, long ms) {
+    private synchronized void saveQueryToDb(String query, long ms) {
         ContentValues values = new ContentValues();
         values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
         values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, ms);
@@ -886,7 +887,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
     }
 
-    public void addSuggestions(List<String> suggestions) {
+    public synchronized void addSuggestions(List<String> suggestions) {
         ArrayList<ContentValues> toSave = new ArrayList<>();
         for (String str : suggestions) {
             ContentValues value = new ContentValues();
@@ -925,7 +926,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         ((CursorAdapter) mAdapter).changeCursor(historyCursor);
     }
 
-    public void clearSuggestions() {
+    public synchronized void clearSuggestions() {
         mContext.getContentResolver().delete(
                 HistoryContract.HistoryEntry.CONTENT_URI,
                 HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " = ?",
@@ -933,7 +934,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         );
     }
 
-    public void clearHistory() {
+    public synchronized void clearHistory() {
         mContext.getContentResolver().delete(
                 HistoryContract.HistoryEntry.CONTENT_URI,
                 HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " = ?",
@@ -941,7 +942,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         );
     }
 
-    public void clearAll() {
+    public synchronized void clearAll() {
         mContext.getContentResolver().delete(
                 HistoryContract.HistoryEntry.CONTENT_URI,
                 null,

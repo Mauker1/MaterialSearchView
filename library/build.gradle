@@ -2,15 +2,15 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.1"
 
     def INT = "int"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 8
-        versionName "1.1.2"
+        versionCode 9
+        versionName "1.1.3"
 
         buildConfigField INT, "MAX_HISTORY", "10"
     }
@@ -24,14 +24,14 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
 }
 
 ext {
     PUBLISH_GROUP_ID = 'br.com.mauker.materialsearchview'
     PUBLISH_ARTIFACT_ID = 'materialsearchview'
-    PUBLISH_VERSION = '1.1.2'
+    PUBLISH_VERSION = '1.1.3'
 }
 
 apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
