@@ -6,18 +6,20 @@ import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import br.com.mauker.materialsearchview.MaterialSearchView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private MaterialSearchView searchView;
 
