@@ -6,7 +6,9 @@ android:
     - platform-tools
     - build-tools-24.0.1
     - extra-android-m2repository
+    - extra-android-support
     - android-24
+    - sys-img-armeabi-v7a-android-24
 
 jdk:
   - oraclejdk8
