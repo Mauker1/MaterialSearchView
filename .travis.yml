@@ -4,7 +4,7 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-24.0.1
+    - build-tools-24.0.0
     - extra-android-m2repository
     - extra-android-support
     - android-24
