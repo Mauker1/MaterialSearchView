@@ -8,14 +8,13 @@ android:
     - extra-android-m2repository
     - extra-android-support
     - android-24
-    - sys-img-armeabi-v7a-android-24
 
 jdk:
   - oraclejdk8
 
 script:
   - chmod +x gradlew
-  - ./gradlew clean build connectedCheck
+  - ./gradlew clean build
 
 
 notifications:
