@@ -164,6 +164,11 @@ public class MaterialSearchView extends CoordinatorLayout {
      * Listener for when the search view opens and closes.
      */
     private SearchViewListener mSearchViewListener;
+
+    /**
+     * Listener for interaction with the voice button.
+     */
+    private OnVoiceClickedListener mOnVoiceClickedListener;
     //endregion
 
     //region Constructors
@@ -581,13 +586,19 @@ public class MaterialSearchView extends CoordinatorLayout {
      * Handles when the voice button is clicked and starts listening, then calls activity with voice search.
      */
     private void onVoiceClicked() {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, mContext.getString(R.string.hint_prompt));
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, MAX_RESULTS); // Quantity of results we want to receive
+        // If the user has their own OnVoiceClickedListener defined, call that. Otherwise, use
+        // the library default.
+        if(mOnVoiceClickedListener != null) {
+            mOnVoiceClickedListener.onVoiceClicked();
+        } else {
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, mContext.getString(R.string.hint_prompt));
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, MAX_RESULTS); // Quantity of results we want to receive
 
-        if(mContext instanceof Activity) {
-            ((Activity) mContext).startActivityForResult(intent, REQUEST_VOICE);
+            if(mContext instanceof Activity) {
+                ((Activity) mContext).startActivityForResult(intent, REQUEST_VOICE);
+            }
         }
     }
     //endregion
@@ -804,6 +815,13 @@ public class MaterialSearchView extends CoordinatorLayout {
     public void setInputType(int inputType) {
         mSearchEditText.setInputType(inputType);
     }
+
+    /**
+     * Sets a click listener for the voice button.
+     */
+    public void setOnVoiceClickedListener(OnVoiceClickedListener listener) {
+        this.mOnVoiceClickedListener = listener;
+    }
     //endregion
 
     //region Accessors
@@ -986,6 +1004,16 @@ public class MaterialSearchView extends CoordinatorLayout {
          * Called when the search view closes.
          */
         void onSearchViewClosed();
+    }
+
+    /**
+     * Interface that handles interaction with the voice button.
+     */
+    public interface OnVoiceClickedListener {
+        /**
+         * Called when the user clicks the voice button.
+         */
+        void onVoiceClicked();
     }
     //endregion
 }
