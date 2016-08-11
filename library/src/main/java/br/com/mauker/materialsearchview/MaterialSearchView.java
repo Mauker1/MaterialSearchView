@@ -51,8 +51,7 @@ import br.com.mauker.materialsearchview.utils.AnimationUtils;
  * Based on stadiko on 6/8/15. https://github.com/krishnakapil/MaterialSeachView
  */
 public class MaterialSearchView extends CoordinatorLayout {
-    //-- Class Properties --//
-
+    //region Properties
     /**
      * The freaking log tag. Used for logs, duh.
      */
@@ -94,9 +93,9 @@ public class MaterialSearchView extends CoordinatorLayout {
      * Flag for whether or not we are clearing focus.
      */
     private boolean mClearingFocus;
+    //endregion
 
-    //-- UI Elements --//
-
+    //region UI Elements
     /**
      * The tint that appears over the search view.
      */
@@ -141,9 +140,9 @@ public class MaterialSearchView extends CoordinatorLayout {
      * Adapter for displaying suggestions.
      */
     private ListAdapter mAdapter;
+    //endregion
 
-    //-- Query properties --//
-
+    //region Query Properties
     /**
      * The previous query text.
      */
@@ -153,10 +152,9 @@ public class MaterialSearchView extends CoordinatorLayout {
      * The current query text.
      */
     private CharSequence mCurrentQuery;
+    //endregion
 
-    //-- Listeners --//
-
-
+    //region Listeners
     /**
      * Listener for when the query text is submitted or changed.
      */
@@ -166,9 +164,9 @@ public class MaterialSearchView extends CoordinatorLayout {
      * Listener for when the search view opens and closes.
      */
     private SearchViewListener mSearchViewListener;
+    //endregion
 
-    //-- Constructors --//
-
+    //region Constructors
     public MaterialSearchView(Context context) {
         this(context, null);
     }
@@ -192,40 +190,9 @@ public class MaterialSearchView extends CoordinatorLayout {
         // TODO - Improve this to the next release.
         initStyle(attributeSet, defStyleAttributes);
     }
+    //endregion
 
-    // ----- Setters ----- //
-
-    public void setOnQueryTextListener(OnQueryTextListener mOnQueryTextListener) {
-        this.mOnQueryTextListener = mOnQueryTextListener;
-    }
-
-    public void setSearchViewListener(SearchViewListener mSearchViewListener) {
-        this.mSearchViewListener = mSearchViewListener;
-    }
-
-    /**
-     * Sets an OnItemClickListener to the suggestion list.
-     *
-     * @param listener - The ItemClickListener.
-     */
-    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-        mSuggestionsListView.setOnItemClickListener(listener);
-    }
-
-    public void setShouldAnimate(boolean mShouldAnimate) {
-        this.mShouldAnimate = mShouldAnimate;
-    }
-
-    public void setShouldKeepHistory(boolean keepHistory) {
-        this.mShouldKeepHistory = keepHistory;
-    }
-
-    public static void setMaxHistoryResults(int maxHistory) {
-        MAX_HISTORY = maxHistory;
-    }
-
-    //-- Initializers --//
-
+    //region Initializers
     /**
      * Preforms any required initializations for the search view.
      */
@@ -397,42 +364,9 @@ public class MaterialSearchView extends CoordinatorLayout {
             }
         });
     }
+    //endregion
 
-    /**
-     * Handles when the voice button is clicked and starts listening, then calls activity with voice search.
-     */
-    private void onVoiceClicked() {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, mContext.getString(R.string.hint_prompt));
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, MAX_RESULTS); // Quantity of results we want to receive
-
-        if(mContext instanceof Activity) {
-            ((Activity) mContext).startActivityForResult(intent, REQUEST_VOICE);
-        }
-    }
-
-    /**
-     * Set the query to search view. If submit is set to true, it'll submit the query.
-     *
-     * @param query - The Query value.
-     * @param submit - Whether to submit or not the query or not.
-     */
-    public void setQuery(CharSequence query, boolean submit) {
-        mSearchEditText.setText(query);
-
-        if (query != null) {
-            mSearchEditText.setSelection(mSearchEditText.length());
-            mCurrentQuery = query;
-        }
-
-        if (submit && !TextUtils.isEmpty(query)) {
-            onSubmitQuery();
-        }
-    }
-
-    //-- Show methods --//
-
+    //region Show Methods
     /**
      * Displays the keyboard with a focus on the Search EditText.
      * @param view The view to attach the keyboard to.
@@ -519,9 +453,9 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         mOpen = true;
     }
+    //endregion
 
-    //-- Hide methods --//
-
+    //region Hide Methods
     /**
      * Hides the suggestion list.
      */
@@ -586,9 +520,9 @@ public class MaterialSearchView extends CoordinatorLayout {
 
         mOpen = false;
     }
+    //endregion
 
-    //-- Interface methods --//
-
+    //region Interface Methods
     /**
      * Filters and updates the buttons when text is changed.
      * @param newText The new text.
@@ -643,7 +577,69 @@ public class MaterialSearchView extends CoordinatorLayout {
         }
     }
 
-    //-- Mutators --//
+    /**
+     * Handles when the voice button is clicked and starts listening, then calls activity with voice search.
+     */
+    private void onVoiceClicked() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, mContext.getString(R.string.hint_prompt));
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, MAX_RESULTS); // Quantity of results we want to receive
+
+        if(mContext instanceof Activity) {
+            ((Activity) mContext).startActivityForResult(intent, REQUEST_VOICE);
+        }
+    }
+    //endregion
+
+    //region Mutators
+    public void setOnQueryTextListener(OnQueryTextListener mOnQueryTextListener) {
+        this.mOnQueryTextListener = mOnQueryTextListener;
+    }
+
+    public void setSearchViewListener(SearchViewListener mSearchViewListener) {
+        this.mSearchViewListener = mSearchViewListener;
+    }
+
+    /**
+     * Sets an OnItemClickListener to the suggestion list.
+     *
+     * @param listener - The ItemClickListener.
+     */
+    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
+        mSuggestionsListView.setOnItemClickListener(listener);
+    }
+
+    public void setShouldAnimate(boolean mShouldAnimate) {
+        this.mShouldAnimate = mShouldAnimate;
+    }
+
+    public void setShouldKeepHistory(boolean keepHistory) {
+        this.mShouldKeepHistory = keepHistory;
+    }
+
+    public static void setMaxHistoryResults(int maxHistory) {
+        MAX_HISTORY = maxHistory;
+    }
+
+    /**
+     * Set the query to search view. If submit is set to true, it'll submit the query.
+     *
+     * @param query - The Query value.
+     * @param submit - Whether to submit or not the query or not.
+     */
+    public void setQuery(CharSequence query, boolean submit) {
+        mSearchEditText.setText(query);
+
+        if (query != null) {
+            mSearchEditText.setSelection(mSearchEditText.length());
+            mCurrentQuery = query;
+        }
+
+        if (submit && !TextUtils.isEmpty(query)) {
+            onSubmitQuery();
+        }
+    }
 
     /**
      * Sets the background of the SearchView.
@@ -804,9 +800,9 @@ public class MaterialSearchView extends CoordinatorLayout {
     public void setInputType(int inputType) {
         mSearchEditText.setInputType(inputType);
     }
+    //endregion
 
-    //-- Accessors --//
-
+    //region Accessors
     /**
      * Determines if the search view is opened or closed.
      * @return True if the search view is open, false if it is closed.
@@ -842,9 +838,9 @@ public class MaterialSearchView extends CoordinatorLayout {
             return mAdapter.getItem(position).toString();
         }
     }
+    //endregion
 
-    //-- View methods --//
-
+    //region View Methods
     /**
      * Handles any cleanup when focus is cleared from the view.
      */
@@ -875,9 +871,9 @@ public class MaterialSearchView extends CoordinatorLayout {
     public void activityResumed() {
         refreshAdapterCursor();
     }
+    //endregion
 
-    //----- Database methods -----//
-
+    //region Database Methods
     private synchronized void saveQueryToDb(String query, long ms) {
         ContentValues values = new ContentValues();
         values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
@@ -949,9 +945,9 @@ public class MaterialSearchView extends CoordinatorLayout {
                 null
         );
     }
+    //endregion
 
-    //-- Interfaces --//
-
+    //region Interfaces
     /**
      * Interface that handles the submission and change of search queries.
      */
@@ -987,4 +983,5 @@ public class MaterialSearchView extends CoordinatorLayout {
          */
         void onSearchViewClosed();
     }
+    //endregion
 }
