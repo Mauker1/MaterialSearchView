@@ -610,6 +610,10 @@ public class MaterialSearchView extends CoordinatorLayout {
         mSuggestionsListView.setOnItemClickListener(listener);
     }
 
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
+        mSuggestionsListView.setOnItemLongClickListener(listener);
+    }
+
     public void setShouldAnimate(boolean mShouldAnimate) {
         this.mShouldAnimate = mShouldAnimate;
     }
