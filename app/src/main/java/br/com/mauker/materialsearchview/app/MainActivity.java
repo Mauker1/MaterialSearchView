@@ -1,5 +1,6 @@
 package br.com.mauker.materialsearchview.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -100,11 +101,19 @@ public class MainActivity extends AppCompatActivity {
 //        searchView.setTintAlpha(200);
         searchView.adjustTintAlpha(0.8f);
 
+        final Context context = this;
         searchView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(view.getContext(), "Long clicked position: " + i, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Long clicked position: " + i, Toast.LENGTH_SHORT).show();
                 return true;
+            }
+        });
+
+        searchView.setOnVoiceClickedListener(new MaterialSearchView.OnVoiceClickedListener() {
+            @Override
+            public void onVoiceClicked() {
+                Toast.makeText(context, "Voice clicked!", Toast.LENGTH_SHORT).show();
             }
         });
     }
