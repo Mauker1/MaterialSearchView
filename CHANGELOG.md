@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+## Version 1.1.3
+
+_2016-08-14_
+
+* Fixed a bug where `onQueryTextChanged` interface method was called multiple times;
+* Added `OnItemLongClickListener` on history/suggestion list;
+* Implemented an `OnClickListener` to the voice search icon, so it's possible to change the click behavior.
+
 ## Version 1.1.2
 
 _2016-07-19_

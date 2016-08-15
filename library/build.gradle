@@ -9,7 +9,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 9
+        versionCode 10
         versionName "1.1.3"
 
         buildConfigField INT, "MAX_HISTORY", "10"
