@@ -4,7 +4,7 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_action_action_search"
+        android:icon="@drawable/ic_action_search_white"
         android:orderInCategory="100"
         android:title="@string/abc_search_hint"
         app:showAsAction="always" />
