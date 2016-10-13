@@ -67,6 +67,10 @@ public class MaterialSearchView extends CoordinatorLayout {
      */
     public static final int REQUEST_VOICE = 42;
 
+
+    /**
+     * Number of suggestions to show.
+     */
     private static int MAX_HISTORY = BuildConfig.MAX_HISTORY;
 
     /**
@@ -192,7 +196,6 @@ public class MaterialSearchView extends CoordinatorLayout {
         init();
 
         // Initialize style
-        // TODO - Improve this to the next release.
         initStyle(attributeSet, defStyleAttributes);
     }
     //endregion
