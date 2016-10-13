@@ -20,6 +20,7 @@ import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -329,6 +330,8 @@ public class MaterialSearchView extends CoordinatorLayout {
             } else {
                 setSearchBarHeight(getAppCompatActionBarHeight());
             }
+
+            ViewCompat.setFitsSystemWindows(this, typedArray.getBoolean(R.styleable.MaterialSearchView_android_fitsSystemWindows, false));
 
             typedArray.recycle();
         }
