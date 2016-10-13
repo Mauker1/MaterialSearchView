@@ -331,7 +331,7 @@ public class MaterialSearchView extends CoordinatorLayout {
                 setSearchBarHeight(getAppCompatActionBarHeight());
             }
 
-            ViewCompat.setFitsSystemWindows(this, typedArray.getBoolean(R.styleable.NavigationView_android_fitsSystemWindows, false));
+            ViewCompat.setFitsSystemWindows(this, typedArray.getBoolean(R.styleable.MaterialSearchView_android_fitsSystemWindows, false));
 
             typedArray.recycle();
         }
