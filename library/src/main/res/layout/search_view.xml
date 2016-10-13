@@ -45,7 +45,7 @@
                 android:imeOptions="actionSearch|flagNoExtractUi"
                 android:paddingLeft="@dimen/search_view_text_padding"
                 android:paddingRight="@dimen/search_view_text_padding"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray_50"

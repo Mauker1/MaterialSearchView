@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/listPreferredItemHeight"
+                android:background="@color/transparent"
                 android:minHeight="?android:attr/listPreferredItemHeight">
 
     <ImageView
@@ -11,6 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
+        android:contentDescription="@string/cd_suggestion_icon"
         android:padding="16dp"/>
 
     <TextView
