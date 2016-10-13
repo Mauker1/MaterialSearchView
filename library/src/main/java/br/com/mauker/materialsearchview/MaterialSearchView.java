@@ -17,6 +17,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -24,6 +25,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -323,6 +325,12 @@ public class MaterialSearchView extends CoordinatorLayout {
 
             if(typedArray.hasValue(R.styleable.MaterialSearchView_android_inputType)) {
                 setInputType(typedArray.getInteger(R.styleable.MaterialSearchView_android_inputType, InputType.TYPE_CLASS_TEXT));
+            }
+
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_searchBarHeight)) {
+                setSearchBarHeight(typedArray.getDimensionPixelSize(R.styleable.MaterialSearchView_searchBarHeight, getAppCompatActionBarHeight()));
+            } else {
+                setSearchBarHeight(getAppCompatActionBarHeight());
             }
 
             typedArray.recycle();
@@ -825,6 +833,30 @@ public class MaterialSearchView extends CoordinatorLayout {
     public void setOnVoiceClickedListener(OnVoiceClickedListener listener) {
         this.mOnVoiceClickedListener = listener;
     }
+
+
+    /**
+     * Sets the bar height if prefered to not use the existing actionbar height value
+     *
+     * @param height The value of the height in pixels
+     */
+    public void setSearchBarHeight(@NonNull final int height) {
+        mSearchBar.setMinimumHeight(height);
+        mSearchBar.getLayoutParams().height = height;
+    }
+
+    /**
+     * Returns the actual AppCompat ActionBar height value. This will be used as the default
+     *
+     * @return The value of the actual actionbar height in pixels
+     */
+    private final int getAppCompatActionBarHeight(){
+        TypedValue tv = new TypedValue();
+        getContext().getTheme().resolveAttribute(R.attr.actionBarSize, tv, true);
+        int actionBarHeight = getResources().getDimensionPixelSize(tv.resourceId);
+        return actionBarHeight;
+    }
+
     //endregion
 
     //region Accessors

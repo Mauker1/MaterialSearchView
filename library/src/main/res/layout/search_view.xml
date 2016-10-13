@@ -19,7 +19,7 @@
         <LinearLayout
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="@color/search_field_bg"
             android:gravity="start"
             android:orientation="horizontal">
