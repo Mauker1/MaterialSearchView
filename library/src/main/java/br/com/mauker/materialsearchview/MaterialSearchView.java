@@ -318,7 +318,7 @@ public class MaterialSearchView extends CoordinatorLayout {
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_searchSuggestionBackground)) {
-                setSuggestionBackground(typedArray.getDrawable(R.styleable.MaterialSearchView_searchSuggestionBackground));
+                setSuggestionBackground(typedArray.getResourceId(R.styleable.MaterialSearchView_searchSuggestionBackground, R.color.search_layover_bg));
             }
 
             if(typedArray.hasValue(R.styleable.MaterialSearchView_android_inputType)) {
@@ -806,15 +806,12 @@ public class MaterialSearchView extends CoordinatorLayout {
     /**
      * Sets the background of the suggestions ListView.
      *
-     * @param drawable The drawable to use as a background for the suggestions listview.
+     * @param resource The resource to use as a background for the
+     *                 suggestions listview.
      */
-    public void setSuggestionBackground(Drawable drawable) {
-        // Method change in jelly bean
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mSuggestionsListView.setBackground(getBackground());
-        } else {
-            //noinspection deprecation
-            mSuggestionsListView.setBackgroundDrawable(drawable);
+    public void setSuggestionBackground(int resource) {
+        if (resource > 0) {
+            mSuggestionsListView.setBackgroundResource(resource);
         }
     }
 
