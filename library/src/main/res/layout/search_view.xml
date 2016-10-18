@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 android:id="@+id/search_layout"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:visibility="gone">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone">
 
     <View
         android:id="@+id/transparent_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/search_layover_bg"/>
+        android:background="@color/search_layover_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                 android:contentDescription="@string/cd_up_button"
                 android:paddingLeft="@dimen/search_icon_padding"
                 android:paddingRight="@dimen/search_icon_padding"
-                android:src="@drawable/ic_action_navigation_arrow_back"/>
+                android:src="@drawable/ic_action_navigation_arrow_back" />
 
             <EditText
                 android:id="@+id/et_search"
@@ -43,14 +44,13 @@
                 android:background="@null"
                 android:hint="@string/search_hint"
                 android:imeOptions="actionSearch|flagNoExtractUi"
+                android:maxLines="1"
                 android:paddingLeft="@dimen/search_view_text_padding"
                 android:paddingRight="@dimen/search_view_text_padding"
-                android:singleLine="true"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray_50"
-                android:textCursorDrawable="@null"
-                />
+                android:textCursorDrawable="@null" />
 
             <ImageButton
                 android:id="@+id/action_voice"
@@ -60,7 +60,7 @@
                 android:contentDescription="@string/cd_voice_search"
                 android:paddingLeft="@dimen/search_icon_padding"
                 android:paddingRight="@dimen/search_icon_padding"
-                android:src="@drawable/ic_action_voice_search"/>
+                android:src="@drawable/ic_action_voice_search" />
 
             <ImageButton
                 android:id="@+id/action_clear"
@@ -71,7 +71,7 @@
                 android:paddingLeft="@dimen/search_icon_padding"
                 android:paddingRight="@dimen/search_icon_padding"
                 android:src="@drawable/ic_action_navigation_close"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
         <ListView
@@ -79,6 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@null"
-            android:dividerHeight="0dp"/>
+            android:dividerHeight="0dp" />
     </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>
