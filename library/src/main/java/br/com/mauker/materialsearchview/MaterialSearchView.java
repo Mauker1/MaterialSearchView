@@ -17,7 +17,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -35,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -107,7 +107,7 @@ public class MaterialSearchView extends CoordinatorLayout {
     /**
      * The root of the search view.
      */
-    private CoordinatorLayout mRoot;
+    private FrameLayout mRoot;
 
     /**
      * The bar at the top of the SearchView containing the EditText and ImageButtons.
@@ -209,7 +209,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         LayoutInflater.from(mContext).inflate(R.layout.search_view, this, true);
 
         // Get items
-        mRoot = (CoordinatorLayout) findViewById(R.id.search_layout);
+        mRoot = (FrameLayout) findViewById(R.id.search_layout);
         mTintView = mRoot.findViewById(R.id.transparent_view);
         mSearchBar = (LinearLayout) mRoot.findViewById(R.id.search_bar);
         mBack = (ImageButton) mRoot.findViewById(R.id.action_back);
@@ -837,7 +837,7 @@ public class MaterialSearchView extends CoordinatorLayout {
      *
      * @param height The value of the height in pixels
      */
-    public void setSearchBarHeight(@NonNull final int height) {
+    public void setSearchBarHeight(final int height) {
         mSearchBar.setMinimumHeight(height);
         mSearchBar.getLayoutParams().height = height;
     }
@@ -847,11 +847,10 @@ public class MaterialSearchView extends CoordinatorLayout {
      *
      * @return The value of the actual actionbar height in pixels
      */
-    private final int getAppCompatActionBarHeight(){
+    private int getAppCompatActionBarHeight(){
         TypedValue tv = new TypedValue();
         getContext().getTheme().resolveAttribute(R.attr.actionBarSize, tv, true);
-        int actionBarHeight = getResources().getDimensionPixelSize(tv.resourceId);
-        return actionBarHeight;
+        return getResources().getDimensionPixelSize(tv.resourceId);
     }
 
     //endregion
