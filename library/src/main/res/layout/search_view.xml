@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,7 +34,7 @@
                 android:contentDescription="@string/cd_up_button"
                 android:paddingLeft="@dimen/search_icon_padding"
                 android:paddingRight="@dimen/search_icon_padding"
-                android:src="@drawable/ic_action_navigation_arrow_back" />
+                app:srcCompat="@drawable/ic_action_navigation_arrow_back" />
 
             <EditText
                 android:id="@+id/et_search"
@@ -60,7 +61,7 @@
                 android:contentDescription="@string/cd_voice_search"
                 android:paddingLeft="@dimen/search_icon_padding"
                 android:paddingRight="@dimen/search_icon_padding"
-                android:src="@drawable/ic_action_voice_search" />
+                app:srcCompat="@drawable/ic_action_voice_search" />
 
             <ImageButton
                 android:id="@+id/action_clear"
@@ -70,7 +71,7 @@
                 android:contentDescription="@string/cd_clear_button"
                 android:paddingLeft="@dimen/search_icon_padding"
                 android:paddingRight="@dimen/search_icon_padding"
-                android:src="@drawable/ic_action_navigation_close"
+                app:srcCompat="@drawable/ic_action_navigation_close"
                 android:visibility="gone" />
         </LinearLayout>
 
