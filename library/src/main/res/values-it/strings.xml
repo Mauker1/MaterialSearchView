@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Material Search Library</string>
     <string name="search_hint">Cerca&#8230;</string>
     <string name="hint_prompt">Pronuncia un nome o un numero</string>
 
