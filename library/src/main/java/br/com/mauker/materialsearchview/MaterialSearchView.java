@@ -939,6 +939,48 @@ public class MaterialSearchView extends CoordinatorLayout {
         mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
     }
 
+    /**
+     * Add a single suggestion item to the suggestion list.
+     * @param suggestion - The suggestion to be inserted on the database.
+     */
+    public synchronized void addSuggestion(String suggestion) {
+        if (!TextUtils.isEmpty(suggestion)) {
+            ContentValues value = new ContentValues();
+            value.put(HistoryContract.HistoryEntry.COLUMN_QUERY, suggestion);
+            value.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, System.currentTimeMillis());
+            value.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,0); // Saving as suggestion.
+
+
+            mContext.getContentResolver().insert(
+                    HistoryContract.HistoryEntry.CONTENT_URI,
+                    value
+            );
+        }
+    }
+
+    /**
+     * Removes a single suggestion from the list. <br/>
+     * Disclaimer, this doesn't remove a single search history item, only suggestions.
+     * @param suggestion - The suggestion to be removed.
+     */
+    public synchronized void removeSuggestion(String suggestion) {
+        if (!TextUtils.isEmpty(suggestion)) {
+            mContext.getContentResolver().delete(
+                    HistoryContract.HistoryEntry.CONTENT_URI,
+                    HistoryContract.HistoryEntry.TABLE_NAME +
+                            "." +
+                            HistoryContract.HistoryEntry.COLUMN_QUERY +
+                            " = ? AND " +
+                            HistoryContract.HistoryEntry.TABLE_NAME +
+                            "." +
+                            HistoryContract.HistoryEntry.COLUMN_IS_HISTORY +
+                            " = ?"
+                    ,
+                    new String[]{suggestion,String.valueOf(0)}
+                    );
+        }
+    }
+
     public synchronized void addSuggestions(List<String> suggestions) {
         ArrayList<ContentValues> toSave = new ArrayList<>();
         for (String str : suggestions) {
