@@ -101,6 +101,11 @@ public class MaterialSearchView extends FrameLayout {
      * Flag for whether or not we are clearing focus.
      */
     private boolean mClearingFocus;
+
+    /**
+     * Voice hint prompt text.
+     */
+    private String mHintPrompt;
     //endregion
 
     //region UI Elements
@@ -335,6 +340,13 @@ public class MaterialSearchView extends FrameLayout {
                 setSearchBarHeight(getAppCompatActionBarHeight());
             }
 
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_voiceHintPrompt)) {
+                setVoiceHintPrompt(typedArray.getString(R.styleable.MaterialSearchView_voiceHintPrompt));
+            }
+            else {
+                setVoiceHintPrompt(mContext.getString(R.string.hint_prompt));
+            }
+
             ViewCompat.setFitsSystemWindows(this, typedArray.getBoolean(R.styleable.MaterialSearchView_android_fitsSystemWindows, false));
 
             typedArray.recycle();
@@ -560,7 +572,6 @@ public class MaterialSearchView extends FrameLayout {
             displayVoiceButton(true);
         }
 
-        // TODO - #5
         // If we have a query listener and the text has changed, call it.
         if(mOnQueryTextListener != null) {
             mOnQueryTextListener.onQueryTextChange(newText.toString());
@@ -607,7 +618,7 @@ public class MaterialSearchView extends FrameLayout {
             mOnVoiceClickedListener.onVoiceClicked();
         } else {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, mContext.getString(R.string.hint_prompt));
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, mHintPrompt);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, MAX_RESULTS); // Quantity of results we want to receive
 
@@ -844,6 +855,15 @@ public class MaterialSearchView extends FrameLayout {
     public void setSearchBarHeight(final int height) {
         mSearchBar.setMinimumHeight(height);
         mSearchBar.getLayoutParams().height = height;
+    }
+
+    public void setVoiceHintPrompt(final String hintPrompt) {
+        if (!TextUtils.isEmpty(hintPrompt)) {
+            mHintPrompt = hintPrompt;
+        }
+        else {
+            mHintPrompt = mContext.getString(R.string.hint_prompt);
+        }
     }
 
     /**
