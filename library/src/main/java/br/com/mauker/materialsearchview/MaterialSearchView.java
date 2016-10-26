@@ -51,9 +51,10 @@ import br.com.mauker.materialsearchview.utils.AnimationUtils;
 
 /**
  * Created by Mauker and Adam McNeilly on 30/03/2016. dd/MM/YY.
+ * Maintained by Mauker, Adam McNeilly and our beautiful open source community <3
  * Based on stadiko on 6/8/15. https://github.com/krishnakapil/MaterialSeachView
  */
-public class MaterialSearchView extends CoordinatorLayout {
+public class MaterialSearchView extends FrameLayout {
     //region Properties
     /**
      * The freaking log tag. Used for logs, duh.
