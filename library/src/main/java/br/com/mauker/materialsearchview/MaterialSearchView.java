@@ -17,9 +17,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -110,7 +111,7 @@ public class MaterialSearchView extends CoordinatorLayout {
     /**
      * The root of the search view.
      */
-    private CoordinatorLayout mRoot;
+    private FrameLayout mRoot;
 
     /**
      * The bar at the top of the SearchView containing the EditText and ImageButtons.
@@ -211,7 +212,7 @@ public class MaterialSearchView extends CoordinatorLayout {
         LayoutInflater.from(mContext).inflate(R.layout.search_view, this, true);
 
         // Get items
-        mRoot = (CoordinatorLayout) findViewById(R.id.search_layout);
+        mRoot = (FrameLayout) findViewById(R.id.search_layout);
         mTintView = mRoot.findViewById(R.id.transparent_view);
         mSearchBar = (LinearLayout) mRoot.findViewById(R.id.search_bar);
         mBack = (ImageButton) mRoot.findViewById(R.id.action_back);
@@ -320,7 +321,7 @@ public class MaterialSearchView extends CoordinatorLayout {
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_searchSuggestionBackground)) {
-                setSuggestionBackground(typedArray.getDrawable(R.styleable.MaterialSearchView_searchSuggestionBackground));
+                setSuggestionBackground(typedArray.getResourceId(R.styleable.MaterialSearchView_searchSuggestionBackground, R.color.search_layover_bg));
             }
 
             if(typedArray.hasValue(R.styleable.MaterialSearchView_android_inputType)) {
@@ -332,6 +333,8 @@ public class MaterialSearchView extends CoordinatorLayout {
             } else {
                 setSearchBarHeight(getAppCompatActionBarHeight());
             }
+
+            ViewCompat.setFitsSystemWindows(this, typedArray.getBoolean(R.styleable.MaterialSearchView_android_fitsSystemWindows, false));
 
             typedArray.recycle();
         }
@@ -806,15 +809,12 @@ public class MaterialSearchView extends CoordinatorLayout {
     /**
      * Sets the background of the suggestions ListView.
      *
-     * @param drawable The drawable to use as a background for the suggestions listview.
+     * @param resource The resource to use as a background for the
+     *                 suggestions listview.
      */
-    public void setSuggestionBackground(Drawable drawable) {
-        // Method change in jelly bean
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mSuggestionsListView.setBackground(getBackground());
-        } else {
-            //noinspection deprecation
-            mSuggestionsListView.setBackgroundDrawable(drawable);
+    public void setSuggestionBackground(int resource) {
+        if (resource > 0) {
+            mSuggestionsListView.setBackgroundResource(resource);
         }
     }
 
@@ -840,7 +840,7 @@ public class MaterialSearchView extends CoordinatorLayout {
      *
      * @param height The value of the height in pixels
      */
-    public void setSearchBarHeight(@NonNull final int height) {
+    public void setSearchBarHeight(final int height) {
         mSearchBar.setMinimumHeight(height);
         mSearchBar.getLayoutParams().height = height;
     }
@@ -850,11 +850,10 @@ public class MaterialSearchView extends CoordinatorLayout {
      *
      * @return The value of the actual actionbar height in pixels
      */
-    private final int getAppCompatActionBarHeight(){
+    private int getAppCompatActionBarHeight(){
         TypedValue tv = new TypedValue();
         getContext().getTheme().resolveAttribute(R.attr.actionBarSize, tv, true);
-        int actionBarHeight = getResources().getDimensionPixelSize(tv.resourceId);
-        return actionBarHeight;
+        return getResources().getDimensionPixelSize(tv.resourceId);
     }
 
     //endregion

@@ -7,6 +7,7 @@
         <attr name="searchBackIcon" format="integer" />
         <attr name="searchSuggestionBackground" format="integer" />
         <attr name="searchBarHeight" format="dimension"  />
+        <attr name="android:fitsSystemWindows"/>
         <attr name="android:hint" />
         <attr name="android:textColor" />
         <attr name="android:textColorHint" />

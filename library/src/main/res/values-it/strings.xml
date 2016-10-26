@@ -1,0 +1,8 @@
+<resources>
+    <string name="search_hint">Cerca&#8230;</string>
+    <string name="hint_prompt">Pronuncia un nome o un numero</string>
+
+    <string name="cd_up_button">Tasto navigazione SU</string>
+    <string name="cd_voice_search">Ricerca vocale</string>
+    <string name="cd_clear_button">Svuota campo</string>
+</resources>
