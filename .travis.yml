@@ -14,7 +14,7 @@ jdk:
 
 script:
   - chmod +x gradlew
-  - ./gradlew clean build
+  - ./gradlew clean build --stacktrace
 
 
 notifications:
