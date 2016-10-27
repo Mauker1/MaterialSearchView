@@ -14,7 +14,7 @@ android {
 
         buildConfigField INT, "MAX_HISTORY", "10"
 
-        consumerProguardFiles 'proguard-android.txt'
+        consumerProguardFiles 'proguard.txt'
     }
     buildTypes {
         release {
