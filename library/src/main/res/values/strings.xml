@@ -3,7 +3,8 @@
     <string name="search_hint">Search&#8230;</string>
     <string name="hint_prompt">Speak an item name or a number</string>
 
-    <string name="cd_up_button">UP navigation button</string>
+    <string name="cd_up_button">Up navigation button</string>
     <string name="cd_voice_search">Voice search</string>
     <string name="cd_clear_button">Clear field</string>
+    <string name="cd_suggestion_icon">List item icon</string>
 </resources>

@@ -103,9 +103,17 @@ You can provide search suggestions by using the following methods:
 - `addSuggestions(String[] suggestions)`
 - `addSuggestions(ArrayList<String> suggestions)`
 
-To remove the search suggestions use:
+It's also possible to add a single suggestion using the following method:
+
+- `addSuggestion(String suggestion)`
+
+To remove all the search suggestions use:
 
 - `clearSuggestions()`
+
+And to remove a single suggestion, use the following method:
+
+- `removeSuggestion(String suggestion)`
 
 The search history is automatically handled by the view, and it can be cleared by using:
 
@@ -126,6 +134,8 @@ You can change how your MaterialSearchView looks like. To achieve that effect, t
     <item name="searchCloseIcon">@drawable/ic_action_navigation_close</item>
     <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back</item>
     <item name="searchSuggestionBackground">@color/search_layover_bg</item>
+    <item name="searchBarHeight">?attr/actionBarSize</item>
+    <item name="voiceHintPrompt">@string/hint_prompt</item>
     <item name="android:textColor">@color/black</item>
     <item name="android:textColorHint">@color/gray_50</item>
     <item name="android:hint">@string/search_hint</item>
@@ -161,7 +171,8 @@ Currently there are two interfaces that you can use to instantiate listeners for
 The MaterialSearchView supports the following languages:
 
 - English (en_US);
-- Brazillian Portuguese (pt_BR).
+- Brazillian Portuguese (pt_BR);
+- Italian (Thanks to [Francesco Donzello](https://github.com/wideawake)).
 
 ## Sample
 <img src='http://i.stack.imgur.com/C5LA4.gif' width='450' height='800' />
@@ -169,6 +180,7 @@ The MaterialSearchView supports the following languages:
 ## Credits
 This library was created by Maurício Pessoa with contributions from:
 - [Adam McNeilly](http://adammcneilly.com)
+- [Pier Betos](https://github.com/peterbetos)
 
 JCenter version was made possible with help from:
 

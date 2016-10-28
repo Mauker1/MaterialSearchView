@@ -51,9 +51,10 @@ import br.com.mauker.materialsearchview.utils.AnimationUtils;
 
 /**
  * Created by Mauker and Adam McNeilly on 30/03/2016. dd/MM/YY.
+ * Maintained by Mauker, Adam McNeilly and our beautiful open source community <3
  * Based on stadiko on 6/8/15. https://github.com/krishnakapil/MaterialSeachView
  */
-public class MaterialSearchView extends CoordinatorLayout {
+public class MaterialSearchView extends FrameLayout {
     //region Properties
     /**
      * The freaking log tag. Used for logs, duh.
@@ -70,6 +71,10 @@ public class MaterialSearchView extends CoordinatorLayout {
      */
     public static final int REQUEST_VOICE = 42;
 
+
+    /**
+     * Number of suggestions to show.
+     */
     private static int MAX_HISTORY = BuildConfig.MAX_HISTORY;
 
     /**
@@ -96,6 +101,11 @@ public class MaterialSearchView extends CoordinatorLayout {
      * Flag for whether or not we are clearing focus.
      */
     private boolean mClearingFocus;
+
+    /**
+     * Voice hint prompt text.
+     */
+    private String mHintPrompt;
     //endregion
 
     //region UI Elements
@@ -195,7 +205,6 @@ public class MaterialSearchView extends CoordinatorLayout {
         init();
 
         // Initialize style
-        // TODO - Improve this to the next release.
         initStyle(attributeSet, defStyleAttributes);
     }
     //endregion
@@ -329,6 +338,13 @@ public class MaterialSearchView extends CoordinatorLayout {
                 setSearchBarHeight(typedArray.getDimensionPixelSize(R.styleable.MaterialSearchView_searchBarHeight, getAppCompatActionBarHeight()));
             } else {
                 setSearchBarHeight(getAppCompatActionBarHeight());
+            }
+
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_voiceHintPrompt)) {
+                setVoiceHintPrompt(typedArray.getString(R.styleable.MaterialSearchView_voiceHintPrompt));
+            }
+            else {
+                setVoiceHintPrompt(mContext.getString(R.string.hint_prompt));
             }
 
             ViewCompat.setFitsSystemWindows(this, typedArray.getBoolean(R.styleable.MaterialSearchView_android_fitsSystemWindows, false));
@@ -556,7 +572,6 @@ public class MaterialSearchView extends CoordinatorLayout {
             displayVoiceButton(true);
         }
 
-        // TODO - #5
         // If we have a query listener and the text has changed, call it.
         if(mOnQueryTextListener != null) {
             mOnQueryTextListener.onQueryTextChange(newText.toString());
@@ -603,7 +618,7 @@ public class MaterialSearchView extends CoordinatorLayout {
             mOnVoiceClickedListener.onVoiceClicked();
         } else {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, mContext.getString(R.string.hint_prompt));
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, mHintPrompt);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, MAX_RESULTS); // Quantity of results we want to receive
 
@@ -842,6 +857,15 @@ public class MaterialSearchView extends CoordinatorLayout {
         mSearchBar.getLayoutParams().height = height;
     }
 
+    public void setVoiceHintPrompt(final String hintPrompt) {
+        if (!TextUtils.isEmpty(hintPrompt)) {
+            mHintPrompt = hintPrompt;
+        }
+        else {
+            mHintPrompt = mContext.getString(R.string.hint_prompt);
+        }
+    }
+
     /**
      * Returns the actual AppCompat ActionBar height value. This will be used as the default
      *
@@ -934,6 +958,48 @@ public class MaterialSearchView extends CoordinatorLayout {
         values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,1); // Saving as history.
 
         mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
+    }
+
+    /**
+     * Add a single suggestion item to the suggestion list.
+     * @param suggestion - The suggestion to be inserted on the database.
+     */
+    public synchronized void addSuggestion(String suggestion) {
+        if (!TextUtils.isEmpty(suggestion)) {
+            ContentValues value = new ContentValues();
+            value.put(HistoryContract.HistoryEntry.COLUMN_QUERY, suggestion);
+            value.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, System.currentTimeMillis());
+            value.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,0); // Saving as suggestion.
+
+
+            mContext.getContentResolver().insert(
+                    HistoryContract.HistoryEntry.CONTENT_URI,
+                    value
+            );
+        }
+    }
+
+    /**
+     * Removes a single suggestion from the list. <br/>
+     * Disclaimer, this doesn't remove a single search history item, only suggestions.
+     * @param suggestion - The suggestion to be removed.
+     */
+    public synchronized void removeSuggestion(String suggestion) {
+        if (!TextUtils.isEmpty(suggestion)) {
+            mContext.getContentResolver().delete(
+                    HistoryContract.HistoryEntry.CONTENT_URI,
+                    HistoryContract.HistoryEntry.TABLE_NAME +
+                            "." +
+                            HistoryContract.HistoryEntry.COLUMN_QUERY +
+                            " = ? AND " +
+                            HistoryContract.HistoryEntry.TABLE_NAME +
+                            "." +
+                            HistoryContract.HistoryEntry.COLUMN_IS_HISTORY +
+                            " = ?"
+                    ,
+                    new String[]{suggestion,String.valueOf(0)}
+                    );
+        }
     }
 
     public synchronized void addSuggestions(List<String> suggestions) {

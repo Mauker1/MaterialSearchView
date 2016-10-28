@@ -5,7 +5,7 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        vectorDrawables.useSupportLibrary = true
+      //  vectorDrawables.useSupportLibrary = true
         applicationId "br.com.mauker.materialsearchview.app"
         minSdkVersion 14
         targetSdkVersion 25

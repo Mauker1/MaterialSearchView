@@ -5,4 +5,5 @@
     <string name="cd_up_button">Botão de navegação UP</string>
     <string name="cd_voice_search">Busca por voz</string>
     <string name="cd_clear_button">Limpar campo</string>
+    <string name="cd_suggestion_icon">Ícone do item da lista</string>
 </resources>
