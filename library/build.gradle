@@ -14,13 +14,12 @@ android {
         versionName "1.1.3"
 
         buildConfigField INT, "MAX_HISTORY", "10"
-
         consumerProguardFiles 'proguard-android.txt'
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        //    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     
