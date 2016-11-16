@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_hint">Zoek&#8230;</string>
+    <string name="hint_prompt">Spreek een item naam of een nummer</string>
+
+    <string name="cd_up_button">Navigatie omhoog knop</string>
+    <string name="cd_voice_search">Spraaksgewijs zoeken</string>
+    <string name="cd_clear_button">Veld legen</string>
+    <string name="cd_suggestion_icon">Lijst item icoon</string>
+</resources>
