@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+## Version 1.2.0
+
+_2016-10-27_
+
+* Suggestions can now be inserted and removed one by one;
+* It's now possible to change the voice hint prompt and the searchBarHeight;
+* MSV now have RTL support;
+* MSV now is correctly displayed with transparent status bar;
+* `CoordinatorLayout` was dropped. Now `FrameLayout` is the new root for MSV;
+* Added italian translation;
+* Bunch of bug fixes (See [this link](https://github.com/Mauker1/MaterialSearchView/milestone/2) for more information).
+
 ## Version 1.1.3
 
 _2016-08-14_

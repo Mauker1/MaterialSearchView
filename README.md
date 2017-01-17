@@ -2,7 +2,7 @@
 Android SearchView based on Material Design guidelines. The MaterialSearchView will overlay a Toolbar or ActionBar as well as display a ListView for the user to show suggested or recent searches.
 
 [![Build Status](https://travis-ci.org/Mauker1/MaterialSearchView.svg?branch=master)](https://travis-ci.org/Mauker1/MaterialSearchView)
-[![APK size](https://img.shields.io/badge/Size-81 KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.1.3)
+[![APK size](https://img.shields.io/badge/Size-70 KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.2.0)
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialSearchView-green.svg?style=true)](https://android-arsenal.com/details/1/3469)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/Mauker1/MaterialSearchView/blob/master/LICENSE)
@@ -10,7 +10,7 @@ Android SearchView based on Material Design guidelines. The MaterialSearchView w
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
 ```java
-compile 'br.com.mauker.materialsearchview:materialsearchview:1.1.3'
+compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.0'
 ```
 
 This library is supported with a min SDK of 14.
@@ -103,9 +103,17 @@ You can provide search suggestions by using the following methods:
 - `addSuggestions(String[] suggestions)`
 - `addSuggestions(ArrayList<String> suggestions)`
 
-To remove the search suggestions use:
+It's also possible to add a single suggestion using the following method:
+
+- `addSuggestion(String suggestion)`
+
+To remove all the search suggestions use:
 
 - `clearSuggestions()`
+
+And to remove a single suggestion, use the following method:
+
+- `removeSuggestion(String suggestion)`
 
 The search history is automatically handled by the view, and it can be cleared by using:
 
@@ -126,6 +134,8 @@ You can change how your MaterialSearchView looks like. To achieve that effect, t
     <item name="searchCloseIcon">@drawable/ic_action_navigation_close</item>
     <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back</item>
     <item name="searchSuggestionBackground">@color/search_layover_bg</item>
+    <item name="searchBarHeight">?attr/actionBarSize</item>
+    <item name="voiceHintPrompt">@string/hint_prompt</item>
     <item name="android:textColor">@color/black</item>
     <item name="android:textColorHint">@color/gray_50</item>
     <item name="android:hint">@string/search_hint</item>
@@ -161,7 +171,8 @@ Currently there are two interfaces that you can use to instantiate listeners for
 The MaterialSearchView supports the following languages:
 
 - English (en_US);
-- Brazillian Portuguese (pt_BR).
+- Brazillian Portuguese (pt_BR);
+- Italian (Thanks to [Francesco Donzello](https://github.com/wideawake)).
 
 ## Sample
 <img src='http://i.stack.imgur.com/C5LA4.gif' width='450' height='800' />
@@ -169,6 +180,7 @@ The MaterialSearchView supports the following languages:
 ## Credits
 This library was created by Maurício Pessoa with contributions from:
 - [Adam McNeilly](http://adammcneilly.com)
+- [Pier Betos](https://github.com/peterbetos)
 
 JCenter version was made possible with help from:
 

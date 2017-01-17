@@ -1,0 +1,9 @@
+<resources>
+	<string name="search_hint">Rechercher&#8230;</string>
+	<string name="hint_prompt">Prononcer un nom ou un nombre</string>
+
+	<string name="cd_up_button">Bouton de navigation UP</string>
+	<string name="cd_voice_search">Recherche vocale</string>
+	<string name="cd_clear_button">Effacer le champ</string>
+	<string name="cd_suggestion_icon">Lister les icônes</string>
+</resources>
