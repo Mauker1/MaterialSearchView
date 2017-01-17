@@ -123,6 +123,26 @@ You can also remove both by using the method below:
 
 - `clearAll()`
 
+## Modifying the suggestion list behavior
+
+The suggestion list is based on a `ListView`, and as such you can define the behavior of the item click by using the `MaterialSearchView#setOnItemClickListener()` method.
+
+If you want to submit the query from the selected suggestion, you can use the snippet below:
+
+```java
+searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // Do something when the suggestion list is clicked.
+        String suggestion = searchView.getSuggestionAtPosition(position);
+
+        searchView.setQuery(suggestion, true);
+    }
+});
+```
+
+If you just want to set the text on the search view text field when the user selects the suggestion, change the second argument from the  `searchView#setQuery()` from `true` to `false`.
+
 ## Styling the View
 
 You can change how your MaterialSearchView looks like. To achieve that effect, try to add the following lines to your styles.xml:
@@ -172,7 +192,8 @@ The MaterialSearchView supports the following languages:
 
 - English (en_US);
 - Brazillian Portuguese (pt_BR);
-- Italian (Thanks to [Francesco Donzello](https://github.com/wideawake)).
+- Italian (Thanks to [Francesco Donzello](https://github.com/wideawake));
+- French (Thanks to [Robin](https://github.com/RobinPetit)).
 
 ## Sample
 <img src='http://i.stack.imgur.com/C5LA4.gif' width='450' height='800' />
