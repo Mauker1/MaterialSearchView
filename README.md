@@ -141,7 +141,7 @@ searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 });
 ```
 
-If you want just to set the text on the view when the user selects the suggestion, change the second argument from the  `searchView#setQuery()` from `true` to `false`.
+If you just want to set the text on the search view text field when the user selects the suggestion, change the second argument from the  `searchView#setQuery()` from `true` to `false`.
 
 ## Styling the View
 
