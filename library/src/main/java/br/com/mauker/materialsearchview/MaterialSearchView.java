@@ -951,13 +951,22 @@ public class MaterialSearchView extends FrameLayout {
     //endregion
 
     //region Database Methods
-    private synchronized void saveQueryToDb(String query, long ms) {
-        ContentValues values = new ContentValues();
-        values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
-        values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, ms);
-        values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,1); // Saving as history.
+    /**
+    * Save a query to the local database.
+    * 
+    * @param query - The query to be saved. Can't be empty or null.
+    * @param ms - The insert date, in millis. As a suggestion, use System.currentTimeMillis();
+    **/
+    public synchronized void saveQueryToDb(String query, long ms) {
+        if (!TextUtils.isEmpty(query) && ms > 0) {
+            ContentValues values = new ContentValues();
+        
+            values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
+            values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, ms);
+            values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,1); // Saving as history.
 
-        mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
+            mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
+        }
     }
 
     /**
