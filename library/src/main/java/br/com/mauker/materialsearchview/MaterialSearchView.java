@@ -923,6 +923,17 @@ public class MaterialSearchView extends FrameLayout {
     public boolean isOpen() {
         return mOpen;
     }
+    
+    /**
+     * Gets the current text on the SearchView, if any. Returns an empty String if no text is available.
+     * @return The current query, or an empty String if there's no query.
+     */
+    public String getCurrentQuery() {
+        if (!TextUtils.isEmpty(mCurrentQuery)) {
+            return mCurrentQuery.toString();
+        }
+        return "";
+    }
 
     /** Determines if the user's voice is available
      * @return True if we can collect the user's voice, false otherwise.
