@@ -91,6 +91,11 @@ public class MaterialSearchView extends FrameLayout {
      * Whether or not the MaterialSearchView will animate into view or just appear.
      */
     private boolean mShouldAnimate;
+    
+    /**
+     * Whether or not the MaterialSearchView will clonse under a click on the Tint View (Blank Area).
+     */
+    private boolean mShouldCloseOnTintClick;
 
     /**
      * Wheter to keep the search history or not.
@@ -252,7 +257,9 @@ public class MaterialSearchView extends FrameLayout {
         mTintView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeSearch();
+                if (mShouldCloseOnTintClick) {
+                    closeSearch();
+                }
             }
         });
 
@@ -647,18 +654,47 @@ public class MaterialSearchView extends FrameLayout {
         mSuggestionsListView.setOnItemClickListener(listener);
     }
 
+    /**
+     * Sets an OnItemLongClickListener to the suggestion list.
+     *
+     * @param listener - The ItemLongClickListener.
+     */
     public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
         mSuggestionsListView.setOnItemLongClickListener(listener);
     }
+    
+    /**
+     * Toggles the Tint click action.
+     *
+     * @param shouldClose - Whether the tint click should close the search view or not.
+     */
+    public void setCloseOnTintClick(boolean shouldClose) {
+        mShouldCloseOnTintClick = shouldClose;
+    }
 
+    /**
+     * Sets whether the MSV should be animated on open/close or not.
+     *
+     * @param mShouldAnimate - true if you want animations, false otherwise.
+     */
     public void setShouldAnimate(boolean mShouldAnimate) {
         this.mShouldAnimate = mShouldAnimate;
     }
 
+    /**
+     * Sets whether the MSV should be keeping track of the submited queries or not.
+     *
+     * @param keepHistory - true if you want to save the search history, false otherwise.
+     */
     public void setShouldKeepHistory(boolean keepHistory) {
         this.mShouldKeepHistory = keepHistory;
     }
 
+    /**
+     * Sets how many items you want to show from the history database.
+     *
+     * @param maxHistory - The number of items you want to display.
+     */
     public static void setMaxHistoryResults(int maxHistory) {
         MAX_HISTORY = maxHistory;
     }
@@ -887,6 +923,17 @@ public class MaterialSearchView extends FrameLayout {
     public boolean isOpen() {
         return mOpen;
     }
+    
+    /**
+     * Gets the current text on the SearchView, if any. Returns an empty String if no text is available.
+     * @return The current query, or an empty String if there's no query.
+     */
+    public String getCurrentQuery() {
+        if (!TextUtils.isEmpty(mCurrentQuery)) {
+            return mCurrentQuery.toString();
+        }
+        return "";
+    }
 
     /** Determines if the user's voice is available
      * @return True if we can collect the user's voice, false otherwise.
@@ -951,13 +998,22 @@ public class MaterialSearchView extends FrameLayout {
     //endregion
 
     //region Database Methods
-    private synchronized void saveQueryToDb(String query, long ms) {
-        ContentValues values = new ContentValues();
-        values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
-        values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, ms);
-        values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,1); // Saving as history.
+    /**
+    * Save a query to the local database.
+    * 
+    * @param query - The query to be saved. Can't be empty or null.
+    * @param ms - The insert date, in millis. As a suggestion, use System.currentTimeMillis();
+    **/
+    public synchronized void saveQueryToDb(String query, long ms) {
+        if (!TextUtils.isEmpty(query) && ms > 0) {
+            ContentValues values = new ContentValues();
+        
+            values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
+            values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, ms);
+            values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,1); // Saving as history.
 
-        mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
+            mContext.getContentResolver().insert(HistoryContract.HistoryEntry.CONTENT_URI,values);
+        }
     }
 
     /**
