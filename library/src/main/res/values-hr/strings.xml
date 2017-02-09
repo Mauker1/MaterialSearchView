@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MaterialSearch</string>
+
+    <string name="hello_world">Zdravo svete!</string>
+    <string name="action_settings">Podešavanja</string>
+
+    <string name="bt_clearHistory">Obriši istoriju</string>
+    <string name="bt_clearSuggestions">Obriši predloge</string>
+    <string name="bt_clearAll">Obriši sve</string>
+
+    <string-array name="suggestions">
+        <item>Jabuka</item>
+        <item>Kajsija</item>
+        <item>Avokado</item>
+        <item>Banana</item>
+        <item>Borovnica</item>
+        <item>Kupina</item>
+        <item>Šargarepa</item>
+        <item>Trešnja</item> <!--if this is for colors, višnja is more frequently used, though it's techinally sour cherry-->
+        <item>Narandža</item>
+        <item>Krompir</item>
+        <item>Breskva</item>
+        <item>Marakuje</item> <!--by Google translate. Sounds legit enough, even though we don't have this fruit anywhere near nor do we find it particularly important-->
+        <item>Kruška</item>
+        <item>Jagoda</item>
+    </string-array>
+</resources>
