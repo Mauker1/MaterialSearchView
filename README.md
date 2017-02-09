@@ -193,7 +193,8 @@ The MaterialSearchView supports the following languages:
 - English (en_US);
 - Brazillian Portuguese (pt_BR);
 - Italian (Thanks to [Francesco Donzello](https://github.com/wideawake));
-- French (Thanks to [Robin](https://github.com/RobinPetit)).
+- French (Thanks to [Robin](https://github.com/RobinPetit));
+- Bosnian, Croatian and Serbian (Thanks to [Luke](https://github.com/luq-0)).
 
 ## Sample
 <img src='http://i.stack.imgur.com/C5LA4.gif' width='450' height='800' />
