@@ -82,6 +82,8 @@ To close the search view, call the `searchView.closeSearch()` method.
 
 You can check if the view is open by using the `searchView.isOpen()` method.
 
+As from Version 1.2.1 it's also possible to get the query anytime by using the `searchView.getCurrentQuery()` method.
+
 **Protip:** To close the search view using the back button, put the following code on your `Activity`:
 
 ```java
