@@ -3,7 +3,6 @@ Android SearchView based on Material Design guidelines. The MaterialSearchView w
 
 [![Download](https://api.bintray.com/packages/mauker/maven/MaterialSearchView/images/download.svg)](https://bintray.com/mauker/maven/MaterialSearchView/_latestVersion)
 [![APK size](https://img.shields.io/badge/Size-70 KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.2.0)
-
 [![Build Status](https://travis-ci.org/Mauker1/MaterialSearchView.svg?branch=master)](https://travis-ci.org/Mauker1/MaterialSearchView)
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialSearchView-green.svg?style=true)](https://android-arsenal.com/details/1/3469)
