@@ -846,7 +846,6 @@ public class MaterialSearchView extends FrameLayout {
         this.mOnVoiceClickedListener = listener;
     }
 
-
     /**
      * Sets the bar height if prefered to not use the existing actionbar height value
      *
@@ -877,6 +876,12 @@ public class MaterialSearchView extends FrameLayout {
         return getResources().getDimensionPixelSize(tv.resourceId);
     }
 
+    /**
+     * Retrieves the adapter.
+     */
+    public CursorAdapter getAdapter() {
+        return (CursorAdapter) mAdapter;
+    }
     //endregion
 
     //region Accessors
