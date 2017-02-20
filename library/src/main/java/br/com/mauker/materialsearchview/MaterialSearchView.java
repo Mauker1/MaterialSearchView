@@ -157,7 +157,7 @@ public class MaterialSearchView extends FrameLayout {
     /**
      * Adapter for displaying suggestions.
      */
-    private ListAdapter mAdapter;
+    private CursorAdapter mAdapter;
     //endregion
 
     //region Query Properties
@@ -270,7 +270,7 @@ public class MaterialSearchView extends FrameLayout {
         initSearchView();
 
         mAdapter = new CursorSearchAdapter(mContext,getHistoryCursor(),0);
-        ((CursorAdapter)mAdapter).setFilterQueryProvider(new FilterQueryProvider() {
+        mAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
                 String filter = constraint.toString();
@@ -383,8 +383,8 @@ public class MaterialSearchView extends FrameLayout {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // When the text changes, filter
-                ((CursorAdapter)mAdapter).getFilter().filter(s.toString());
-                ((CursorAdapter) mAdapter).notifyDataSetChanged();
+                mAdapter.getFilter().filter(s.toString());
+                mAdapter.notifyDataSetChanged();
                 MaterialSearchView.this.onTextChanged(s);
             }
 
@@ -882,7 +882,6 @@ public class MaterialSearchView extends FrameLayout {
         this.mOnVoiceClickedListener = listener;
     }
 
-
     /**
      * Sets the bar height if prefered to not use the existing actionbar height value
      *
@@ -913,6 +912,12 @@ public class MaterialSearchView extends FrameLayout {
         return getResources().getDimensionPixelSize(tv.resourceId);
     }
 
+    /**
+     * Retrieves the adapter.
+     */
+    public CursorAdapter getAdapter() {
+        return mAdapter ;
+    }
     //endregion
 
     //region Accessors
@@ -1094,7 +1099,7 @@ public class MaterialSearchView extends FrameLayout {
 
     private void refreshAdapterCursor() {
         Cursor historyCursor = getHistoryCursor();
-        ((CursorAdapter) mAdapter).changeCursor(historyCursor);
+        mAdapter.changeCursor(historyCursor);
     }
 
     public synchronized void clearSuggestions() {
