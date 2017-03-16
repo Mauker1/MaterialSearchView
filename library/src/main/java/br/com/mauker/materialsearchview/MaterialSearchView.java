@@ -17,7 +17,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.Editable;
@@ -726,10 +725,10 @@ public class MaterialSearchView extends FrameLayout {
     public void setBackground(Drawable background) {
         // Method changed in jelly bean for setting background.
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mSearchBar.setBackground(background);
+            mTintView.setBackground(background);
         } else {
             //noinspection deprecation
-            mSearchBar.setBackgroundDrawable(background);
+            mTintView.setBackgroundDrawable(background);
         }
     }
 
@@ -740,8 +739,12 @@ public class MaterialSearchView extends FrameLayout {
      */
     @Override
     public void setBackgroundColor(int color) {
+        setTintColor(color);
+    }
+
+    public void setSearchBarColor(int color) {
         // Set background color of search bar.
-        mSearchBar.setBackgroundColor(color);
+        mSearchEditText.setBackgroundColor(color);
     }
 
     /**
@@ -749,7 +752,7 @@ public class MaterialSearchView extends FrameLayout {
      *
      * @param color The new color.
      */
-    public void setTintColor(int color) {
+    private void setTintColor(int color) {
         mTintView.setBackgroundColor(color);
     }
 
