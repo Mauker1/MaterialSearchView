@@ -195,8 +195,12 @@ The MaterialSearchView supports the following languages:
 - Italian (Thanks to [Francesco Donzello](https://github.com/wideawake));
 - French (Thanks to [Robin](https://github.com/RobinPetit)).
 
-## Sample
+## Sample GIF
 <img src='http://i.stack.imgur.com/C5LA4.gif' width='450' height='800' />
+
+## More Info
+
+For more use cases, and some examples, you can [check the sample app](https://github.com/Mauker1/MaterialSearchView/tree/master/app/src/main/java/br/com/mauker/materialsearchview/app).
 
 ## Credits
 This library was created by Maurício Pessoa with contributions from:

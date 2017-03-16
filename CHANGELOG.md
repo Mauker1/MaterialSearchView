@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+## Version 1.2.1
+
+_2017-03-16_
+
+* You can now get the default adapter by calling `MaterialSearchView#getAdapter()` and have more control over it;
+* Added the `getCurrentQuery()` method, making it possible to get the query anywhere in the application;
+* Added the `setCloseOnTintClick(boolean)` method. If you set it to `true`, a touch outside the result list will close the `MaterialSearchView`, it'll remain open otherwise;
+* Added the `setSearchBarColor(int color)` method, where you can change specifically the search bar color;
+* The `saveQueryToDb()` method is now public, giving the programmer more control over when to save the queries;
+* The `setTintBackground(int color)` method is now private. It's been replaced by the public method `setBackgroundColor(int color)`;
+* Added French, Dutch, Bosnian, Croatian and Serbian translations.
+
 ## Version 1.2.0
 
 _2016-10-27_

@@ -7,11 +7,12 @@ android {
     def INT = "int"
 
     defaultConfig {
-     //   vectorDrawables.useSupportLibrary = true
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 11
-        versionName "1.2.0"
+        versionCode 12
+        versionName "1.2.1"
+
+        vectorDrawables.useSupportLibrary = true
 
         buildConfigField INT, "MAX_HISTORY", "10"
         consumerProguardFiles 'proguard-android.txt'
@@ -37,7 +38,7 @@ dependencies {
 ext {
     PUBLISH_GROUP_ID = 'br.com.mauker.materialsearchview'
     PUBLISH_ARTIFACT_ID = 'materialsearchview'
-    PUBLISH_VERSION = '1.2.0'
+    PUBLISH_VERSION = '1.2.1'
 }
 
 apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
