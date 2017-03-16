@@ -1,11 +1,14 @@
 # MaterialSearchView
 Android SearchView based on Material Design guidelines. The MaterialSearchView will overlay a Toolbar or ActionBar as well as display a ListView for the user to show suggested or recent searches.
 
-[![Build Status](https://travis-ci.org/Mauker1/MaterialSearchView.svg?branch=master)](https://travis-ci.org/Mauker1/MaterialSearchView)
+[![Download](https://api.bintray.com/packages/mauker/maven/MaterialSearchView/images/download.svg)](https://bintray.com/mauker/maven/MaterialSearchView/_latestVersion)
 [![APK size](https://img.shields.io/badge/Size-70 KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.2.0)
+[![Build Status](https://travis-ci.org/Mauker1/MaterialSearchView.svg?branch=master)](https://travis-ci.org/Mauker1/MaterialSearchView)
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialSearchView-green.svg?style=true)](https://android-arsenal.com/details/1/3469)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/Mauker1/MaterialSearchView/blob/master/LICENSE)
+
+<a href='https://ko-fi.com/A623L7G' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a> 
 
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
@@ -81,6 +84,8 @@ To open the search view, simply call the `searchView.openSearch()` method.
 To close the search view, call the `searchView.closeSearch()` method.
 
 You can check if the view is open by using the `searchView.isOpen()` method.
+
+As from Version 1.2.1 it's also possible to get the query anytime by using the `searchView.getCurrentQuery()` method.
 
 **Protip:** To close the search view using the back button, put the following code on your `Activity`:
 
@@ -193,7 +198,8 @@ The MaterialSearchView supports the following languages:
 - English (en_US);
 - Brazillian Portuguese (pt_BR);
 - Italian (Thanks to [Francesco Donzello](https://github.com/wideawake));
-- French (Thanks to [Robin](https://github.com/RobinPetit)).
+- French (Thanks to [Robin](https://github.com/RobinPetit));
+- Bosnian, Croatian and Serbian (Thanks to [Luke](https://github.com/luq-0)).
 
 ## Sample GIF
 <img src='http://i.stack.imgur.com/C5LA4.gif' width='450' height='800' />
