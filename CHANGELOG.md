@@ -3,6 +3,12 @@ Change Log
 
 ## Version 1.2.1
 
+_2017-03-20_
+
+* Fixed a bug where MSV was crashing on devices with Kitkat or older due to the use of Vector Drawables. For more info on this issue, check [issue #92](https://github.com/Mauker1/MaterialSearchView/issues/92).
+
+## Version 1.2.1
+
 _2017-03-16_
 
 * You can now get the default adapter by calling `MaterialSearchView#getAdapter()` and have more control over it;

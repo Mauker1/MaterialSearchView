@@ -19,6 +19,7 @@ import android.os.Build;
 import android.speech.RecognizerIntent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -36,7 +37,6 @@ import android.widget.FilterQueryProvider;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -299,6 +299,7 @@ public class MaterialSearchView extends FrameLayout {
      * @param defStyleAttribute An attribute to the style theme applied to this view.
      */
     private void initStyle(AttributeSet attributeSet, int defStyleAttribute) {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         TypedArray typedArray = mContext.obtainStyledAttributes(attributeSet, R.styleable.MaterialSearchView, defStyleAttribute, 0);
 
         if(typedArray != null) {
@@ -321,23 +322,38 @@ public class MaterialSearchView extends FrameLayout {
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_searchVoiceIcon)) {
-                setVoiceIcon(typedArray.getDrawable(R.styleable.MaterialSearchView_searchVoiceIcon));
+                setVoiceIcon(typedArray.getResourceId(
+                        R.styleable.MaterialSearchView_searchVoiceIcon,
+                        R.drawable.ic_action_voice_search)
+                );
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_searchCloseIcon)) {
-                setClearIcon(typedArray.getDrawable(R.styleable.MaterialSearchView_searchCloseIcon));
+                setClearIcon(typedArray.getResourceId(
+                        R.styleable.MaterialSearchView_searchCloseIcon,
+                        R.drawable.ic_action_navigation_close)
+                );
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_searchBackIcon)) {
-                setBackIcon(typedArray.getDrawable(R.styleable.MaterialSearchView_searchBackIcon));
+                setBackIcon(typedArray.getResourceId(
+                        R.styleable.MaterialSearchView_searchBackIcon,
+                        R.drawable.ic_action_navigation_arrow_back)
+                );
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_searchSuggestionBackground)) {
-                setSuggestionBackground(typedArray.getResourceId(R.styleable.MaterialSearchView_searchSuggestionBackground, R.color.search_layover_bg));
+                setSuggestionBackground(typedArray.getResourceId(
+                        R.styleable.MaterialSearchView_searchSuggestionBackground,
+                        R.color.search_layover_bg)
+                );
             }
 
             if(typedArray.hasValue(R.styleable.MaterialSearchView_android_inputType)) {
-                setInputType(typedArray.getInteger(R.styleable.MaterialSearchView_android_inputType, InputType.TYPE_CLASS_TEXT));
+                setInputType(typedArray.getInteger(
+                        R.styleable.MaterialSearchView_android_inputType,
+                        InputType.TYPE_CLASS_TEXT)
+                );
             }
 
             if (typedArray.hasValue(R.styleable.MaterialSearchView_searchBarHeight)) {
@@ -835,26 +851,26 @@ public class MaterialSearchView extends FrameLayout {
 
     /**
      * Sets the icon for the voice action.
-     * @param drawable The drawable to represent the voice action.
+     * @param resourceId The drawable to represent the voice action.
      */
-    public void setVoiceIcon(Drawable drawable) {
-        mVoice.setImageDrawable(drawable);
+    public void setVoiceIcon(int resourceId) {
+        mVoice.setImageResource(resourceId);
     }
 
     /**
      * Sets the icon for the clear action.
-     * @param drawable The drawable to represent the clear action.
+     * @param resourceId The resource ID of drawable that will represent the clear action.
      */
-    public void setClearIcon(Drawable drawable) {
-        mClear.setImageDrawable(drawable);
+    public void setClearIcon(int resourceId) {
+        mClear.setImageResource(resourceId);
     }
 
     /**
      * Sets the icon for the back action.
-     * @param drawable The drawable to represent the back action.
+     * @param resourceId The resource Id of the drawable that will represent the back action.
      */
-    public void setBackIcon(Drawable drawable) {
-        mBack.setImageDrawable(drawable);
+    public void setBackIcon(int resourceId) {
+        mBack.setImageResource(resourceId);
     }
 
     /**
