@@ -2,7 +2,7 @@
 Android SearchView based on Material Design guidelines. The MaterialSearchView will overlay a Toolbar or ActionBar as well as display a ListView for the user to show suggested or recent searches.
 
 [![Download](https://api.bintray.com/packages/mauker/maven/MaterialSearchView/images/download.svg)](https://bintray.com/mauker/maven/MaterialSearchView/_latestVersion)
-[![APK size](https://img.shields.io/badge/Size-70%20KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.2.0)
+[![APK size](https://img.shields.io/badge/Size-54%20KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.2.1)
 [![Build Status](https://travis-ci.org/Mauker1/MaterialSearchView.svg?branch=master)](https://travis-ci.org/Mauker1/MaterialSearchView)
 
 
@@ -15,7 +15,7 @@ Android SearchView based on Material Design guidelines. The MaterialSearchView w
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
 ```java
-compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.0'
+compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.1'
 ```
 
 This library is supported with a min SDK of 14.
