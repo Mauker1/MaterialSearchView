@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name" translatable="false">Material Search Library</string>
+    <string name="search_hint">Buscar&#8230;</string>
+    <string name="hint_prompt">Di un nombre o número</string>
+
+    <string name="cd_up_button">Navegar hacia arriba</string>
+    <string name="cd_voice_search">Búsqueda por voz</string>
+    <string name="cd_clear_button">Borrar</string>
+    <string name="cd_suggestion_icon">Ícono de elemento de lista</string>
+</resources>
