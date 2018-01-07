@@ -490,7 +490,7 @@ class KTMaterialSearchView @JvmOverloads constructor(context: Context, attribute
         currentQuery = searchEditText?.text.toString()
 
         // If the text is not empty, show the empty button and hide the voice button
-        if (!TextUtils.isEmpty(currentQuery)) {
+        if (!currentQuery.isEmpty()) {
             displayVoiceButton(false)
             displayClearButton(true)
         } else {
@@ -580,13 +580,13 @@ class KTMaterialSearchView @JvmOverloads constructor(context: Context, attribute
     fun setQuery(query: CharSequence?, submit: Boolean) {
         searchEditText?.setText(query)
 
-        if (query != null) {
+        query?.let {
             searchEditText?.setSelection(searchEditText?.length() ?: 0)
             currentQuery = query
-        }
 
-        if (submit && !TextUtils.isEmpty(query)) {
-            onSubmitQuery()
+            if (submit && !it.isEmpty()) {
+                onSubmitQuery()
+            }
         }
     }
 
@@ -851,7 +851,7 @@ class KTMaterialSearchView @JvmOverloads constructor(context: Context, attribute
      */
     @Synchronized
     fun saveQueryToDb(query: String, ms: Long) {
-        if (!TextUtils.isEmpty(query) && ms > 0) {
+        if (!query.isEmpty() && ms > 0) {
             val values = ContentValues()
 
             values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query)
@@ -868,7 +868,7 @@ class KTMaterialSearchView @JvmOverloads constructor(context: Context, attribute
      */
     @Synchronized
     fun addSuggestion(suggestion: String) {
-        if (!TextUtils.isEmpty(suggestion)) {
+        if (!suggestion.isEmpty()) {
             val value = ContentValues()
             value.put(HistoryContract.HistoryEntry.COLUMN_QUERY, suggestion)
             value.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, System.currentTimeMillis())
@@ -889,7 +889,7 @@ class KTMaterialSearchView @JvmOverloads constructor(context: Context, attribute
      */
     @Synchronized
     fun removeSuggestion(suggestion: String) {
-        if (!TextUtils.isEmpty(suggestion)) {
+        if (!suggestion.isEmpty()) {
             context.contentResolver.delete(
                     HistoryContract.HistoryEntry.CONTENT_URI,
                     HistoryContract.HistoryEntry.TABLE_NAME +
