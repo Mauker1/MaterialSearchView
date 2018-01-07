@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -35,6 +36,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
     compile "com.android.support:design:${supportLibraryVersion}"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 ext {
@@ -44,3 +46,6 @@ ext {
 }
 
 apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+repositories {
+    mavenCentral()
+}
