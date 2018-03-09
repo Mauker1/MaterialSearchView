@@ -15,7 +15,7 @@ Android SearchView based on Material Design guidelines. The MaterialSearchView w
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
 ```java
-compile 'br.com.mauker.materialsearchview:materialsearchview:1.2.2'
+implementation 'br.com.mauker.materialsearchview:materialsearchview:1.2.2'
 ```
 
 This library is supported with a min SDK of 14.
