@@ -45,6 +45,7 @@
                 android:background="@null"
                 android:hint="@string/search_hint"
                 android:imeOptions="actionSearch|flagNoExtractUi"
+                android:inputType="text"
                 android:maxLines="1"
                 android:paddingLeft="@dimen/search_view_text_padding"
                 android:paddingRight="@dimen/search_view_text_padding"
