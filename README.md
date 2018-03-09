@@ -38,6 +38,17 @@ public class MsvAuthority {
 }
 ```
 
+Or if you're using Kotlin:
+
+**MsvAuthority.kt**
+```Kotlin
+package br.com.mauker
+
+object MsvAuthority {
+    const val CONTENT_AUTHORITY: String = "br.com.mauker.materialsearchview.searchhistorydatabase"
+}
+```
+
 **AndroidManifest.xml**
 
 ```xml
@@ -65,7 +76,7 @@ public class MsvAuthority {
 
 ## Usage
 
-To open the search view on your app, add the following code to your layout:
+To open the search view on your app, add the following code **to the end of your layout**:
 
 ```xml
 <br.com.mauker.materialsearchview.MaterialSearchView
@@ -81,15 +92,15 @@ Then, inside your `Activity` get the reference:
 MaterialSearchView searchView = (MaterialSearchView) findViewById(R.id.search_view);
 ```
 
-To open the search view, simply call the `searchView.openSearch()` method.
+- To open the search view, simply call the `searchView.openSearch()` method.
 
-To close the search view, call the `searchView.closeSearch()` method.
+- To close the search view, call the `searchView.closeSearch()` method.
 
-You can check if the view is open by using the `searchView.isOpen()` method.
+- You can check if the view is open by using the `searchView.isOpen()` method.
 
-As from Version 1.2.1 it's also possible to get the query anytime by using the `searchView.getCurrentQuery()` method.
+- As from Version 1.2.1 it's also possible to get the query anytime by using the `searchView.getCurrentQuery()` method.
 
-**Protip:** To close the search view using the back button, put the following code on your `Activity`:
+- To close the search view using the back button, put the following code on your `Activity`:
 
 ```java
 @Override
@@ -102,6 +113,8 @@ public void onBackPressed() {
     }
 }
 ```
+
+For more examples on how to use this lib, [check the sample app code here](https://github.com/Mauker1/MaterialSearchView/blob/master/app/src/main/java/br/com/mauker/materialsearchview/app/MainActivity.java).
 
 ## Search history and suggestions
 
@@ -189,8 +202,8 @@ So it'll look like:
 ## Interfaces
 Currently there are two interfaces that you can use to instantiate listeners for:
 
-- `OnQueryTextListener`: This interface handles either QueryTextChange or QueryTextSubmit events inside the MaterialSearchView.
-- `SearchViewListener`: This interfaces handles the open or close events of the MaterialSearchView.
+- `OnQueryTextListener`: Use this interface to handle QueryTextChange or QueryTextSubmit events inside the MaterialSearchView.
+- `SearchViewListener`: You can use this interface to listen and handle the open or close events of the MaterialSearchView.
 
 
 ## Languages
