@@ -17,6 +17,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
+import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatDelegate;
@@ -905,6 +906,39 @@ public class MaterialSearchView extends FrameLayout {
     public void setSuggestionBackground(int resource) {
         if (resource > 0) {
             mSuggestionsListView.setBackgroundResource(resource);
+        }
+    }
+
+    /**
+     * Changes the default history list icon.
+     *
+     * @param resourceId The resource id of the new history icon.
+     */
+    public void setHistoryIcon(@DrawableRes int resourceId) {
+        if (mAdapter instanceof CursorSearchAdapter) {
+            ((CursorSearchAdapter)mAdapter).setHistoryIcon(resourceId);
+        }
+    }
+
+    /**
+     * Changes the default suggestion list icon.
+     *
+     * @param resourceId The resource id of the new suggestion icon.
+     */
+    public void setSuggestionIcon(@DrawableRes int resourceId) {
+        if (mAdapter instanceof CursorSearchAdapter) {
+            ((CursorSearchAdapter)mAdapter).setSuggestionIcon(resourceId);
+        }
+    }
+
+    /**
+     * Changes the default suggestion list item text color.
+     *
+     * @param color The new color.
+     */
+    public void setListTextColor(int color) {
+        if (mAdapter instanceof CursorSearchAdapter) {
+            ((CursorSearchAdapter)mAdapter).setTextColor(color);
         }
     }
 
