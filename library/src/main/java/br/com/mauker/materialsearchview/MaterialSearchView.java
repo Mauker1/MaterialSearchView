@@ -222,14 +222,14 @@ public class MaterialSearchView extends FrameLayout {
         LayoutInflater.from(mContext).inflate(R.layout.search_view, this, true);
 
         // Get items
-        mRoot = (FrameLayout) findViewById(R.id.search_layout);
+        mRoot = findViewById(R.id.search_layout);
         mTintView = mRoot.findViewById(R.id.transparent_view);
-        mSearchBar = (LinearLayout) mRoot.findViewById(R.id.search_bar);
-        mBack = (ImageButton) mRoot.findViewById(R.id.action_back);
-        mSearchEditText = (EditText) mRoot.findViewById(R.id.et_search);
-        mVoice = (ImageButton) mRoot.findViewById(R.id.action_voice);
-        mClear = (ImageButton) mRoot.findViewById(R.id.action_clear);
-        mSuggestionsListView = (ListView) mRoot.findViewById(R.id.suggestion_list);
+        mSearchBar = mRoot.findViewById(R.id.search_bar);
+        mBack = mRoot.findViewById(R.id.action_back);
+        mSearchEditText = mRoot.findViewById(R.id.et_search);
+        mVoice = mRoot.findViewById(R.id.action_voice);
+        mClear = mRoot.findViewById(R.id.action_clear);
+        mSuggestionsListView = mRoot.findViewById(R.id.suggestion_list);
 
         // Set click listeners
         mBack.setOnClickListener(new View.OnClickListener() {
@@ -347,6 +347,29 @@ public class MaterialSearchView extends FrameLayout {
                         R.styleable.MaterialSearchView_searchSuggestionBackground,
                         R.color.search_layover_bg)
                 );
+            }
+
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_historyIcon)) {
+                if (mAdapter instanceof CursorSearchAdapter) {
+                    ((CursorSearchAdapter)mAdapter).setHistoryIcon(typedArray.getResourceId(
+                            R.styleable.MaterialSearchView_historyIcon,
+                            R.drawable.ic_history_white));
+                }
+            }
+
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_suggestionIcon)) {
+                if (mAdapter instanceof CursorSearchAdapter) {
+                    ((CursorSearchAdapter)mAdapter).setSuggestionIcon(typedArray.getResourceId(
+                            R.styleable.MaterialSearchView_suggestionIcon,
+                            R.drawable.ic_action_search_white));
+                }
+            }
+
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_listTextColor)) {
+                if (mAdapter instanceof CursorSearchAdapter) {
+                    ((CursorSearchAdapter)mAdapter).setTextColor(typedArray.getColor(R.styleable.MaterialSearchView_listTextColor,
+                            ContextCompat.getColor(mContext,R.color.white)));
+                }
             }
 
             if(typedArray.hasValue(R.styleable.MaterialSearchView_android_inputType)) {
