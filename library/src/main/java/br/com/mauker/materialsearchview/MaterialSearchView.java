@@ -350,27 +350,21 @@ public class MaterialSearchView extends FrameLayout {
                 );
             }
 
-            if (typedArray.hasValue(R.styleable.MaterialSearchView_historyIcon)) {
-                if (mAdapter instanceof CursorSearchAdapter) {
-                    ((CursorSearchAdapter)mAdapter).setHistoryIcon(typedArray.getResourceId(
-                            R.styleable.MaterialSearchView_historyIcon,
-                            R.drawable.ic_history_white));
-                }
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_historyIcon) && mAdapter instanceof CursorSearchAdapter) {
+                ((CursorSearchAdapter)mAdapter).setHistoryIcon(typedArray.getResourceId(
+                        R.styleable.MaterialSearchView_historyIcon,
+                        R.drawable.ic_history_white));
             }
 
-            if (typedArray.hasValue(R.styleable.MaterialSearchView_suggestionIcon)) {
-                if (mAdapter instanceof CursorSearchAdapter) {
-                    ((CursorSearchAdapter)mAdapter).setSuggestionIcon(typedArray.getResourceId(
-                            R.styleable.MaterialSearchView_suggestionIcon,
-                            R.drawable.ic_action_search_white));
-                }
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_suggestionIcon) && mAdapter instanceof CursorSearchAdapter) {
+                ((CursorSearchAdapter)mAdapter).setSuggestionIcon(typedArray.getResourceId(
+                        R.styleable.MaterialSearchView_suggestionIcon,
+                        R.drawable.ic_action_search_white));
             }
 
-            if (typedArray.hasValue(R.styleable.MaterialSearchView_listTextColor)) {
-                if (mAdapter instanceof CursorSearchAdapter) {
-                    ((CursorSearchAdapter)mAdapter).setTextColor(typedArray.getColor(R.styleable.MaterialSearchView_listTextColor,
-                            ContextCompat.getColor(mContext,R.color.white)));
-                }
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_listTextColor) && mAdapter instanceof CursorSearchAdapter) {
+                ((CursorSearchAdapter)mAdapter).setTextColor(typedArray.getColor(R.styleable.MaterialSearchView_listTextColor,
+                        ContextCompat.getColor(mContext,R.color.white)));
             }
 
             if(typedArray.hasValue(R.styleable.MaterialSearchView_android_inputType)) {
