@@ -291,6 +291,14 @@ public class MaterialSearchView extends FrameLayout {
         });
         mSuggestionsListView.setAdapter(mAdapter);
         mSuggestionsListView.setTextFilterEnabled(true);
+        mSuggestionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String suggestion = getSuggestionAtPosition(position);
+
+                setQuery(suggestion, true);
+            }
+        });
     }
 
     /**
