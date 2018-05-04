@@ -2,6 +2,7 @@ package br.com.mauker.materialsearchview.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,24 @@ import br.com.mauker.materialsearchview.db.HistoryContract;
  */
 public class CursorSearchAdapter extends CursorAdapter {
 
+    private int textColor = Color.WHITE;
+    private int historyIcon = R.drawable.ic_history_white;
+    private int suggestionIcon = R.drawable.ic_action_search_white;
+
     public CursorSearchAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
+    }
+
+    public void setTextColor(int color) {
+        textColor = color;
+    }
+
+    public void setHistoryIcon(int iconResource) {
+        historyIcon = iconResource;
+    }
+
+    public void setSuggestionIcon(int iconResource) {
+        suggestionIcon = iconResource;
     }
 
     @Override
@@ -39,12 +56,13 @@ public class CursorSearchAdapter extends CursorAdapter {
                                             HistoryContract.HistoryEntry.COLUMN_IS_HISTORY)) != 0;
 
         vh.tv_content.setText(text);
+        vh.tv_content.setTextColor(textColor);
 
         if (isHistory) {
-            vh.iv_icon.setImageResource(R.drawable.ic_history_white);
+            vh.iv_icon.setImageResource(historyIcon);
         }
         else {
-            vh.iv_icon.setImageResource(R.drawable.ic_action_search_white);
+            vh.iv_icon.setImageResource(suggestionIcon);
         }
     }
 
@@ -65,9 +83,9 @@ public class CursorSearchAdapter extends CursorAdapter {
         ImageView iv_icon;
         TextView tv_content;
 
-        public ListViewHolder(View convertView) {
-            iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
-            tv_content = (TextView) convertView.findViewById(R.id.tv_str);
+        ListViewHolder(View convertView) {
+            iv_icon = convertView.findViewById(R.id.iv_icon);
+            tv_content = convertView.findViewById(R.id.tv_str);
         }
     }
 }

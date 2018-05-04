@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView = findViewById(R.id.search_view);
 
-        bt_clearHistory = (Button) findViewById(R.id.bt_clearHistory);
-        bt_clearSuggestions = (Button) findViewById(R.id.bt_clearSuggestions);
-        bt_clearAll = (Button) findViewById(R.id.bt_clearAll);
+        bt_clearHistory = findViewById(R.id.bt_clearHistory);
+        bt_clearSuggestions = findViewById(R.id.bt_clearSuggestions);
+        bt_clearAll = findViewById(R.id.bt_clearAll);
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override

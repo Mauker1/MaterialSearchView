@@ -17,6 +17,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
+import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatDelegate;
@@ -222,14 +223,14 @@ public class MaterialSearchView extends FrameLayout {
         LayoutInflater.from(mContext).inflate(R.layout.search_view, this, true);
 
         // Get items
-        mRoot = (FrameLayout) findViewById(R.id.search_layout);
+        mRoot = findViewById(R.id.search_layout);
         mTintView = mRoot.findViewById(R.id.transparent_view);
-        mSearchBar = (LinearLayout) mRoot.findViewById(R.id.search_bar);
-        mBack = (ImageButton) mRoot.findViewById(R.id.action_back);
-        mSearchEditText = (EditText) mRoot.findViewById(R.id.et_search);
-        mVoice = (ImageButton) mRoot.findViewById(R.id.action_voice);
-        mClear = (ImageButton) mRoot.findViewById(R.id.action_clear);
-        mSuggestionsListView = (ListView) mRoot.findViewById(R.id.suggestion_list);
+        mSearchBar = mRoot.findViewById(R.id.search_bar);
+        mBack = mRoot.findViewById(R.id.action_back);
+        mSearchEditText = mRoot.findViewById(R.id.et_search);
+        mVoice = mRoot.findViewById(R.id.action_voice);
+        mClear = mRoot.findViewById(R.id.action_clear);
+        mSuggestionsListView = mRoot.findViewById(R.id.suggestion_list);
 
         // Set click listeners
         mBack.setOnClickListener(new View.OnClickListener() {
@@ -355,6 +356,23 @@ public class MaterialSearchView extends FrameLayout {
                         R.styleable.MaterialSearchView_searchSuggestionBackground,
                         R.color.search_layover_bg)
                 );
+            }
+
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_historyIcon) && mAdapter instanceof CursorSearchAdapter) {
+                ((CursorSearchAdapter)mAdapter).setHistoryIcon(typedArray.getResourceId(
+                        R.styleable.MaterialSearchView_historyIcon,
+                        R.drawable.ic_history_white));
+            }
+
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_suggestionIcon) && mAdapter instanceof CursorSearchAdapter) {
+                ((CursorSearchAdapter)mAdapter).setSuggestionIcon(typedArray.getResourceId(
+                        R.styleable.MaterialSearchView_suggestionIcon,
+                        R.drawable.ic_action_search_white));
+            }
+
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_listTextColor) && mAdapter instanceof CursorSearchAdapter) {
+                ((CursorSearchAdapter)mAdapter).setTextColor(typedArray.getColor(R.styleable.MaterialSearchView_listTextColor,
+                        ContextCompat.getColor(mContext,R.color.white)));
             }
 
             if(typedArray.hasValue(R.styleable.MaterialSearchView_android_inputType)) {
@@ -890,6 +908,39 @@ public class MaterialSearchView extends FrameLayout {
     public void setSuggestionBackground(int resource) {
         if (resource > 0) {
             mSuggestionsListView.setBackgroundResource(resource);
+        }
+    }
+
+    /**
+     * Changes the default history list icon.
+     *
+     * @param resourceId The resource id of the new history icon.
+     */
+    public void setHistoryIcon(@DrawableRes int resourceId) {
+        if (mAdapter instanceof CursorSearchAdapter) {
+            ((CursorSearchAdapter)mAdapter).setHistoryIcon(resourceId);
+        }
+    }
+
+    /**
+     * Changes the default suggestion list icon.
+     *
+     * @param resourceId The resource id of the new suggestion icon.
+     */
+    public void setSuggestionIcon(@DrawableRes int resourceId) {
+        if (mAdapter instanceof CursorSearchAdapter) {
+            ((CursorSearchAdapter)mAdapter).setSuggestionIcon(resourceId);
+        }
+    }
+
+    /**
+     * Changes the default suggestion list item text color.
+     *
+     * @param color The new color.
+     */
+    public void setListTextColor(int color) {
+        if (mAdapter instanceof CursorSearchAdapter) {
+            ((CursorSearchAdapter)mAdapter).setTextColor(color);
         }
     }
 
