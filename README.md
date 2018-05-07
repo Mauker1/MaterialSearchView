@@ -1,8 +1,8 @@
 # MaterialSearchView
 Android SearchView based on Material Design guidelines. The MaterialSearchView will overlay a Toolbar or ActionBar as well as display a ListView for the user to show suggested or recent searches.
 
-[![Download](https://img.shields.io/badge/download-1.2.2-blue.svg)](https://bintray.com/mauker/maven/MaterialSearchView/_latestVersion)
-[![APK size](https://img.shields.io/badge/Size-54%20KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.2.1)
+[![Download](https://img.shields.io/badge/download-1.2.3-blue.svg)](https://bintray.com/mauker/maven/MaterialSearchView/_latestVersion)
+[![APK size](https://img.shields.io/badge/Size-54%20KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.2.3)
 [![Build Status](https://travis-ci.org/Mauker1/MaterialSearchView.svg?branch=master)](https://travis-ci.org/Mauker1/MaterialSearchView)
 
 
