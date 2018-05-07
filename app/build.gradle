@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -11,7 +12,7 @@ android {
         applicationId "br.com.mauker.materialsearchview.app"
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
-        versionCode 2
+        versionCode 3
         versionName "1.0"
     }
     buildTypes {
@@ -31,4 +32,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
     implementation project(':library')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

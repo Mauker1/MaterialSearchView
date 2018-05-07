@@ -11,6 +11,9 @@
         <item name="searchCloseIcon">@drawable/ic_action_navigation_close</item>
         <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back</item>
         <item name="searchSuggestionBackground">@color/search_layover_bg</item>
+        <item name="historyIcon">@drawable/ic_history_white</item>
+        <item name="suggestionIcon">@drawable/ic_action_search_white</item>
+        <item name="listTextColor">@color/white_ish</item>
         <item name="searchBarHeight">?attr/actionBarSize</item>
         <item name="voiceHintPrompt">@string/hint_prompt</item>
         <item name="android:textColor">@color/black</item>
