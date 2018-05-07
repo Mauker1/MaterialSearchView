@@ -15,7 +15,7 @@ Android SearchView based on Material Design guidelines. The MaterialSearchView w
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
 ```java
-implementation 'br.com.mauker.materialsearchview:materialsearchview:1.2.2'
+implementation 'br.com.mauker.materialsearchview:materialsearchview:1.2.3'
 ```
 
 This library is supported with a min SDK of 14.
@@ -169,19 +169,42 @@ You can change how your MaterialSearchView looks like. To achieve that effect, t
 
 ```xml
 <style name="MaterialSearchViewStyle">
-    <item name="searchBackground">@color/white_ish</item>
-    <item name="searchVoiceIcon">@drawable/ic_action_voice_search</item>
-    <item name="searchCloseIcon">@drawable/ic_action_navigation_close</item>
-    <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back</item>
-    <item name="searchSuggestionBackground">@color/search_layover_bg</item>
-    <item name="searchBarHeight">?attr/actionBarSize</item>
-    <item name="voiceHintPrompt">@string/hint_prompt</item>
-    <item name="android:textColor">@color/black</item>
-    <item name="android:textColorHint">@color/gray_50</item>
-    <item name="android:hint">@string/search_hint</item>
-    <item name="android:inputType">textCapWords</item>
+        <style name="MaterialSearchViewStyle">
+            <item name="searchBackground">@color/white_ish</item>
+            <item name="searchVoiceIcon">@drawable/ic_action_voice_search</item>
+            <item name="searchCloseIcon">@drawable/ic_action_navigation_close</item>
+            <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back</item>
+            <item name="searchSuggestionBackground">@color/search_layover_bg</item>
+            <item name="historyIcon">@drawable/ic_history_white</item>
+            <item name="suggestionIcon">@drawable/ic_action_search_white</item>
+            <item name="listTextColor">@color/white_ish</item>
+            <item name="searchBarHeight">?attr/actionBarSize</item>
+            <item name="voiceHintPrompt">@string/hint_prompt</item>
+            <item name="android:textColor">@color/black</item>
+            <item name="android:textColorHint">@color/gray_50</item>
+            <item name="android:hint">@string/search_hint</item>
+            <item name="android:inputType">textCapWords</item>
+        </style>
 </style>
 ```
+
+Alternatively, you can also style the Search View programmatically by calling the methods:
+
+- `setBackgroundColor(int color);`
+- `setTintAlpha(int alpha);`
+- `setSearchBarColor(int color);`
+- `setSearchBarHeight(int height);`
+- `setTextColor(int color);`
+- `setHintTextColor(int color);`
+- `setHint(String hint);`
+- `setVoiceHintPrompt(String voiceHint);`
+- `setVoiceIcon(DrawableRes int resourceId);`
+- `setClearIcon(DrawableRes int resourceId);`
+- `setBackIcon(DrawableRes int resourceId);`
+- `setSuggestionBackground(DrawableRes int resourceId);`
+- `setHistoryIcon(@DrawableRes int resourceId);`
+- `setSuggestionIcon(@DrawableRes int resourceId);`
+- `setListTextColor(int color);`
 
 And add this line on your `br.com.mauker.materialsearchview.MaterialSearchView` tag:
 
