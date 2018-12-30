@@ -29,6 +29,7 @@ allprojects {
         androidTargetSdkVersion = 28
         androidCompileSdkVersion = 28
 
-        supportLibraryVersion = "28.0.0"
+        appCompatVersion = "1.1.0-alpha01"
+        materialDesignVersion = "1.1.0-alpha02"
     }
 }
