@@ -17,10 +17,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
-import androidx.annotation.DrawableRes;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
-import androidx.appcompat.app.AppCompatDelegate;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -40,6 +36,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,6 +112,11 @@ public class MaterialSearchView extends FrameLayout {
      * Voice hint prompt text.
      */
     private String mHintPrompt;
+
+    /**
+     * Allows user to decide whether to allow voice search.
+     */
+    private boolean mVoiceIconEnabled;
     //endregion
 
     //region UI Elements
@@ -263,9 +269,6 @@ public class MaterialSearchView extends FrameLayout {
             }
         });
 
-        // Show voice button
-        displayVoiceButton(true);
-
         // Initialize the search view.
         initSearchView();
 
@@ -403,6 +406,9 @@ public class MaterialSearchView extends FrameLayout {
 
             typedArray.recycle();
         }
+
+        // Show voice button. We put this here because whether or not it's shown is defined by a style above.
+        displayVoiceButton(true);
     }
 
     /**
@@ -483,7 +489,7 @@ public class MaterialSearchView extends FrameLayout {
      */
     private void displayVoiceButton(boolean display) {
         // Only display voice if we pass in true, and it's available
-        if(display && isVoiceAvailable()) {
+        if(display && isVoiceAvailable() && isVoiceIconEnabled()) {
             mVoice.setVisibility(View.VISIBLE);
         } else {
             mVoice.setVisibility(View.GONE);
@@ -1001,9 +1007,12 @@ public class MaterialSearchView extends FrameLayout {
         return mAdapter ;
     }
 
+    /**
+     * Set whether or not we should allow voice search.
+     * @param enabled True if we want to allow searching by voice, false if not.
+     */
     public void setVoiceIconEnabled(Boolean enabled) {
-        int visibility = (enabled) ? View.VISIBLE : View.GONE;
-        this.mVoice.setVisibility(visibility);
+        this.mVoiceIconEnabled = enabled;
     }
     //endregion
 
@@ -1060,7 +1069,7 @@ public class MaterialSearchView extends FrameLayout {
      * @return True if the icon is visible, false otherwise.
      */
     public boolean isVoiceIconEnabled() {
-        return this.mVoice.getVisibility() == View.VISIBLE;
+        return this.mVoiceIconEnabled;
     }
     //endregion
 
