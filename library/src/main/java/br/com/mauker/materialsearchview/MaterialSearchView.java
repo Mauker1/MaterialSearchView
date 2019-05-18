@@ -91,7 +91,7 @@ public class MaterialSearchView extends FrameLayout {
      * Whether or not the MaterialSearchView will animate into view or just appear.
      */
     private boolean mShouldAnimate;
-    
+
     /**
      * Whether or not the MaterialSearchView will clonse under a click on the Tint View (Blank Area).
      */
@@ -393,6 +393,10 @@ public class MaterialSearchView extends FrameLayout {
             }
             else {
                 setVoiceHintPrompt(mContext.getString(R.string.hint_prompt));
+            }
+
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_voiceIconEnabled)) {
+                setVoiceIconEnabled(typedArray.getBoolean(R.styleable.MaterialSearchView_voiceIconEnabled, true));
             }
 
             ViewCompat.setFitsSystemWindows(this, typedArray.getBoolean(R.styleable.MaterialSearchView_android_fitsSystemWindows, false));
@@ -703,7 +707,7 @@ public class MaterialSearchView extends FrameLayout {
     public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
         mSuggestionsListView.setOnItemLongClickListener(listener);
     }
-    
+
     /**
      * Toggles the Tint click action.
      *
@@ -996,6 +1000,11 @@ public class MaterialSearchView extends FrameLayout {
     public CursorAdapter getAdapter() {
         return mAdapter ;
     }
+
+    public void setVoiceIconEnabled(Boolean enabled) {
+        int visibility = (enabled) ? View.VISIBLE : View.GONE;
+        this.mVoice.setVisibility(visibility);
+    }
     //endregion
 
     //region Accessors
@@ -1006,7 +1015,7 @@ public class MaterialSearchView extends FrameLayout {
     public boolean isOpen() {
         return mOpen;
     }
-    
+
     /**
      * Gets the current text on the SearchView, if any. Returns an empty String if no text is available.
      * @return The current query, or an empty String if there's no query.
@@ -1044,6 +1053,14 @@ public class MaterialSearchView extends FrameLayout {
         } else {
             return mAdapter.getItem(position).toString();
         }
+    }
+
+    /**
+     * Determines if we can use the voice icon.
+     * @return True if the icon is visible, false otherwise.
+     */
+    public boolean isVoiceIconEnabled() {
+        return this.mVoice.getVisibility() == View.VISIBLE;
     }
     //endregion
 
@@ -1083,14 +1100,14 @@ public class MaterialSearchView extends FrameLayout {
     //region Database Methods
     /**
     * Save a query to the local database.
-    * 
+    *
     * @param query - The query to be saved. Can't be empty or null.
     * @param ms - The insert date, in millis. As a suggestion, use System.currentTimeMillis();
     **/
     public synchronized void saveQueryToDb(String query, long ms) {
         if (!TextUtils.isEmpty(query) && ms > 0) {
             ContentValues values = new ContentValues();
-        
+
             values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
             values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, ms);
             values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,1); // Saving as history.
