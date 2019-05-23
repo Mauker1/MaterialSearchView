@@ -17,10 +17,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
-import androidx.annotation.DrawableRes;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
-import androidx.appcompat.app.AppCompatDelegate;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -40,6 +36,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,7 +92,7 @@ public class MaterialSearchView extends FrameLayout {
      * Whether or not the MaterialSearchView will animate into view or just appear.
      */
     private boolean mShouldAnimate;
-    
+
     /**
      * Whether or not the MaterialSearchView will clonse under a click on the Tint View (Blank Area).
      */
@@ -111,6 +112,11 @@ public class MaterialSearchView extends FrameLayout {
      * Voice hint prompt text.
      */
     private String mHintPrompt;
+
+    /**
+     * Allows user to decide whether to allow voice search.
+     */
+    private boolean mVoiceIconEnabled;
     //endregion
 
     //region UI Elements
@@ -263,9 +269,6 @@ public class MaterialSearchView extends FrameLayout {
             }
         });
 
-        // Show voice button
-        displayVoiceButton(true);
-
         // Initialize the search view.
         initSearchView();
 
@@ -395,10 +398,17 @@ public class MaterialSearchView extends FrameLayout {
                 setVoiceHintPrompt(mContext.getString(R.string.hint_prompt));
             }
 
+            if (typedArray.hasValue(R.styleable.MaterialSearchView_voiceIconEnabled)) {
+                setVoiceIconEnabled(typedArray.getBoolean(R.styleable.MaterialSearchView_voiceIconEnabled, true));
+            }
+
             ViewCompat.setFitsSystemWindows(this, typedArray.getBoolean(R.styleable.MaterialSearchView_android_fitsSystemWindows, false));
 
             typedArray.recycle();
         }
+
+        // Show voice button. We put this here because whether or not it's shown is defined by a style above.
+        displayVoiceButton(true);
     }
 
     /**
@@ -479,7 +489,7 @@ public class MaterialSearchView extends FrameLayout {
      */
     private void displayVoiceButton(boolean display) {
         // Only display voice if we pass in true, and it's available
-        if(display && isVoiceAvailable()) {
+        if(display && isVoiceAvailable() && isVoiceIconEnabled()) {
             mVoice.setVisibility(View.VISIBLE);
         } else {
             mVoice.setVisibility(View.GONE);
@@ -703,7 +713,7 @@ public class MaterialSearchView extends FrameLayout {
     public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
         mSuggestionsListView.setOnItemLongClickListener(listener);
     }
-    
+
     /**
      * Toggles the Tint click action.
      *
@@ -996,6 +1006,14 @@ public class MaterialSearchView extends FrameLayout {
     public CursorAdapter getAdapter() {
         return mAdapter ;
     }
+
+    /**
+     * Set whether or not we should allow voice search.
+     * @param enabled True if we want to allow searching by voice, false if not.
+     */
+    public void setVoiceIconEnabled(Boolean enabled) {
+        this.mVoiceIconEnabled = enabled;
+    }
     //endregion
 
     //region Accessors
@@ -1006,7 +1024,7 @@ public class MaterialSearchView extends FrameLayout {
     public boolean isOpen() {
         return mOpen;
     }
-    
+
     /**
      * Gets the current text on the SearchView, if any. Returns an empty String if no text is available.
      * @return The current query, or an empty String if there's no query.
@@ -1044,6 +1062,14 @@ public class MaterialSearchView extends FrameLayout {
         } else {
             return mAdapter.getItem(position).toString();
         }
+    }
+
+    /**
+     * Determines if we can use the voice icon.
+     * @return True if the icon is visible, false otherwise.
+     */
+    public boolean isVoiceIconEnabled() {
+        return this.mVoiceIconEnabled;
     }
     //endregion
 
@@ -1083,14 +1109,14 @@ public class MaterialSearchView extends FrameLayout {
     //region Database Methods
     /**
     * Save a query to the local database.
-    * 
+    *
     * @param query - The query to be saved. Can't be empty or null.
     * @param ms - The insert date, in millis. As a suggestion, use System.currentTimeMillis();
     **/
     public synchronized void saveQueryToDb(String query, long ms) {
         if (!TextUtils.isEmpty(query) && ms > 0) {
             ContentValues values = new ContentValues();
-        
+
             values.put(HistoryContract.HistoryEntry.COLUMN_QUERY, query);
             values.put(HistoryContract.HistoryEntry.COLUMN_INSERT_DATE, ms);
             values.put(HistoryContract.HistoryEntry.COLUMN_IS_HISTORY,1); // Saving as history.
