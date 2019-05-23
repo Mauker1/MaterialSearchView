@@ -9,12 +9,13 @@
         <attr name="historyIcon" format="integer" />
         <attr name="suggestionIcon" format="integer" />
         <attr name="listTextColor" format="integer" />
-        <attr name="searchBarHeight" format="dimension"  />
+        <attr name="searchBarHeight" format="dimension" />
         <attr name="voiceHintPrompt" format="string" />
-        <attr name="android:fitsSystemWindows"/>
+        <attr name="voiceIconEnabled" format="boolean" />
+        <attr name="android:fitsSystemWindows" />
         <attr name="android:hint" />
         <attr name="android:textColor" />
         <attr name="android:textColorHint" />
-        <attr name="android:inputType"/>
+        <attr name="android:inputType" />
     </declare-styleable>
 </resources>
