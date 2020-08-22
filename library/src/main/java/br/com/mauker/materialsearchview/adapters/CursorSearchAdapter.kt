@@ -20,7 +20,7 @@ import br.com.mauker.materialsearchview.db.HistoryContract
  */
 open class CursorSearchAdapter @JvmOverloads constructor(
         context: Context,
-        cursor: Cursor,
+        cursor: Cursor?,
         flags: Int = 0
 ) : CursorAdapter(context, cursor, flags) {
 
