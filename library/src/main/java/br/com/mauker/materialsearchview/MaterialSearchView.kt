@@ -884,6 +884,7 @@ class MaterialSearchView @JvmOverloads constructor(
             return resources.getDimensionPixelSize(tv.resourceId)
         }
     //endregion
+
     //region Accessors
     /**
      * Gets the current text on the SearchView, if any. Returns an empty String if no text is available.
@@ -926,6 +927,7 @@ class MaterialSearchView @JvmOverloads constructor(
         }
     }
     //endregion
+
     //region View Methods
     /**
      * Handles any cleanup when focus is cleared from the view.
@@ -954,6 +956,7 @@ class MaterialSearchView @JvmOverloads constructor(
         refreshAdapterCursor()
     }
     //endregion
+
     //region Database Methods
     /**
      * Save a query to the local database.
