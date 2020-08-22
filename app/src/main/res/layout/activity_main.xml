@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -21,36 +21,36 @@
         android:layout_below="@+id/toolbar">
 
         <Button
+            android:id="@+id/bt_clearHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:id="@+id/bt_clearHistory"
             android:text="@string/bt_clearHistory" />
 
         <Button
+            android:id="@+id/bt_clearSuggestions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bt_clearHistory"
             android:layout_centerHorizontal="true"
-            android:id="@+id/bt_clearSuggestions"
-            android:text="@string/bt_clearSuggestions"/>
+            android:text="@string/bt_clearSuggestions" />
 
         <Button
+            android:id="@+id/bt_clearAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bt_clearSuggestions"
             android:layout_centerHorizontal="true"
-            android:id="@+id/bt_clearAll"
             android:text="@string/bt_clearAll" />
 
     </RelativeLayout>
 
     <br.com.mauker.materialsearchview.MaterialSearchView
         android:id="@+id/search_view"
+        style="@style/MaterialSearchViewStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/MaterialSearchViewStyle"/>
-
+        app:voiceIconEnabled="true" />
 
 
 </RelativeLayout>
