@@ -7,17 +7,15 @@ android {
     compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
     buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
 
-    def INT = "int"
-
     defaultConfig {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
-        versionCode 14
-        versionName "1.2.3"
+        versionCode 15
+        versionName "1.2.4"
 
         vectorDrawables.useSupportLibrary = true
 
-        buildConfigField INT, "MAX_HISTORY", "10"
+        buildConfigField "int", "MAX_HISTORY", "10"
         consumerProguardFiles 'proguard-android.txt'
     }
     buildTypes {
@@ -44,7 +42,7 @@ dependencies {
 ext {
     PUBLISH_GROUP_ID = 'br.com.mauker.materialsearchview'
     PUBLISH_ARTIFACT_ID = 'materialsearchview'
-    PUBLISH_VERSION = '1.2.3'
+    PUBLISH_VERSION = '1.2.4'
 }
 
 apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
