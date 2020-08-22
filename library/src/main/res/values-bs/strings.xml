@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MaterialSearch</string>
 
     <string name="hello_world">Zdravo svete!</string>
     <string name="action_settings">Podešavanja</string>
