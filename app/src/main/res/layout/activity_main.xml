@@ -1,56 +1,56 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="#607D8B"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <RelativeLayout
-        android:id="@+id/rl_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+    <Button
+        android:id="@+id/bt_clearHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_clearHistory"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/bt_clearHistory"
-            android:text="@string/bt_clearHistory" />
+    <Button
+        android:id="@+id/bt_clearSuggestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_clearSuggestions"
+        app:layout_constraintTop_toBottomOf="@id/bt_clearHistory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bt_clearHistory"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/bt_clearSuggestions"
-            android:text="@string/bt_clearSuggestions"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bt_clearSuggestions"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/bt_clearAll"
-            android:text="@string/bt_clearAll" />
-
-    </RelativeLayout>
+    <Button
+        android:id="@+id/bt_clearAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_clearAll"
+        app:layout_constraintTop_toBottomOf="@id/bt_clearSuggestions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <br.com.mauker.materialsearchview.MaterialSearchView
         android:id="@+id/search_view"
+        style="@style/MaterialSearchViewStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/MaterialSearchViewStyle"/>
+        android:elevation="10dp"
+        app:voiceIconEnabled="true" />
 
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@ android {
         applicationId "br.com.mauker.materialsearchview.app"
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
-        versionCode 3
+        versionCode 4
         versionName "1.0"
     }
     buildTypes {
@@ -26,11 +26,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    useLibrary 'android.test.base'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation project(':library')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

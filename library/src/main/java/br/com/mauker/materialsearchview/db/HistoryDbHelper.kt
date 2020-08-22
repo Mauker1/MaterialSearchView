@@ -1,34 +1,25 @@
-package br.com.mauker.materialsearchview.db;
+package br.com.mauker.materialsearchview.db
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 
 /**
  * Created by mauker on 15/04/16.
  * Helper class used to create and update the database.
  */
-public class HistoryDbHelper extends SQLiteOpenHelper {
-    // Defines the database version. Increment it if the schema has been changed.
-    private static final int DB_VERSION = 4;
-    // The name of the database.
-    private static final String DB_NAME = "SearchHistory.db";
-
-    /**
-     * The default constructor for this helper.
-     * @param context The Android application context which is using this DB.
-     */
-    public HistoryDbHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
-    }
-
+class HistoryDbHelper
+/**
+ * The default constructor for this helper.
+ * @param context The Android application context which is using this DB.
+ */
+(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     /**
      * Called when this database is first created.
      * @param db The database being created.
      */
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        addHistoryTable(db);
+    override fun onCreate(db: SQLiteDatabase) {
+        addHistoryTable(db)
     }
 
     /**
@@ -37,14 +28,13 @@ public class HistoryDbHelper extends SQLiteOpenHelper {
      *
      * @param db The database being updated.
      * @param oldVersion The previous version of the database. Used to determine whether or not
-     *                   certain updates should be run.
+     * certain updates should be run.
      * @param newVersion The new version of the database.
      */
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // TODO - Create update if needed.
-        dropAllTables(db);
-        onCreate(db);
+        dropAllTables(db)
+        onCreate(db)
     }
 
     /**
@@ -52,21 +42,20 @@ public class HistoryDbHelper extends SQLiteOpenHelper {
      *
      * @param db The database being updated.
      * @param oldVersion The previous version of the database. Used to determine whether or not
-     *                   certain updates should be run.
+     * certain updates should be run.
      * @param newVersion The new version of the database.
      */
-    @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // TODO - Create downgrade if needed.
-        dropAllTables(db);
-        onCreate(db);
+        dropAllTables(db)
+        onCreate(db)
     }
 
     /**
      * Inserts the Search History table into the database.
      * @param db The SQLiteDatabase the table is inserted into.
      */
-    private void addHistoryTable(SQLiteDatabase db) {
+    private fun addHistoryTable(db: SQLiteDatabase) {
         db.execSQL(
                 "CREATE TABLE " + HistoryContract.HistoryEntry.TABLE_NAME + " (" +
                         HistoryContract.HistoryEntry._ID + " INTEGER PRIMARY KEY," +
@@ -74,7 +63,7 @@ public class HistoryDbHelper extends SQLiteOpenHelper {
                         HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " INTEGER DEFAULT 0," +
                         HistoryContract.HistoryEntry.COLUMN_IS_HISTORY + " INTEGER NOT NULL DEFAULT 0," +
                         "UNIQUE (" + HistoryContract.HistoryEntry.COLUMN_QUERY + ") ON CONFLICT REPLACE);"
-        );
+        )
     }
 
     /**
@@ -82,7 +71,15 @@ public class HistoryDbHelper extends SQLiteOpenHelper {
      *
      * @param db The SQLiteDatabase from where you're dropping the tables.
      */
-    private void dropAllTables(SQLiteDatabase db) {
-        db.execSQL("DROP TABLE IF EXISTS " + HistoryContract.HistoryEntry.TABLE_NAME);
+    private fun dropAllTables(db: SQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS " + HistoryContract.HistoryEntry.TABLE_NAME)
+    }
+
+    companion object {
+        // Defines the database version. Increment it if the schema has been changed.
+        private const val DB_VERSION = 5
+
+        // The name of the database.
+        private const val DB_NAME = "SearchHistory.db"
     }
 }

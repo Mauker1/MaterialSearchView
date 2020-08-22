@@ -1,8 +1,8 @@
 # MaterialSearchView
 Android SearchView based on Material Design guidelines. The MaterialSearchView will overlay a Toolbar or ActionBar as well as display a ListView for the user to show suggested or recent searches.
 
-[![Download](https://img.shields.io/badge/download-1.2.2-blue.svg)](https://bintray.com/mauker/maven/MaterialSearchView/_latestVersion)
-[![APK size](https://img.shields.io/badge/Size-54%20KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.2.1)
+[![Download](https://img.shields.io/badge/download-1.2.3-blue.svg)](https://bintray.com/mauker/maven/MaterialSearchView/_latestVersion)
+[![APK size](https://img.shields.io/badge/Size-56%20KB-e91e63.svg)](http://www.methodscount.com/?lib=br.com.mauker.materialsearchview%3Amaterialsearchview%3A1.2.1)
 [![Build Status](https://travis-ci.org/Mauker1/MaterialSearchView.svg?branch=master)](https://travis-ci.org/Mauker1/MaterialSearchView)
 
 
@@ -15,7 +15,7 @@ Android SearchView based on Material Design guidelines. The MaterialSearchView w
 ## Download
 To add the MaterialSearchView library to your Android Studio project, simply add the following gradle dependency:
 ```java
-implementation 'br.com.mauker.materialsearchview:materialsearchview:1.2.3'
+implementation 'br.com.mauker.materialsearchview:materialsearchview:1.3.0-rc01'
 ```
 
 This library is supported with a min SDK of 14.
@@ -87,9 +87,9 @@ To open the search view on your app, add the following code **to the end of your
 
 Then, inside your `Activity` get the reference:
 
-```java
+```kotlin
 // Activity:
-MaterialSearchView searchView = (MaterialSearchView) findViewById(R.id.search_view);
+val searchView: MaterialSearchView = findViewById(R.id.search_view)
 ```
 
 - To open the search view, simply call the `searchView.openSearch()` method.
@@ -102,14 +102,13 @@ MaterialSearchView searchView = (MaterialSearchView) findViewById(R.id.search_vi
 
 - To close the search view using the back button, put the following code on your `Activity`:
 
-```java
-@Override
-public void onBackPressed() {
-    if (searchView.isOpen()) {
+```kotlin
+override fun onBackPressed() {
+    if (searchView.isOpen) {
         // Close the search on the back button press.
-        searchView.closeSearch();
+        searchView.closeSearch()
     } else {
-        super.onBackPressed();
+        super.onBackPressed()
     }
 }
 ```
@@ -120,12 +119,12 @@ For more examples on how to use this lib, [check the sample app code here](https
 
 You can provide search suggestions by using the following methods:
 
-- `addSuggestions(String[] suggestions)`
-- `addSuggestions(ArrayList<String> suggestions)`
+- `addSuggestions(suggestions: Array<String?>)`
+- `addSuggestions(suggestions: List<String?>)`
 
 It's also possible to add a single suggestion using the following method:
 
-- `addSuggestion(String suggestion)`
+- `addSuggestion(suggestion: String?)`
 
 To remove all the search suggestions use:
 
@@ -133,7 +132,7 @@ To remove all the search suggestions use:
 
 And to remove a single suggestion, use the following method:
 
-- `removeSuggestion(String suggestion)`
+- `removeSuggestion(suggestion: String?)`
 
 The search history is automatically handled by the view, and it can be cleared by using:
 
@@ -149,19 +148,15 @@ The suggestion list is based on a `ListView`, and as such you can define the beh
 
 If you want to submit the query from the selected suggestion, you can use the snippet below:
 
-```java
-searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Do something when the suggestion list is clicked.
-        String suggestion = searchView.getSuggestionAtPosition(position);
-
-        searchView.setQuery(suggestion, true);
-    }
-});
+```kotlin
+searchView.setOnItemClickListener { _, _, position, _ -> 
+    // Do something when the suggestion list is clicked.
+    val suggestion = searchView.getSuggestionAtPosition(position)
+    searchView.setQuery(suggestion, false)
+}
 ```
 
-If you just want to set the text on the search view text field when the user selects the suggestion, change the second argument from the  `searchView#setQuery()` from `true` to `false`.
+If you just want to set the text on the search view text field when the user selects the suggestion, change the second argument from the `searchView#setQuery()` from `true` to `false`.
 
 ## Styling the View
 
