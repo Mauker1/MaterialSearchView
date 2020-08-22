@@ -24,12 +24,13 @@ allprojects {
     }
 
     ext {
-        androidBuildToolsVersion = "28.0.3"
+        androidBuildToolsVersion = "30.0.2"
         androidMinSdkVersion = 14
         androidTargetSdkVersion = 30
         androidCompileSdkVersion = 30
 
         appCompatVersion = "1.2.0"
+        constraintLayoutVersion = "2.0.0"
         materialDesignVersion = "1.2.0"
     }
 }
