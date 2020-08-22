@@ -20,7 +20,7 @@ import br.com.mauker.materialsearchview.db.HistoryContract
  */
 open class CursorSearchAdapter @JvmOverloads constructor(
         context: Context,
-        cursor: Cursor,
+        cursor: Cursor?,
         flags: Int = 0
 ) : CursorAdapter(context, cursor, flags) {
 
@@ -57,7 +57,7 @@ open class CursorSearchAdapter @JvmOverloads constructor(
         return retString
     }
 
-    private inner class ListViewHolder internal constructor(convertView: View) {
+    private inner class ListViewHolder  (convertView: View) {
         private val iv_icon: ImageView = convertView.findViewById(R.id.iv_icon)
         private val tv_content: TextView = convertView.findViewById(R.id.tv_str)
 
