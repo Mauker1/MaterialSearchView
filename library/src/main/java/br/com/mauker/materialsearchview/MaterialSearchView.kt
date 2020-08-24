@@ -245,6 +245,7 @@ class MaterialSearchView @JvmOverloads constructor(
 
         // Initialize the search view.
         initSearchView()
+        // TODO - Use Room and Coroutines
         adapter = CursorSearchAdapter(mContext, historyCursor, 0)
 
         adapter.setFilterQueryProvider(FilterQueryProvider { constraint ->

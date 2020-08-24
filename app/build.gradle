@@ -12,7 +12,7 @@ android {
         applicationId "br.com.mauker.materialsearchview.app"
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
-        versionCode 4
+        versionCode 5
         versionName "1.0"
     }
     buildTypes {
