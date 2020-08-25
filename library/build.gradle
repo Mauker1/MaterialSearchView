@@ -12,7 +12,7 @@ android {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
         versionCode 17
-        versionName "2.0.0"
+        versionName "2.0.0-alpha01"
 
         vectorDrawables.useSupportLibrary = true
 
@@ -74,7 +74,7 @@ dependencies {
 ext {
     PUBLISH_GROUP_ID = 'br.com.mauker.materialsearchview'
     PUBLISH_ARTIFACT_ID = 'materialsearchview'
-    PUBLISH_VERSION = '2.0.0'
+    PUBLISH_VERSION = '2.0.0-alpha01'
 }
 
 apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
