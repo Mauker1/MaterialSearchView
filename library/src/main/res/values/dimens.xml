@@ -2,4 +2,9 @@
 <resources>
     <dimen name="search_icon_padding">12dp</dimen>
     <dimen name="search_view_text_padding">8dp</dimen>
+
+    <dimen name="base_grid">8dp</dimen>
+    <dimen name="double_grid">16dp</dimen>
+
+    <dimen name="list_icon_size">24dp</dimen>
 </resources>

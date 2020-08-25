@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import br.com.mauker.materialsearchview.MaterialSearchView
 import br.com.mauker.materialsearchview.MaterialSearchView.SearchViewListener
+import br.com.mauker.materialsearchview.db.model.History
 
 class MainActivity : AppCompatActivity() {
     private lateinit var searchView: MaterialSearchView
@@ -51,10 +52,21 @@ class MainActivity : AppCompatActivity() {
                 // Do something once the view is closed.
             }
         })
-        searchView.setOnItemClickListener { _, _, position, _ -> // Do something when the suggestion list is clicked.
-            val suggestion = searchView.getSuggestionAtPosition(position)
-            searchView.setQuery(suggestion, false)
+
+        val context: Context = this
+
+        val clickListener = object: MaterialSearchView.OnHistoryItemClickListener {
+            override fun onClick(history: History) {
+                searchView.setQuery(history.query, false)
+            }
+
+            override fun onLongClick(history: History) {
+                Toast.makeText(context, "Long clicked! Item: $history", Toast.LENGTH_SHORT).show()
+            }
         }
+
+        searchView.setOnItemClickListener(clickListener)
+
         searchView.setOnClearClickListener {
             Toast.makeText(this, "Clear clicked!", Toast.LENGTH_LONG).show()
         }
@@ -63,11 +75,6 @@ class MainActivity : AppCompatActivity() {
         btClearAll.setOnClickListener { clearAll() }
 
         searchView.adjustTintAlpha(0.8f)
-        val context: Context = this
-        searchView.setOnItemLongClickListener { _, _, i, _ ->
-            Toast.makeText(context, "Long clicked position: $i", Toast.LENGTH_SHORT).show()
-            true
-        }
         // This will override the default audio action.
         searchView.setOnVoiceClickedListener { Toast.makeText(context, "Voice clicked!", Toast.LENGTH_SHORT).show() }
     }
@@ -120,9 +127,14 @@ class MainActivity : AppCompatActivity() {
         searchView.clearSuggestions()
     }
 
+    override fun onStop() {
+        super.onStop()
+        searchView.onViewStopped()
+    }
+
     override fun onResume() {
         super.onResume()
-        searchView.activityResumed()
+//        searchView.onViewResumed()
         val arr = resources.getStringArray(R.array.suggestions)
         searchView.addSuggestions(arr)
     }

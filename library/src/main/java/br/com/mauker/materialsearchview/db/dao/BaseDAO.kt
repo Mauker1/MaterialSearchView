@@ -1,16 +1,14 @@
 package br.com.mauker.materialsearchview.db.dao
 
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Update
+import androidx.room.*
 
 interface BaseDAO<T> {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(obj: T): Long
 
-    @Insert
-    suspend fun insert(vararg obj: T): List<Long>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(objList: List<T>): List<Long>
 
     @Update
     suspend fun update(obj: T): Int

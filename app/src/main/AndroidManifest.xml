@@ -17,20 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!--
-            Authorities is the package name, while name is the file of the provider
-            Add content provider so android's content resolver can see it.
-            The authority matches package, name represents the file the provider is in.
-            The syncable flag lets android now we're going to synchronize our content provider with the server.
-            Changing the exported tag to false means that only our app can see the content.
-        -->
-        <provider
-        android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
-        android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
-        android:exported="false"
-        android:protectionLevel="signature"
-        android:syncable="true"/>
     </application>
 
 </manifest>

@@ -16,6 +16,5 @@ data class History(
         val historyId: Long = 0L,
         @ColumnInfo(name = "query") val query: String,
         @ColumnInfo(name = "insert_date") val insertDate: Calendar,
-        @ColumnInfo(name = "is_history") val isHistory: Boolean,
-        @ColumnInfo(name = "is_pinned") val isPinned: Boolean
+        @ColumnInfo(name = "query_type") val queryType: QueryType,
 )
