@@ -22,6 +22,14 @@ This library is supported with a min SDK of 14.
 
 **Important note:** If you're still using version 1.0.3, it's recommended to upgrade to the latest version as soon as possible. For more information, please see [this issue](https://github.com/Mauker1/MaterialSearchView/issues/7).
 
+**New version note**: MSV 2.0 is now on alpha stage, if you wish to test it, get it by using:
+
+```java
+implementation 'br.com.mauker.materialsearchview:materialsearchview:2.0.0-alpha01'
+```
+
+**Version 2.0 doesn't require the Content Provider setup** and had some API changes which will be added to the documentation later on. For more details please take a look at the [V_2.0 branch](https://github.com/Mauker1/MaterialSearchView/tree/milestone/2_0).
+
 ## Setup
 
 Before you can use this lib, you have to implement a class named `MsvAuthority` inside the `br.com.mauker` package on your app module, and it should have a public static String variable called `CONTENT_AUTHORITY`. Give it the value you want and **don't forget** to add the same name on your manifest file. The lib will use this file to set the Content Provider authority.
