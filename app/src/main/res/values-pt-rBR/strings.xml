@@ -25,4 +25,5 @@
         <item>Pêra</item>
         <item>Morango</item>
     </string-array>
+    <string name="bt_clearPins">Limpar pins</string>
 </resources>

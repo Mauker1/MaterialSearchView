@@ -36,11 +36,20 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
+        android:id="@+id/bt_clearPins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_clearPins"
+        app:layout_constraintTop_toBottomOf="@id/bt_clearSuggestions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
         android:id="@+id/bt_clearAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bt_clearAll"
-        app:layout_constraintTop_toBottomOf="@id/bt_clearSuggestions"
+        app:layout_constraintTop_toBottomOf="@id/bt_clearPins"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

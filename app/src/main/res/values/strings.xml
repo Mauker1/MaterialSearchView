@@ -6,6 +6,7 @@
 
     <string name="bt_clearHistory">Clear history</string>
     <string name="bt_clearSuggestions">Clear suggestions</string>
+    <string name="bt_clearPins">Clear pins</string>
     <string name="bt_clearAll">Clear all</string>
 
     <string-array name="suggestions">

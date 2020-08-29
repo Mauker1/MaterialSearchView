@@ -29,6 +29,7 @@ import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mauker.materialsearchview.adapters.SearchAdapter
 import br.com.mauker.materialsearchview.db.DaoProvider
@@ -72,6 +73,8 @@ class MaterialSearchView @JvmOverloads constructor(
          */
         private var MAX_HISTORY = BuildConfig.MAX_HISTORY
 
+        private var MAX_PINNED = BuildConfig.MAX_PINNED
+
         private const val EMPTY_STRING = ""
 
         /**
@@ -81,6 +84,15 @@ class MaterialSearchView @JvmOverloads constructor(
          */
         fun setMaxHistoryResults(maxHistory: Int) {
             MAX_HISTORY = maxHistory
+        }
+
+        /**
+         * Sets how many pinned items you want to show from the history database.
+         *
+         * @param maxPinned - The number of pinned items you want to display.
+         */
+        fun setMaxPinnedResults(maxPinned: Int) {
+            MAX_PINNED = maxPinned
         }
     }
 
@@ -988,7 +1000,7 @@ class MaterialSearchView @JvmOverloads constructor(
     @Synchronized
     private fun resetAdapterToInitialState() {
         CoroutineScope(IO).launch {
-            val initialList = historyDAO.getDefaultHistory(MAX_HISTORY)
+            val initialList = historyDAO.getDefaultHistoryWithPin(MAX_HISTORY, MAX_PINNED)
             withContext(MAIN) {
                 adapter.updateAdapter(initialList.toMutableList())
             }
@@ -999,7 +1011,7 @@ class MaterialSearchView @JvmOverloads constructor(
     private fun doFiltering(query: String) {
         CoroutineScope(IO).launch {
             val filtered =  if (query.isBlank()) {
-                historyDAO.getDefaultHistory(MAX_HISTORY)
+                historyDAO.getDefaultHistoryWithPin(MAX_HISTORY, MAX_PINNED)
             } else {
                 historyDAO.getFilteredHistory(query)
             }
