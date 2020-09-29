@@ -27,7 +27,7 @@ This library is supported with a min SDK of 14.
 **New version note**: MSV 2.0 is now on alpha stage, if you wish to test it, get it by using:
 
 ```java
-implementation 'br.com.mauker.materialsearchview:materialsearchview:2.0.0-alpha02'
+implementation 'br.com.mauker.materialsearchview:materialsearchview:2.0.0-alpha03'
 ```
 
 **Version 2.0 doesn't require the Content Provider setup** and had some API changes which will be added to the documentation later on. For more details please take a look at the [V_2.0 branch](https://github.com/Mauker1/MaterialSearchView/tree/milestone/2_0).
