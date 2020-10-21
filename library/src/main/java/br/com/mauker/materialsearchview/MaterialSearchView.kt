@@ -29,7 +29,6 @@ import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mauker.materialsearchview.adapters.SearchAdapter
 import br.com.mauker.materialsearchview.db.DaoProvider
@@ -522,7 +521,7 @@ class MaterialSearchView @JvmOverloads constructor(
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
                     // After the animation is done. Hide the root view.
-                    v.visibility = GONE
+                    v.visibility = INVISIBLE
                 }
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -532,7 +531,7 @@ class MaterialSearchView @JvmOverloads constructor(
             }
         } else {
             // Just hide the view.
-            mRoot.visibility = GONE
+            mRoot.visibility = INVISIBLE
         }
 
         // Call listener if we have one
