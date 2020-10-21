@@ -281,7 +281,7 @@ class MaterialSearchView @JvmOverloads constructor(
 
         val listener = object: OnHistoryItemClickListener {
             override fun onClick(history: History) {
-                setQuery(query = history.query, submit = true)
+                setQuery(query = history.query, shouldSubmit = true)
             }
 
             override fun onLongClick(history: History) { }
@@ -550,7 +550,7 @@ class MaterialSearchView @JvmOverloads constructor(
         mCurrentQuery = mSearchEditText.text
 
         // If the text is not empty, show the empty button and hide the voice button
-        if (!TextUtils.isEmpty(mCurrentQuery)) {
+        if (mCurrentQuery.isNotEmpty()) {
             displayVoiceButton(false)
             displayClearButton(true)
         } else {
@@ -669,15 +669,14 @@ class MaterialSearchView @JvmOverloads constructor(
      * Set the query to search view. If submit is set to true, it'll submit the query.
      *
      * @param query - The Query value.
-     * @param submit - Whether to submit or not the query or not.
+     * @param shouldSubmit - Whether to submit or not the query or not.
      */
-    fun setQuery(query: CharSequence?, submit: Boolean) {
+    fun setQuery(query: CharSequence, shouldSubmit: Boolean) {
         mSearchEditText.setText(query)
-        if (query != null) {
-            mSearchEditText.setSelection(mSearchEditText.length())
-            mCurrentQuery = query
-        }
-        if (submit && !TextUtils.isEmpty(query)) {
+        mSearchEditText.setSelection(mSearchEditText.length())
+        mCurrentQuery = query
+
+        if (shouldSubmit && query.isNotEmpty()) {
             onSubmitQuery()
         }
     }
