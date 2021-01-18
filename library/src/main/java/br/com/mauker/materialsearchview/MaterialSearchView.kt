@@ -974,7 +974,7 @@ class MaterialSearchView @JvmOverloads constructor(
         mClearingFocus = false
     }
 
-    override fun requestFocus(direction: Int, previouslyFocusedRect: Rect): Boolean {
+    override fun requestFocus(direction: Int, previouslyFocusedRect: Rect?): Boolean {
         // Don't accept if we are clearing focus, or if the view isn't focusable.
         return !(mClearingFocus || !isFocusable) && mSearchEditText.requestFocus(direction, previouslyFocusedRect)
     }
