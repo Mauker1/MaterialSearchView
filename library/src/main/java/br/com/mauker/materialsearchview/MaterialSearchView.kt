@@ -208,6 +208,11 @@ class MaterialSearchView @JvmOverloads constructor(
      * Listener for interaction with the voice button.
      */
     private var mOnVoiceClickedListener: OnVoiceClickedListener? = null
+
+    /**
+     * Listener for interaction with the clear (X) button
+     */
+    private var mOnClearClickListener: OnClearTextClickListener? = null
     //endregion
 
     //region Initializers
@@ -231,7 +236,7 @@ class MaterialSearchView @JvmOverloads constructor(
         // Set click listeners
         mBack.setOnClickListener { closeSearch() }
         mVoice.setOnClickListener { onVoiceClicked() }
-        mClear.setOnClickListener { mSearchEditText.setText(EMPTY_STRING) }
+        mClear.setOnClickListener { onClearClicked() }
         mTintView.setOnClickListener {
             if (mShouldCloseOnTintClick) {
                 closeSearch()
@@ -580,6 +585,14 @@ class MaterialSearchView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Handles when the clear (X) button is clicked.
+     */
+    private fun onClearClicked() {
+        mOnClearClickListener?.onClearClicked()
+        mSearchEditText.setText(EMPTY_STRING)
+    }
+
     //endregion
 
     //region Mutators
@@ -847,11 +860,26 @@ class MaterialSearchView @JvmOverloads constructor(
     }
 
     fun setOnVoiceClickedListener(listener: () -> Unit) {
-        mOnVoiceClickedListener = object: OnVoiceClickedListener {
+        setOnVoiceClickedListener(object: OnVoiceClickedListener {
             override fun onVoiceClicked() {
                 listener.invoke()
             }
-        }
+        })
+    }
+
+    /**
+     * Sets a click listener for the clear (X) button.
+     */
+    fun setOnClearClickListener(listener: OnClearTextClickListener) {
+        mOnClearClickListener = listener
+    }
+
+    fun setOnClearClickListener(listener: () -> Unit) {
+        setOnClearClickListener(object: OnClearTextClickListener {
+            override fun onClearClicked() {
+                listener.invoke()
+            }
+        })
     }
 
     /**
@@ -1117,5 +1145,13 @@ class MaterialSearchView @JvmOverloads constructor(
          * Called when the user clicks the voice button.
          */
         fun onVoiceClicked()
-    } //endregion
+    }
+
+    /**
+     * Handles interactions with the clear (X) button
+     */
+    interface OnClearTextClickListener {
+        fun onClearClicked()
+    }
+    //endregion
 }
