@@ -55,6 +55,9 @@ class MainActivity : AppCompatActivity() {
             val suggestion = searchView.getSuggestionAtPosition(position)
             searchView.setQuery(suggestion, false)
         }
+        searchView.setOnClearClickListener {
+            Toast.makeText(this, "Clear clicked!", Toast.LENGTH_LONG).show()
+        }
         btClearHistory.setOnClickListener { clearHistory() }
         btClearSuggestions.setOnClickListener { clearSuggestions() }
         btClearAll.setOnClickListener { clearAll() }
