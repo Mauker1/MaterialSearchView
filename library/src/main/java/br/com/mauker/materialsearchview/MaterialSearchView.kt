@@ -102,11 +102,11 @@ class MaterialSearchView @JvmOverloads constructor(
     //region Database
 
     private val daoProvider: DaoProvider = DbHelper(context)
-    private val historyDAO: HistoryDAO = daoProvider.getHistoryDAO()
-
     private val dataAccessor = MsvDataAccessor(daoProvider)
 
-    private val parentScope = CoroutineScope(Job())
+    private val parentJob: Job = Job()
+
+    private val parentScope = CoroutineScope(parentJob)
 
     // TODO - Check if this buffer uses too much memory
     private val actor = parentScope.actor<Message>(capacity = 10, context = Dispatchers.IO) {
@@ -147,22 +147,29 @@ class MaterialSearchView @JvmOverloads constructor(
                     println("Inside actor clear all")
                     dataAccessor.clearAll()
                 }
+                is Message.GetDefaultList -> {
+                    val list = dataAccessor.getDefaultList(msg.maxHistory, msg.maxPinned)
+                    withContext(Dispatchers.Main) {
+                        adapter.updateAdapter(list)
+                    }
+                }
+                is Message.GetFilteredList -> {
+                    val filtered = dataAccessor.getFilteredList(
+                            msg.filter,
+                            msg.maxHistory,
+                            msg.maxPinned
+                    )
+                    withContext(Dispatchers.Main) {
+                        adapter.updateAdapter(filtered)
+                    }
+                }
             }
         }
     }
 
-    private val parentJob: Job
-
-    private val IO: CoroutineContext
-        get() = parentJob + Dispatchers.IO
-
-    private val MAIN: CoroutineContext
-        get() = parentJob + Dispatchers.Main
-
     //endregion
 
     init {
-        parentJob = Job()
         // Initialize view
         init()
 
@@ -1044,26 +1051,28 @@ class MaterialSearchView @JvmOverloads constructor(
      * Resets the adapter to its initial state showing only history and pinned items.
      */
     private fun resetAdapterToInitialState() {
-        CoroutineScope(IO).launch {
-            val initialList = historyDAO.getDefaultHistoryWithPin(MAX_HISTORY, MAX_PINNED)
-            withContext(MAIN) {
-                adapter.updateAdapter(initialList.toMutableList())
-            }
-        }
+        actor.offer(Message.GetDefaultList(MAX_HISTORY, MAX_PINNED))
+//        CoroutineScope(IO).launch {
+//            val initialList = historyDAO.getDefaultHistoryWithPin(MAX_HISTORY, MAX_PINNED)
+//            withContext(MAIN) {
+//                adapter.updateAdapter(initialList.toMutableList())
+//            }
+//        }
     }
 
     private fun doFiltering(query: String) {
-        CoroutineScope(IO).launch {
-            val filtered =  if (query.isBlank()) {
-                historyDAO.getDefaultHistoryWithPin(MAX_HISTORY, MAX_PINNED)
-            } else {
-                historyDAO.getFilteredHistory(query)
-            }
-
-            withContext(MAIN) {
-                adapter.updateAdapter(filtered.toMutableList())
-            }
-        }
+        actor.offer(Message.GetFilteredList(query, MAX_HISTORY, MAX_PINNED))
+//        CoroutineScope(IO).launch {
+//            val filtered =  if (query.isBlank()) {
+//                historyDAO.getDefaultHistoryWithPin(MAX_HISTORY, MAX_PINNED)
+//            } else {
+//                historyDAO.getFilteredHistory(query)
+//            }
+//
+//            withContext(MAIN) {
+//                adapter.updateAdapter(filtered.toMutableList())
+//            }
+//        }
     }
 
     /**

@@ -12,4 +12,7 @@ sealed class Message {
     object ClearHistory: Message()
     object ClearPinned: Message()
     object ClearAll: Message()
+
+    data class GetDefaultList(val maxHistory: Int, val maxPinned: Int): Message()
+    data class GetFilteredList(val filter: String, val maxHistory: Int, val maxPinned: Int): Message()
 }
