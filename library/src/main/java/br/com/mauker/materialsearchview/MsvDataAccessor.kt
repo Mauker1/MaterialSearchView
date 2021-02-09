@@ -14,17 +14,8 @@ class MsvDataAccessor(daoProvider: DaoProvider) {
 
     private val historyDAO: HistoryDAO = daoProvider.getHistoryDAO()
 
-    private val jobList = mutableListOf<Job>()
-
-    fun disposeAll() {
-        jobList.run {
-            forEach { it.cancel() }
-            clear()
-        }
-    }
-
     suspend fun getDefaultList(maxHistory: Int, maxPinned: Int) =
-            historyDAO.getDefaultHistoryWithPin(maxHistory, maxPinned)
+            historyDAO.getDefaultHistoryWithPin(maxHistory, maxPinned).toMutableList()
 
     suspend fun getFilteredList(query: String, maxHistory: Int, maxPinned: Int): MutableList<History> {
         val filtered = if (query.isBlank()) {
