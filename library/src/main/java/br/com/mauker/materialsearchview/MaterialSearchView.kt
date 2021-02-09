@@ -36,11 +36,13 @@ import br.com.mauker.materialsearchview.db.DbHelper
 import br.com.mauker.materialsearchview.db.dao.HistoryDAO
 import br.com.mauker.materialsearchview.db.model.History
 import br.com.mauker.materialsearchview.db.model.QueryType
+import br.com.mauker.materialsearchview.sealedClasses.Message
 import br.com.mauker.materialsearchview.utils.AnimationUtils.circleHideView
 import br.com.mauker.materialsearchview.utils.AnimationUtils.circleRevealView
 import br.com.mauker.materialsearchview.utils.AnimationUtils.fadeInView
 import br.com.mauker.materialsearchview.utils.AnimationUtils.fadeOutView
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.actor
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.roundToInt
@@ -102,6 +104,53 @@ class MaterialSearchView @JvmOverloads constructor(
     private val daoProvider: DaoProvider = DbHelper(context)
     private val historyDAO: HistoryDAO = daoProvider.getHistoryDAO()
 
+    private val dataAccessor = MsvDataAccessor(daoProvider)
+
+    private val parentScope = CoroutineScope(Job())
+
+    // TODO - Check if this buffer uses too much memory
+    private val actor = parentScope.actor<Message>(capacity = 10, context = Dispatchers.IO) {
+        for (msg in channel) {
+            println("Inside actor loop")
+            when (msg) {
+                is Message.SaveQuery -> {
+                    println("Inside actor save query")
+                    dataAccessor.saveQuery(msg.query)
+                }
+                is Message.AddSuggestion -> {
+                    dataAccessor.addSuggestion(msg.suggestion)
+                }
+                is Message.AddPin -> {
+                    println("Inside actor add pin")
+                    dataAccessor.addPin(msg.pin)
+                }
+                is Message.AddSuggestions -> {
+                    println("Inside actor add suggestions")
+                    dataAccessor.addSuggestions(msg.suggestions)
+                }
+                is Message.AddPinnedItems -> {
+                    dataAccessor.addPinnedItems(msg.pinnedItems)
+                }
+                is Message.RemoveItem -> {
+                    dataAccessor.removeHistoryItem(msg.item)
+                }
+                Message.ClearSuggestions -> {
+                    dataAccessor.clearSuggestions()
+                }
+                Message.ClearHistory -> {
+                    dataAccessor.clearSearchHistory()
+                }
+                Message.ClearPinned -> {
+                    dataAccessor.clearPinned()
+                }
+                Message.ClearAll -> {
+                    println("Inside actor clear all")
+                    dataAccessor.clearAll()
+                }
+            }
+        }
+    }
+
     private val parentJob: Job
 
     private val IO: CoroutineContext
@@ -109,9 +158,6 @@ class MaterialSearchView @JvmOverloads constructor(
 
     private val MAIN: CoroutineContext
         get() = parentJob + Dispatchers.Main
-
-    private val COMPUTATION: CoroutineContext
-        get() = parentJob + Dispatchers.Default
 
     //endregion
 
@@ -485,6 +531,7 @@ class MaterialSearchView @JvmOverloads constructor(
         isOpen = true
     }
     //endregion
+
     //region Hide Methods
     /**
      * Hides the suggestion list.
@@ -540,6 +587,7 @@ class MaterialSearchView @JvmOverloads constructor(
         isOpen = false
     }
     //endregion
+
     //region Interface Methods
     /**
      * Filters and updates the buttons when text is changed.
@@ -578,7 +626,7 @@ class MaterialSearchView @JvmOverloads constructor(
             // TODO - Improve.
             if (mOnQueryTextListener?.onQueryTextSubmit(query.toString()) == false) {
                 if (mShouldKeepHistory) {
-                    saveQueryToDb(query.toString(), Calendar.getInstance())
+                    saveQueryToDb(query.toString())
                 }
 
                 // Refresh the cursor on the adapter,
@@ -925,9 +973,9 @@ class MaterialSearchView @JvmOverloads constructor(
      * @return The current query, or an empty String if there's no query.
      */
     val currentQuery: String
-        get() = if (!TextUtils.isEmpty(mCurrentQuery)) {
+        get() = if (mCurrentQuery.isNotEmpty()) {
             mCurrentQuery.toString()
-        } else EMPTY_STRING// Get package manager
+        } else EMPTY_STRING // Get package manager
 
     // Gets a list of activities that can handle this intent.
 
@@ -995,7 +1043,6 @@ class MaterialSearchView @JvmOverloads constructor(
     /**
      * Resets the adapter to its initial state showing only history and pinned items.
      */
-    @Synchronized
     private fun resetAdapterToInitialState() {
         CoroutineScope(IO).launch {
             val initialList = historyDAO.getDefaultHistoryWithPin(MAX_HISTORY, MAX_PINNED)
@@ -1005,7 +1052,6 @@ class MaterialSearchView @JvmOverloads constructor(
         }
     }
 
-    @Synchronized
     private fun doFiltering(query: String) {
         CoroutineScope(IO).launch {
             val filtered =  if (query.isBlank()) {
@@ -1024,91 +1070,50 @@ class MaterialSearchView @JvmOverloads constructor(
      * Save a query to the local database.
      *
      * @param query - The query to be saved. Can't be empty.
-     * @param insertDate - The insert date, in millis.
      */
-    @Synchronized
-    fun saveQueryToDb(query: String, insertDate: Calendar) {
+    fun saveQueryToDb(query: String) {
         if (query.isBlank()) {
             return
         }
-        val history = History(
-                query = query,
-                insertDate = insertDate,
-                queryType = QueryType.HISTORY
-        )
-        CoroutineScope(IO).launch {
-            historyDAO.insert(history)
-        }
+
+        actor.offer(Message.SaveQuery(query))
     }
 
-    @Synchronized
     fun addPin(pin: String) {
         if (pin.isBlank()) {
             return
         }
-        val history = History(
-                query = pin,
-                insertDate = Calendar.getInstance(),
-                queryType = QueryType.PINNED
-        )
-        CoroutineScope(IO).launch {
-            historyDAO.insert(history)
-        }
+
+        actor.offer(Message.AddPin(pin))
     }
 
     /**
      * Add a single suggestion item to the suggestion list.
      * @param suggestion - The suggestion to be inserted on the database.
      */
-    @Synchronized
     fun addSuggestion(suggestion: String) {
         if (suggestion.isBlank()) {
             return
         }
-        val history = History(
-                query = suggestion,
-                insertDate = Calendar.getInstance(),
-                queryType = QueryType.SUGGESTION
-        )
-        CoroutineScope(IO).launch {
-            historyDAO.insert(history)
-        }
+
+        actor.offer(Message.AddSuggestion(suggestion))
     }
 
     /**
      * Removes a single history item from the database.
      * @param query - The text to be removed.
      */
-    @Synchronized
     fun removeHistoryItem(query: String) {
         if (query.isBlank()) {
             return
         }
-        CoroutineScope(IO).launch {
-            historyDAO.deleteItemByText(query)
-        }
-    }
 
-    @Synchronized
-    private fun addItems(items: List<String>, queryType: QueryType) {
-        if (items.isEmpty()) {
-            return
-        }
-
-        CoroutineScope(COMPUTATION).launch {
-            val insertDate = Calendar.getInstance()
-            val filteredList = items.filterNot { it.isBlank() }
-            val suggestionList = filteredList.map { History(query = it, insertDate = insertDate, queryType = queryType) }
-            withContext(IO) {
-                historyDAO.insert(suggestionList)
-            }
-        }
+        actor.offer(Message.RemoveItem(query))
     }
 
     // Pinned items
-    @Synchronized
-    fun addPinnedItems(suggestions: List<String>) {
-        addItems(suggestions, QueryType.PINNED)
+    fun addPinnedItems(pinnedItems: List<String>) {
+        actor.offer(Message.AddPinnedItems(pinnedItems))
     }
 
     @Synchronized
@@ -1117,43 +1122,29 @@ class MaterialSearchView @JvmOverloads constructor(
     }
 
     // Suggestions
-    @Synchronized
     fun addSuggestions(suggestions: List<String>) {
-        addItems(suggestions, QueryType.SUGGESTION)
+        actor.offer(Message.AddSuggestions(suggestions))
     }
 
-    @Synchronized
     fun addSuggestions(suggestions: Array<String>) {
         addSuggestions(suggestions.toList())
     }
 
-    @Synchronized
     fun clearSuggestions() {
         // TODO - Check if it's needed to update the adapter
-        CoroutineScope(IO).launch {
-            historyDAO.clearSuggestions()
-        }
+        actor.offer(Message.ClearSuggestions)
     }
 
-    @Synchronized
     fun clearHistory() {
-        CoroutineScope(IO).launch {
-            historyDAO.clearHistory()
-        }
+        actor.offer(Message.ClearHistory)
     }
 
-    @Synchronized
     fun clearPinned() {
-        CoroutineScope(IO).launch {
-            historyDAO.clearPinned()
-        }
+        actor.offer(Message.ClearPinned)
     }
 
-    @Synchronized
     fun clearAll() {
-        CoroutineScope(IO).launch {
-            historyDAO.deleteAll()
-        }
+        actor.offer(Message.ClearAll)
     }
     //endregion
 

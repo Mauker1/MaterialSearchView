@@ -42,6 +42,11 @@ android {
         jvmTarget = "1.8"
     }
 
+    kotlinOptions.freeCompilerArgs += [
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
+    ]
+
     useLibrary 'android.test.runner'
     useLibrary 'android.test.base'
     useLibrary 'android.test.mock'

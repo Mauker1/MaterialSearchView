@@ -10,7 +10,6 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.withContext
 import java.util.*
 
-@ObsoleteCoroutinesApi
 class MsvDataAccessor(daoProvider: DaoProvider) {
 
     private val historyDAO: HistoryDAO = daoProvider.getHistoryDAO()
