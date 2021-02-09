@@ -42,6 +42,7 @@ import br.com.mauker.materialsearchview.utils.AnimationUtils.circleRevealView
 import br.com.mauker.materialsearchview.utils.AnimationUtils.fadeInView
 import br.com.mauker.materialsearchview.utils.AnimationUtils.fadeOutView
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.channels.actor
 import java.util.*
 import kotlin.coroutines.CoroutineContext
@@ -104,68 +105,12 @@ class MaterialSearchView @JvmOverloads constructor(
     private val daoProvider: DaoProvider = DbHelper(context)
     private val dataAccessor = MsvDataAccessor(daoProvider)
 
-    private val parentJob: Job = Job()
+    private var parentJob: Job = Job()
 
-    private val parentScope = CoroutineScope(parentJob)
+    private var parentScope = CoroutineScope(parentJob)
 
     // TODO - Check if this buffer uses too much memory
-    private val actor = parentScope.actor<Message>(capacity = 10, context = Dispatchers.IO) {
-        for (msg in channel) {
-            println("Inside actor loop")
-            when (msg) {
-                is Message.SaveQuery -> {
-                    println("Inside actor save query")
-                    dataAccessor.saveQuery(msg.query)
-                }
-                is Message.AddSuggestion -> {
-                    dataAccessor.addSuggestion(msg.suggestion)
-                }
-                is Message.AddPin -> {
-                    println("Inside actor add pin")
-                    dataAccessor.addPin(msg.pin)
-                }
-                is Message.AddSuggestions -> {
-                    println("Inside actor add suggestions")
-                    dataAccessor.addSuggestions(msg.suggestions)
-                }
-                is Message.AddPinnedItems -> {
-                    dataAccessor.addPinnedItems(msg.pinnedItems)
-                }
-                is Message.RemoveItem -> {
-                    dataAccessor.removeHistoryItem(msg.item)
-                }
-                Message.ClearSuggestions -> {
-                    dataAccessor.clearSuggestions()
-                }
-                Message.ClearHistory -> {
-                    dataAccessor.clearSearchHistory()
-                }
-                Message.ClearPinned -> {
-                    dataAccessor.clearPinned()
-                }
-                Message.ClearAll -> {
-                    println("Inside actor clear all")
-                    dataAccessor.clearAll()
-                }
-                is Message.GetDefaultList -> {
-                    val list = dataAccessor.getDefaultList(msg.maxHistory, msg.maxPinned)
-                    withContext(Dispatchers.Main) {
-                        adapter.updateAdapter(list)
-                    }
-                }
-                is Message.GetFilteredList -> {
-                    val filtered = dataAccessor.getFilteredList(
-                            msg.filter,
-                            msg.maxHistory,
-                            msg.maxPinned
-                    )
-                    withContext(Dispatchers.Main) {
-                        adapter.updateAdapter(filtered)
-                    }
-                }
-            }
-        }
-    }
+    private var actor = createActor()
 
     //endregion
 
@@ -175,6 +120,66 @@ class MaterialSearchView @JvmOverloads constructor(
 
         // Initialize style
         initStyle(attributeSet, defStyleAttributes)
+    }
+
+    private fun createActor(): SendChannel<Message> {
+        return parentScope.actor(capacity = 10, context = Dispatchers.IO) {
+            for (msg in channel) {
+                println("Inside actor loop")
+                when (msg) {
+                    is Message.SaveQuery -> {
+                        println("Inside actor save query")
+                        dataAccessor.saveQuery(msg.query)
+                    }
+                    is Message.AddSuggestion -> {
+                        dataAccessor.addSuggestion(msg.suggestion)
+                    }
+                    is Message.AddPin -> {
+                        println("Inside actor add pin")
+                        dataAccessor.addPin(msg.pin)
+                    }
+                    is Message.AddSuggestions -> {
+                        println("Inside actor add suggestions")
+                        dataAccessor.addSuggestions(msg.suggestions)
+                    }
+                    is Message.AddPinnedItems -> {
+                        dataAccessor.addPinnedItems(msg.pinnedItems)
+                    }
+                    is Message.RemoveItem -> {
+                        dataAccessor.removeHistoryItem(msg.item)
+                    }
+                    Message.ClearSuggestions -> {
+                        dataAccessor.clearSuggestions()
+                    }
+                    Message.ClearHistory -> {
+                        dataAccessor.clearSearchHistory()
+                    }
+                    Message.ClearPinned -> {
+                        dataAccessor.clearPinned()
+                    }
+                    Message.ClearAll -> {
+                        println("Inside actor clear all")
+                        dataAccessor.clearAll()
+                    }
+                    is Message.GetDefaultList -> {
+                        val list = dataAccessor.getDefaultList(msg.maxHistory, msg.maxPinned)
+                        withContext(Dispatchers.Main) {
+                            adapter.updateAdapter(list)
+                        }
+                    }
+                    is Message.GetFilteredList -> {
+                        val filtered = dataAccessor.getFilteredList(
+                                msg.filter,
+                                msg.maxHistory,
+                                msg.maxPinned
+                        )
+                        withContext(Dispatchers.Main) {
+                            adapter.updateAdapter(filtered)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     //region Control variables
@@ -1041,7 +1046,9 @@ class MaterialSearchView @JvmOverloads constructor(
     }
 
     fun onViewResumed() {
-        resetAdapterToInitialState()
+        parentJob = Job()
+        parentScope = CoroutineScope(parentJob)
+        actor = createActor()
     }
     //endregion
 

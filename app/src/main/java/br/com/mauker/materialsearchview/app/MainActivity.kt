@@ -130,11 +130,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        searchView.clearAll()
+        searchView.onViewStopped()
     }
 
     override fun onResume() {
         super.onResume()
+        searchView.onViewResumed()
         val arr = resources.getStringArray(R.array.suggestions)
         searchView.addSuggestions(arr)
         searchView.saveQueryToDb("Query")
