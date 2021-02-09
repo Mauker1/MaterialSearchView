@@ -126,20 +126,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        searchView.clearSuggestions()
-        searchView.clearPinned()
     }
 
     override fun onStop() {
         super.onStop()
-        searchView.onViewStopped()
+        searchView.clearAll()
     }
 
     override fun onResume() {
         super.onResume()
-//        searchView.onViewResumed()
         val arr = resources.getStringArray(R.array.suggestions)
         searchView.addSuggestions(arr)
-        searchView.addPin(arr.first())
+        searchView.saveQueryToDb("Query")
+        searchView.addPin("Pinned item test")
     }
 }
