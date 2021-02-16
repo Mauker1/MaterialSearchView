@@ -33,9 +33,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.mauker.materialsearchview.adapters.SearchAdapter
 import br.com.mauker.materialsearchview.db.DaoProvider
 import br.com.mauker.materialsearchview.db.DbHelper
-import br.com.mauker.materialsearchview.db.dao.HistoryDAO
 import br.com.mauker.materialsearchview.db.model.History
-import br.com.mauker.materialsearchview.db.model.QueryType
 import br.com.mauker.materialsearchview.sealedClasses.Message
 import br.com.mauker.materialsearchview.utils.AnimationUtils.circleHideView
 import br.com.mauker.materialsearchview.utils.AnimationUtils.circleRevealView
@@ -45,7 +43,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.channels.actor
 import java.util.*
-import kotlin.coroutines.CoroutineContext
 import kotlin.math.roundToInt
 
 /**
@@ -199,7 +196,7 @@ class MaterialSearchView @JvmOverloads constructor(
     private var mShouldAnimate = true
 
     /**
-     * Whether or not the MaterialSearchView will clonse under a click on the Tint View (Blank Area).
+     * Whether or not the MaterialSearchView will close under a click on the Tint View (Blank Area).
      */
     private var mShouldCloseOnTintClick = false
 
@@ -705,6 +702,14 @@ class MaterialSearchView @JvmOverloads constructor(
      */
     fun setCloseOnTintClick(shouldClose: Boolean) {
         mShouldCloseOnTintClick = shouldClose
+    }
+
+    fun setShouldShowTint(shouldShowTint: Boolean) {
+        mTintView.visibility = if (shouldShowTint) {
+            VISIBLE
+        } else {
+            GONE
+        }
     }
 
     /**
