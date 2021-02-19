@@ -2,7 +2,7 @@
 Android SearchView based on Material Design guidelines. The MaterialSearchView will overlay a Toolbar or ActionBar as well as display a ListView for the user to show suggested or recent searches.
 
 Stable: [![Download](https://img.shields.io/badge/download-1.3.0_rc02-blue.svg)](https://bintray.com/mauker/maven/MaterialSearchView/1.3.0-rc02)
-Alpha: [![Download](https://img.shields.io/badge/download-2.0.0_beta01-blue.svg)](https://bintray.com/mauker/maven/MaterialSearchView/_latestVersion)
+Beta: [![Download](https://img.shields.io/badge/download-2.0.0_beta02-blue.svg)](https://bintray.com/mauker/maven/MaterialSearchView/_latestVersion)
 
 [![Build Status](https://travis-ci.org/Mauker1/MaterialSearchView.svg?branch=master)](https://travis-ci.org/Mauker1/MaterialSearchView)
 ![APK size](https://img.shields.io/badge/Size-94KB-e91e63.svg)
@@ -27,7 +27,7 @@ This library is supported with a min SDK of 14.
 **New version note**: MSV 2.0 is now on beta stage, if you wish to test it, get it by using:
 
 ```java
-implementation 'br.com.mauker.materialsearchview:materialsearchview:2.0.0-beta01'
+implementation 'br.com.mauker.materialsearchview:materialsearchview:2.0.0-beta02'
 ```
 
 **Version 2.0 doesn't require the Content Provider setup** and had some API changes which will be added to the documentation later on. For more details please take a look at the [V_2.0 branch](https://github.com/Mauker1/MaterialSearchView/tree/milestone/2_0).
