@@ -102,13 +102,13 @@ object AnimationUtils {
     fun fadeOutView(view: View, duration: Int = ANIMATION_DURATION_SHORTEST) {
         ViewCompat.animate(view).alpha(0f).setDuration(duration.toLong()).setListener(object : ViewPropertyAnimatorListener {
             override fun onAnimationStart(view: View) {
-                view.isDrawingCacheEnabled = true
+                //view.isDrawingCacheEnabled = true
             }
 
             override fun onAnimationEnd(view: View) {
                 view.visibility = View.GONE
                 view.alpha = 1f
-                view.isDrawingCacheEnabled = false
+                //view.isDrawingCacheEnabled = false
             }
 
             override fun onAnimationCancel(view: View) {}
