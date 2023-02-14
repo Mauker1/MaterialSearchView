@@ -119,6 +119,7 @@ class MaterialSearchView @JvmOverloads constructor(
         initStyle(attributeSet, defStyleAttributes)
     }
 
+    @OptIn(ObsoleteCoroutinesApi::class)
     private fun createActor(): SendChannel<Message> {
         return parentScope.actor(capacity = 10, context = Dispatchers.IO) {
             for (msg in channel) {
@@ -1063,7 +1064,7 @@ class MaterialSearchView @JvmOverloads constructor(
      * Resets the adapter to its initial state showing only history and pinned items.
      */
     private fun resetAdapterToInitialState() {
-        actor.offer(Message.GetDefaultList(MAX_HISTORY, MAX_PINNED))
+        actor.trySend(Message.GetDefaultList(MAX_HISTORY, MAX_PINNED)).isSuccess
 //        CoroutineScope(IO).launch {
 //            val initialList = historyDAO.getDefaultHistoryWithPin(MAX_HISTORY, MAX_PINNED)
 //            withContext(MAIN) {
@@ -1073,7 +1074,7 @@ class MaterialSearchView @JvmOverloads constructor(
     }
 
     private fun doFiltering(query: String) {
-        actor.offer(Message.GetFilteredList(query, MAX_HISTORY, MAX_PINNED))
+        actor.trySend(Message.GetFilteredList(query, MAX_HISTORY, MAX_PINNED)).isSuccess
 //        CoroutineScope(IO).launch {
 //            val filtered =  if (query.isBlank()) {
 //                historyDAO.getDefaultHistoryWithPin(MAX_HISTORY, MAX_PINNED)
@@ -1097,7 +1098,7 @@ class MaterialSearchView @JvmOverloads constructor(
             return
         }
 
-        actor.offer(Message.SaveQuery(query))
+        actor.trySend(Message.SaveQuery(query)).isSuccess
     }
 
     fun addPin(pin: String) {
@@ -1105,7 +1106,7 @@ class MaterialSearchView @JvmOverloads constructor(
             return
         }
 
-        actor.offer(Message.AddPin(pin))
+        actor.trySend(Message.AddPin(pin)).isSuccess
     }
 
     /**
@@ -1117,7 +1118,7 @@ class MaterialSearchView @JvmOverloads constructor(
             return
         }
 
-        actor.offer(Message.AddSuggestion(suggestion))
+        actor.trySend(Message.AddSuggestion(suggestion)).isSuccess
     }
 
     /**
@@ -1129,12 +1130,12 @@ class MaterialSearchView @JvmOverloads constructor(
             return
         }
 
-        actor.offer(Message.RemoveItem(query))
+        actor.trySend(Message.RemoveItem(query)).isSuccess
     }
 
     // Pinned items
     fun addPinnedItems(pinnedItems: List<String>) {
-        actor.offer(Message.AddPinnedItems(pinnedItems))
+        actor.trySend(Message.AddPinnedItems(pinnedItems)).isSuccess
     }
 
     @Synchronized
@@ -1144,7 +1145,7 @@ class MaterialSearchView @JvmOverloads constructor(
 
     // Suggestions
     fun addSuggestions(suggestions: List<String>) {
-        actor.offer(Message.AddSuggestions(suggestions))
+        actor.trySend(Message.AddSuggestions(suggestions)).isSuccess
     }
 
     fun addSuggestions(suggestions: Array<String>) {
@@ -1153,19 +1154,19 @@ class MaterialSearchView @JvmOverloads constructor(
 
     fun clearSuggestions() {
         // TODO - Check if it's needed to update the adapter
-        actor.offer(Message.ClearSuggestions)
+        actor.trySend(Message.ClearSuggestions).isSuccess
     }
 
     fun clearHistory() {
-        actor.offer(Message.ClearHistory)
+        actor.trySend(Message.ClearHistory).isSuccess
     }
 
     fun clearPinned() {
-        actor.offer(Message.ClearPinned)
+        actor.trySend(Message.ClearPinned).isSuccess
     }
 
     fun clearAll() {
-        actor.offer(Message.ClearAll)
+        actor.trySend(Message.ClearAll).isSuccess
     }
     //endregion
 

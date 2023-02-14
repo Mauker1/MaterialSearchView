@@ -33,6 +33,7 @@ android {
     ]
 
     useLibrary 'android.test.base'
+    namespace 'br.com.mauker.materialsearchview.app'
 }
 
 dependencies {
